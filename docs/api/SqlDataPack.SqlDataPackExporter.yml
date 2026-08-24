@@ -1,0 +1,570 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.SqlDataPackExporter
+  commentId: T:SqlDataPack.SqlDataPackExporter
+  id: SqlDataPackExporter
+  parent: SqlDataPack
+  children:
+  - SqlDataPack.SqlDataPackExporter.ExportAsync(System.String,System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  - SqlDataPack.SqlDataPackExporter.PreflightAsync(System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackExporter
+  nameWithType: SqlDataPackExporter
+  fullName: SqlDataPack.SqlDataPackExporter
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackExporter.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SqlDataPackExporter
+    path: src/SqlDataPack/SqlDataPackExporter.cs
+    startLine: 10
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack
+  summary: Exports SQL Server table data into a self-describing SQLite package.
+  example: []
+  syntax:
+    content: public sealed class SqlDataPackExporter
+    content.vb: Public NotInheritable Class SqlDataPackExporter
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.SqlDataPackExporter.ExportAsync(System.String,System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  commentId: M:SqlDataPack.SqlDataPackExporter.ExportAsync(System.String,System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  id: ExportAsync(System.String,System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  parent: SqlDataPack.SqlDataPackExporter
+  langs:
+  - csharp
+  - vb
+  name: ExportAsync(string, string, ExportOptions?, CancellationToken)
+  nameWithType: SqlDataPackExporter.ExportAsync(string, string, ExportOptions?, CancellationToken)
+  fullName: SqlDataPack.SqlDataPackExporter.ExportAsync(string, string, SqlDataPack.Models.ExportOptions?, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackExporter.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ExportAsync
+    path: src/SqlDataPack/SqlDataPackExporter.cs
+    startLine: 19
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack
+  summary: Exports selected SQL Server user tables into a SQLite package.
+  example: []
+  syntax:
+    content: public Task<SqlDataPackResult> ExportAsync(string sqlServerConnectionString, string sqliteFilePath, ExportOptions? options = null, CancellationToken cancellationToken = default)
+    parameters:
+    - id: sqlServerConnectionString
+      type: System.String
+      description: The SQL Server source connection string.
+    - id: sqliteFilePath
+      type: System.String
+      description: The destination SQLite package path.
+    - id: options
+      type: SqlDataPack.Models.ExportOptions
+      description: The export options. When omitted, all user tables are exported.
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: A token used to cancel the operation.
+    return:
+      type: System.Threading.Tasks.Task{SqlDataPack.Models.SqlDataPackResult}
+      description: A summary of exported tables, rows, and warnings.
+    content.vb: Public Function ExportAsync(sqlServerConnectionString As String, sqliteFilePath As String, options As ExportOptions = Nothing, cancellationToken As CancellationToken = Nothing) As Task(Of SqlDataPackResult)
+  overload: SqlDataPack.SqlDataPackExporter.ExportAsync*
+  nameWithType.vb: SqlDataPackExporter.ExportAsync(String, String, ExportOptions, CancellationToken)
+  fullName.vb: SqlDataPack.SqlDataPackExporter.ExportAsync(String, String, SqlDataPack.Models.ExportOptions, System.Threading.CancellationToken)
+  name.vb: ExportAsync(String, String, ExportOptions, CancellationToken)
+- uid: SqlDataPack.SqlDataPackExporter.PreflightAsync(System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  commentId: M:SqlDataPack.SqlDataPackExporter.PreflightAsync(System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  id: PreflightAsync(System.String,SqlDataPack.Models.ExportOptions,System.Threading.CancellationToken)
+  parent: SqlDataPack.SqlDataPackExporter
+  langs:
+  - csharp
+  - vb
+  name: PreflightAsync(string, ExportOptions?, CancellationToken)
+  nameWithType: SqlDataPackExporter.PreflightAsync(string, ExportOptions?, CancellationToken)
+  fullName: SqlDataPack.SqlDataPackExporter.PreflightAsync(string, SqlDataPack.Models.ExportOptions?, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackExporter.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: PreflightAsync
+    path: src/SqlDataPack/SqlDataPackExporter.cs
+    startLine: 98
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack
+  summary: Validates an export plan without creating a SQLite package or copying rows.
+  example: []
+  syntax:
+    content: public Task<SqlDataPackPreflightResult> PreflightAsync(string sqlServerConnectionString, ExportOptions? options = null, CancellationToken cancellationToken = default)
+    parameters:
+    - id: sqlServerConnectionString
+      type: System.String
+      description: The SQL Server source connection string.
+    - id: options
+      type: SqlDataPack.Models.ExportOptions
+      description: The export options. When omitted, all user tables are included.
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: A token used to cancel the operation.
+    return:
+      type: System.Threading.Tasks.Task{SqlDataPack.Models.SqlDataPackPreflightResult}
+      description: The preflight validation result.
+    content.vb: Public Function PreflightAsync(sqlServerConnectionString As String, options As ExportOptions = Nothing, cancellationToken As CancellationToken = Nothing) As Task(Of SqlDataPackPreflightResult)
+  overload: SqlDataPack.SqlDataPackExporter.PreflightAsync*
+  nameWithType.vb: SqlDataPackExporter.PreflightAsync(String, ExportOptions, CancellationToken)
+  fullName.vb: SqlDataPack.SqlDataPackExporter.PreflightAsync(String, SqlDataPack.Models.ExportOptions, System.Threading.CancellationToken)
+  name.vb: PreflightAsync(String, ExportOptions, CancellationToken)
+references:
+- uid: SqlDataPack
+  commentId: N:SqlDataPack
+  href: SqlDataPack.html
+  name: SqlDataPack
+  nameWithType: SqlDataPack
+  fullName: SqlDataPack
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SqlDataPack.SqlDataPackExporter.ExportAsync*
+  commentId: Overload:SqlDataPack.SqlDataPackExporter.ExportAsync
+  href: SqlDataPack.SqlDataPackExporter.html#SqlDataPack_SqlDataPackExporter_ExportAsync_System_String_System_String_SqlDataPack_Models_ExportOptions_System_Threading_CancellationToken_
+  name: ExportAsync
+  nameWithType: SqlDataPackExporter.ExportAsync
+  fullName: SqlDataPack.SqlDataPackExporter.ExportAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SqlDataPack.Models.ExportOptions
+  commentId: T:SqlDataPack.Models.ExportOptions
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.ExportOptions.html
+  name: ExportOptions
+  nameWithType: ExportOptions
+  fullName: SqlDataPack.Models.ExportOptions
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{SqlDataPack.Models.SqlDataPackResult}
+  commentId: T:System.Threading.Tasks.Task{SqlDataPack.Models.SqlDataPackResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<SqlDataPackResult>
+  nameWithType: Task<SqlDataPackResult>
+  fullName: System.Threading.Tasks.Task<SqlDataPack.Models.SqlDataPackResult>
+  nameWithType.vb: Task(Of SqlDataPackResult)
+  fullName.vb: System.Threading.Tasks.Task(Of SqlDataPack.Models.SqlDataPackResult)
+  name.vb: Task(Of SqlDataPackResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackResult
+    name: SqlDataPackResult
+    href: SqlDataPack.Models.SqlDataPackResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackResult
+    name: SqlDataPackResult
+    href: SqlDataPack.Models.SqlDataPackResult.html
+  - name: )
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: SqlDataPack.SqlDataPackExporter.PreflightAsync*
+  commentId: Overload:SqlDataPack.SqlDataPackExporter.PreflightAsync
+  href: SqlDataPack.SqlDataPackExporter.html#SqlDataPack_SqlDataPackExporter_PreflightAsync_System_String_SqlDataPack_Models_ExportOptions_System_Threading_CancellationToken_
+  name: PreflightAsync
+  nameWithType: SqlDataPackExporter.PreflightAsync
+  fullName: SqlDataPack.SqlDataPackExporter.PreflightAsync
+- uid: System.Threading.Tasks.Task{SqlDataPack.Models.SqlDataPackPreflightResult}
+  commentId: T:System.Threading.Tasks.Task{SqlDataPack.Models.SqlDataPackPreflightResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<SqlDataPackPreflightResult>
+  nameWithType: Task<SqlDataPackPreflightResult>
+  fullName: System.Threading.Tasks.Task<SqlDataPack.Models.SqlDataPackPreflightResult>
+  nameWithType.vb: Task(Of SqlDataPackPreflightResult)
+  fullName.vb: System.Threading.Tasks.Task(Of SqlDataPack.Models.SqlDataPackPreflightResult)
+  name.vb: Task(Of SqlDataPackPreflightResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackPreflightResult
+    name: SqlDataPackPreflightResult
+    href: SqlDataPack.Models.SqlDataPackPreflightResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackPreflightResult
+    name: SqlDataPackPreflightResult
+    href: SqlDataPack.Models.SqlDataPackPreflightResult.html
+  - name: )

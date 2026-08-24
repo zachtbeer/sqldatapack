@@ -1,0 +1,52 @@
+name: Fuzz
+
+# Property-based fuzzing of the untrusted-input surface (package reader, value converter,
+# identifier/pattern matching). Runs nightly and on demand, not on every PR, because each
+# property runs many more iterations than a local run. Findings fail the job; the test results
+# (which include FsCheck's shrunk counterexample) are uploaded as an artifact.
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    name: Property fuzzing
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Restore
+        run: dotnet restore tests/SqlDataPack.Fuzzing/SqlDataPack.Fuzzing.csproj --locked-mode
+
+      - name: Build
+        run: dotnet build tests/SqlDataPack.Fuzzing/SqlDataPack.Fuzzing.csproj -c Release --no-restore
+
+      - name: Fuzz
+        env:
+          # Iterations per property. Local runs default to 200; CI fuzzes much harder.
+          FUZZ_MAXTEST: "3000"
+        run: >-
+          dotnet test tests/SqlDataPack.Fuzzing/SqlDataPack.Fuzzing.csproj
+          -c Release --no-build
+          --logger "trx;LogFileName=fuzz.trx"
+          --results-directory ${{ runner.temp }}/fuzz-results
+
+      - name: Upload fuzz results
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: fuzz-results
+          path: ${{ runner.temp }}/fuzz-results
+          retention-days: 14

@@ -1,0 +1,10 @@
+<Project>
+
+  <!--
+    Deliberately empty. This stops MSBuild walking up to the repository root
+    Directory.Build.props, whose shared settings and version-less SourceLink
+    PackageReference belong to the shipping projects, not to the standalone
+    file-based apps in this folder. See VersionGuard.cs.
+  -->
+
+</Project>

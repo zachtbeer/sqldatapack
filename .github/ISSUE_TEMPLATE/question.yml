@@ -1,0 +1,18 @@
+name: Question
+description: Ask about usage, support boundaries, or expected behavior.
+title: "[Question]: "
+labels:
+  - question
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What are you trying to understand or decide?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Include package version, SQL Server version, and relevant schema details if useful.

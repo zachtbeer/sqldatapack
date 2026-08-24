@@ -1,0 +1,813 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.DacpacDeploymentOptions
+  commentId: T:SqlDataPack.Models.DacpacDeploymentOptions
+  id: DacpacDeploymentOptions
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  - SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform
+  - SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops
+  - SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss
+  - SqlDataPack.Models.DacpacDeploymentOptions.Default
+  - SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles
+  - SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+  - SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins
+  - SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions
+  - SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership
+  - SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers
+  - SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment
+  langs:
+  - csharp
+  - vb
+  name: DacpacDeploymentOptions
+  nameWithType: DacpacDeploymentOptions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DacpacDeploymentOptions
+    path: src/SqlDataPack/Options.cs
+    startLine: 118
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Tunes how the package's embedded dacpac is deployed when <xref href="SqlDataPack.Models.ImportOptions.SchemaDeploymentMode" data-throw-if-not-resolved="false"></xref> is <xref href="SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public sealed class DacpacDeploymentOptions
+    content.vb: Public NotInheritable Class DacpacDeploymentOptions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.Default
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.Default
+  id: Default
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: DacpacDeploymentOptions.Default
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.Default
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Default
+    path: src/SqlDataPack/Options.cs
+    startLine: 124
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Returns a new <xref href="SqlDataPack.Models.DacpacDeploymentOptions" data-throw-if-not-resolved="false"></xref> populated with the documented defaults — a convenient starting point to tweak.
+
+    Each access returns a fresh instance, so mutating the returned object never affects subsequent callers.
+
+    Value-identical to <code>new DacpacDeploymentOptions()</code>; the property initializers below are the single source of truth.
+  example: []
+  syntax:
+    content: public static DacpacDeploymentOptions Default { get; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.DacpacDeploymentOptions
+    content.vb: Public Shared ReadOnly Property [Default] As DacpacDeploymentOptions
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.Default*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform
+  id: AllowIncompatiblePlatform
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: AllowIncompatiblePlatform
+  nameWithType: DacpacDeploymentOptions.AllowIncompatiblePlatform
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: AllowIncompatiblePlatform
+    path: src/SqlDataPack/Options.cs
+    startLine: 129
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Allows DacFx to deploy even when the source and target SQL platforms differ (e.g. on-prem dacpac to Azure SQL). Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> (fail-fast on platform mismatch).
+  example: []
+  syntax:
+    content: public bool AllowIncompatiblePlatform { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AllowIncompatiblePlatform As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss
+  id: BlockOnPossibleDataLoss
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: BlockOnPossibleDataLoss
+  nameWithType: DacpacDeploymentOptions.BlockOnPossibleDataLoss
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: BlockOnPossibleDataLoss
+    path: src/SqlDataPack/Options.cs
+    startLine: 134
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Blocks deployment when DacFx detects an operation that could lose existing data (e.g. dropping a populated column). Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>; set to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> only for known-destructive migrations.
+  example: []
+  syntax:
+    content: public bool BlockOnPossibleDataLoss { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property BlockOnPossibleDataLoss As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops
+  id: AllowObjectDrops
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: AllowObjectDrops
+  nameWithType: DacpacDeploymentOptions.AllowObjectDrops
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: AllowObjectDrops
+    path: src/SqlDataPack/Options.cs
+    startLine: 139
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Permits DacFx to drop target objects that are absent from the package schema. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> (extra target objects are preserved).
+  example: []
+  syntax:
+    content: public bool AllowObjectDrops { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AllowObjectDrops As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers
+  id: DeployUsers
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: DeployUsers
+  nameWithType: DacpacDeploymentOptions.DeployUsers
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DeployUsers
+    path: src/SqlDataPack/Options.cs
+    startLine: 144
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Deploys database users from the dacpac. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> because users are usually environment-specific.
+  example: []
+  syntax:
+    content: public bool DeployUsers { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property DeployUsers As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins
+  id: DeployLogins
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: DeployLogins
+  nameWithType: DacpacDeploymentOptions.DeployLogins
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DeployLogins
+    path: src/SqlDataPack/Options.cs
+    startLine: 149
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Deploys server logins and their user mappings from the dacpac, when present. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>; only useful when the captured dacpac actually carries login info.
+  example: []
+  syntax:
+    content: public bool DeployLogins { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property DeployLogins As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions
+  id: DeployPermissions
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: DeployPermissions
+  nameWithType: DacpacDeploymentOptions.DeployPermissions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DeployPermissions
+    path: src/SqlDataPack/Options.cs
+    startLine: 154
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Deploys GRANT/DENY/REVOKE statements from the dacpac. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>; turn on only when the source permissions should follow the schema.
+  example: []
+  syntax:
+    content: public bool DeployPermissions { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property DeployPermissions As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership
+  id: DeployRoleMembership
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: DeployRoleMembership
+  nameWithType: DacpacDeploymentOptions.DeployRoleMembership
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DeployRoleMembership
+    path: src/SqlDataPack/Options.cs
+    startLine: 159
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Deploys role membership assignments from the dacpac. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+  example: []
+  syntax:
+    content: public bool DeployRoleMembership { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property DeployRoleMembership As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles
+  id: DeployDatabaseFiles
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: DeployDatabaseFiles
+  nameWithType: DacpacDeploymentOptions.DeployDatabaseFiles
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DeployDatabaseFiles
+    path: src/SqlDataPack/Options.cs
+    startLine: 164
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Deploys database file and filegroup definitions from the dacpac. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> because storage layout is usually managed per-environment.
+  example: []
+  syntax:
+    content: public bool DeployDatabaseFiles { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property DeployDatabaseFiles As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+  id: DeployDatabaseOptions
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: DeployDatabaseOptions
+  nameWithType: DacpacDeploymentOptions.DeployDatabaseOptions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DeployDatabaseOptions
+    path: src/SqlDataPack/Options.cs
+    startLine: 170
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Applies the source database's <code>ALTER DATABASE</code> property scripts (containment, recovery model, compatibility-adjacent options, etc.) to the target. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> because these settings are usually environment-specific.
+
+    When <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>, cross-platform model adaptation is delegated to <xref href="SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget" data-throw-if-not-resolved="false"></xref>; set this to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> only when you genuinely want the source database options applied verbatim to the target.
+  example: []
+  syntax:
+    content: public bool DeployDatabaseOptions { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property DeployDatabaseOptions As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  id: AdaptAzureSourceForOnPremTarget
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: AdaptAzureSourceForOnPremTarget
+  nameWithType: DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: AdaptAzureSourceForOnPremTarget
+    path: src/SqlDataPack/Options.cs
+    startLine: 193
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Rewrites Azure SQL-specific model elements on a temp copy of the dacpac when deploying an Azure-source extract to an on-prem (non-Azure) target, so DacFx no longer scripts prerequisites the target cannot satisfy. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.
+  remarks: >-
+    <p>
+
+    When <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, the deploy probes <code>SERVERPROPERTY('EngineEdition')</code> on the target and — if the source package was stamped as Azure SQL (edition 5 / 8 / 11 / 12) and the target is non-Azure — performs the following model.xml mutations before invoking DacFx:
+
+    </p>
+
+    <ul><li>Removes the optional <code>Containment</code> property from <code>SqlDatabaseOptions</code>.</li><li>Rewrites <code>SqlUser</code> elements whose <code>AuthenticationType</code> is 2 (contained password user) or 4 (Entra / external provider) to <code>IsWithoutLogin=True</code>, dropping the <code>Password</code> / <code>Sid</code> properties. The element is kept (not deleted) so model-internal references stay valid.</li></ul>
+
+    <p>
+
+    Without this rewrite, DacFx emits <code>ALTER DATABASE ... SET CONTAINMENT = PARTIAL</code> as a deploy-script prerequisite, which fails with Msg 12824 on targets where <code>sp_configure 'contained database authentication'</code> is 0.
+
+    </p>
+
+    <p>
+
+    Set this to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> to deploy the source model verbatim. Useful when you want the deploy to fail loudly so you can fix the source dacpac upstream, or when the operator has already configured <code>contained database authentication = 1</code> on the target and wants the original users preserved.
+
+    </p>
+
+    <p>
+
+    The probe failing aborts the deploy with a <xref href="SqlDataPack.Models.SqlDataPackException" data-throw-if-not-resolved="false"></xref>; disable this flag or <xref href="SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions" data-throw-if-not-resolved="false"></xref> to bypass it. The source-platform signal travels in the SQLite package (column <code>source_engine_edition</code> on <code>zsdp_schema_packages</code>); packages produced before that column existed are treated as "unknown source" and rewritten the same way a non-Azure target would be probed for, preserving pre-stamp behaviour.
+
+    </p>
+  example: []
+  syntax:
+    content: public bool AdaptAzureSourceForOnPremTarget { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AdaptAzureSourceForOnPremTarget As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget*
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment
+  id: VerifyDeployment
+  parent: SqlDataPack.Models.DacpacDeploymentOptions
+  langs:
+  - csharp
+  - vb
+  name: VerifyDeployment
+  nameWithType: DacpacDeploymentOptions.VerifyDeployment
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: VerifyDeployment
+    path: src/SqlDataPack/Options.cs
+    startLine: 198
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Runs DacFx's deployment-plan verification before applying changes; disable to skip the pre-flight check at the cost of catching issues only at apply time. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.
+  example: []
+  syntax:
+    content: public bool VerifyDeployment { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property VerifyDeployment As Boolean
+  overload: SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment*
+references:
+- uid: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  commentId: P:SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_SchemaDeploymentMode
+  name: SchemaDeploymentMode
+  nameWithType: ImportOptions.SchemaDeploymentMode
+  fullName: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+- uid: SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  commentId: F:SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  href: SqlDataPack.Models.SchemaDeploymentMode.html#SqlDataPack_Models_SchemaDeploymentMode_DeployDacpac
+  name: DeployDacpac
+  nameWithType: SchemaDeploymentMode.DeployDacpac
+  fullName: SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SqlDataPack.Models.DacpacDeploymentOptions
+  commentId: T:SqlDataPack.Models.DacpacDeploymentOptions
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html
+  name: DacpacDeploymentOptions
+  nameWithType: DacpacDeploymentOptions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.Default*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.Default
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_Default
+  name: Default
+  nameWithType: DacpacDeploymentOptions.Default
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.Default
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_AllowIncompatiblePlatform
+  name: AllowIncompatiblePlatform
+  nameWithType: DacpacDeploymentOptions.AllowIncompatiblePlatform
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.AllowIncompatiblePlatform
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_BlockOnPossibleDataLoss
+  name: BlockOnPossibleDataLoss
+  nameWithType: DacpacDeploymentOptions.BlockOnPossibleDataLoss
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.BlockOnPossibleDataLoss
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_AllowObjectDrops
+  name: AllowObjectDrops
+  nameWithType: DacpacDeploymentOptions.AllowObjectDrops
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.AllowObjectDrops
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_DeployUsers
+  name: DeployUsers
+  nameWithType: DacpacDeploymentOptions.DeployUsers
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployUsers
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_DeployLogins
+  name: DeployLogins
+  nameWithType: DacpacDeploymentOptions.DeployLogins
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployLogins
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_DeployPermissions
+  name: DeployPermissions
+  nameWithType: DacpacDeploymentOptions.DeployPermissions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployPermissions
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_DeployRoleMembership
+  name: DeployRoleMembership
+  nameWithType: DacpacDeploymentOptions.DeployRoleMembership
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployRoleMembership
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_DeployDatabaseFiles
+  name: DeployDatabaseFiles
+  nameWithType: DacpacDeploymentOptions.DeployDatabaseFiles
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseFiles
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_AdaptAzureSourceForOnPremTarget
+  name: AdaptAzureSourceForOnPremTarget
+  nameWithType: DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_DeployDatabaseOptions
+  name: DeployDatabaseOptions
+  nameWithType: DacpacDeploymentOptions.DeployDatabaseOptions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+- uid: SqlDataPack.Models.SqlDataPackException
+  commentId: T:SqlDataPack.Models.SqlDataPackException
+  href: SqlDataPack.Models.SqlDataPackException.html
+  name: SqlDataPackException
+  nameWithType: SqlDataPackException
+  fullName: SqlDataPack.Models.SqlDataPackException
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+  commentId: P:SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_DeployDatabaseOptions
+  name: DeployDatabaseOptions
+  nameWithType: DacpacDeploymentOptions.DeployDatabaseOptions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.DeployDatabaseOptions
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_AdaptAzureSourceForOnPremTarget
+  name: AdaptAzureSourceForOnPremTarget
+  nameWithType: DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget
+- uid: SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment*
+  commentId: Overload:SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html#SqlDataPack_Models_DacpacDeploymentOptions_VerifyDeployment
+  name: VerifyDeployment
+  nameWithType: DacpacDeploymentOptions.VerifyDeployment
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions.VerifyDeployment

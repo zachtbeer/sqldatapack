@@ -1,0 +1,124 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.SchemaDeploymentMode
+  commentId: T:SqlDataPack.Models.SchemaDeploymentMode
+  id: SchemaDeploymentMode
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  - SqlDataPack.Models.SchemaDeploymentMode.None
+  langs:
+  - csharp
+  - vb
+  name: SchemaDeploymentMode
+  nameWithType: SchemaDeploymentMode
+  fullName: SqlDataPack.Models.SchemaDeploymentMode
+  type: Enum
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SchemaDeploymentMode
+    path: src/SqlDataPack/Options.cs
+    startLine: 23
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Selects whether import deploys the package's schema before loading data. Defaults to <xref href="SqlDataPack.Models.SchemaDeploymentMode.None" data-throw-if-not-resolved="false"></xref> (assume schema already exists).
+  example: []
+  syntax:
+    content: public enum SchemaDeploymentMode
+    content.vb: Public Enum SchemaDeploymentMode
+- uid: SqlDataPack.Models.SchemaDeploymentMode.None
+  commentId: F:SqlDataPack.Models.SchemaDeploymentMode.None
+  id: None
+  parent: SqlDataPack.Models.SchemaDeploymentMode
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: SchemaDeploymentMode.None
+  fullName: SqlDataPack.Models.SchemaDeploymentMode.None
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: None
+    path: src/SqlDataPack/Options.cs
+    startLine: 27
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Skips schema deployment; the target database must already contain matching tables. This is the default.
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: SqlDataPack.Models.SchemaDeploymentMode
+- uid: SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  commentId: F:SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  id: DeployDacpac
+  parent: SqlDataPack.Models.SchemaDeploymentMode
+  langs:
+  - csharp
+  - vb
+  name: DeployDacpac
+  nameWithType: SchemaDeploymentMode.DeployDacpac
+  fullName: SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DeployDacpac
+    path: src/SqlDataPack/Options.cs
+    startLine: 32
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Deploys the dacpac embedded in the SQLite package against the target before importing data.
+  example: []
+  syntax:
+    content: DeployDacpac = 1
+    return:
+      type: SqlDataPack.Models.SchemaDeploymentMode
+references:
+- uid: SqlDataPack.Models.SchemaDeploymentMode.None
+  commentId: F:SqlDataPack.Models.SchemaDeploymentMode.None
+  href: SqlDataPack.Models.SchemaDeploymentMode.html#SqlDataPack_Models_SchemaDeploymentMode_None
+  name: None
+  nameWithType: SchemaDeploymentMode.None
+  fullName: SqlDataPack.Models.SchemaDeploymentMode.None
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: SqlDataPack.Models.SchemaDeploymentMode
+  commentId: T:SqlDataPack.Models.SchemaDeploymentMode
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.SchemaDeploymentMode.html
+  name: SchemaDeploymentMode
+  nameWithType: SchemaDeploymentMode
+  fullName: SqlDataPack.Models.SchemaDeploymentMode

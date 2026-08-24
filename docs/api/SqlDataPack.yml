@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack
+  commentId: N:SqlDataPack
+  id: SqlDataPack
+  children:
+  - SqlDataPack.SqlData
+  - SqlDataPack.SqlDataPackExporter
+  - SqlDataPack.SqlDataPackImporter
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPack
+  nameWithType: SqlDataPack
+  fullName: SqlDataPack
+  type: Namespace
+  assemblies:
+  - SqlDataPack
+references:
+- uid: SqlDataPack.SqlData
+  commentId: T:SqlDataPack.SqlData
+  href: SqlDataPack.SqlData.html
+  name: SqlData
+  nameWithType: SqlData
+  fullName: SqlDataPack.SqlData
+- uid: SqlDataPack.SqlDataPackExporter
+  commentId: T:SqlDataPack.SqlDataPackExporter
+  href: SqlDataPack.SqlDataPackExporter.html
+  name: SqlDataPackExporter
+  nameWithType: SqlDataPackExporter
+  fullName: SqlDataPack.SqlDataPackExporter
+- uid: SqlDataPack.SqlDataPackImporter
+  commentId: T:SqlDataPack.SqlDataPackImporter
+  href: SqlDataPack.SqlDataPackImporter.html
+  name: SqlDataPackImporter
+  nameWithType: SqlDataPackImporter
+  fullName: SqlDataPack.SqlDataPackImporter

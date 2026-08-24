@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Reformats the staged C# files with `jb cleanupcode` and restages the result, so what lands in
+# the commit is already formatted the way CI checks for.
+#
+# Enable it once per clone:
+#     git config core.hooksPath .githooks
+#
+# Set SKIP_CLEANUP=1 to bypass. Note that `jb` loads the whole solution regardless of how few
+# files are staged, so expect ~20s on any commit that touches C#; commits that touch none skip
+# the tool entirely and cost nothing.
+set -euo pipefail
+
+if [ -n "${SKIP_CLEANUP:-}" ]; then
+  exit 0
+fi
+
+staged=$(git diff --cached --name-only --diff-filter=ACM -- '*.cs')
+if [ -z "$staged" ]; then
+  exit 0
+fi
+
+# A file that is both staged and dirty cannot be restaged safely: `git add` would sweep the
+# unstaged half into the commit. Refuse rather than silently widen what is being committed.
+unstaged=$(git diff --name-only -- '*.cs')
+partial=$(comm -12 <(printf '%s\n' "$staged" | sort) <(printf '%s\n' "$unstaged" | sort))
+if [ -n "$partial" ]; then
+  echo "pre-commit: these files have both staged and unstaged changes, so cleanup cannot restage them:" >&2
+  printf '  %s\n' $partial >&2
+  echo "Stage or stash the rest, or commit with SKIP_CLEANUP=1." >&2
+  exit 1
+fi
+
+echo "pre-commit: running jb cleanupcode on $(printf '%s\n' "$staged" | wc -l | tr -d ' ') staged C# file(s)..."
+# shellcheck disable=SC2086 # deliberate word splitting: one argument per staged path
+"$(git rev-parse --show-toplevel)/build/cleanup.sh" $staged
+
+reformatted=$(git diff --name-only -- $staged)
+if [ -n "$reformatted" ]; then
+  echo "pre-commit: reformatted and restaged:"
+  printf '  %s\n' $reformatted
+  git add -- $reformatted
+fi

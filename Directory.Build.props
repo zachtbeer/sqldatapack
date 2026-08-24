@@ -1,0 +1,25 @@
+<Project>
+
+  <!-- Reproducible build and source link settings shared by every project. -->
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!--
+    No project holds a <Version>. An ordinary build produces 1.0.0, which is a
+    placeholder rather than a real version. At release time publish.yml computes the
+    version from the last tag and the semver: label on the merged pull request, and
+    passes it into both build and pack. See docs/RELEASE.md.
+  -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

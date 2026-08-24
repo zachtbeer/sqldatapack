@@ -1,0 +1,883 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.SqlDataPackTableManifest
+  commentId: T:SqlDataPack.Models.SqlDataPackTableManifest
+  id: SqlDataPackTableManifest
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.SqlDataPackTableManifest.#ctor(System.String,System.String,System.String,System.Int64,System.Int64,System.Int64,System.Int32,System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest})
+  - SqlDataPack.Models.SqlDataPackTableManifest.Columns
+  - SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes
+  - SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount
+  - SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize
+  - SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount
+  - SqlDataPack.Models.SqlDataPackTableManifest.FullName
+  - SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema
+  - SqlDataPack.Models.SqlDataPackTableManifest.SourceTable
+  - SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackTableManifest
+  nameWithType: SqlDataPackTableManifest
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SqlDataPackTableManifest
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 202
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Describes a table stored in or planned for a SQLite bridge package.
+  example: []
+  syntax:
+    content: 'public sealed record SqlDataPackTableManifest : IEquatable<SqlDataPackTableManifest>'
+    content.vb: Public NotInheritable Class SqlDataPackTableManifest Implements IEquatable(Of SqlDataPackTableManifest)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{SqlDataPack.Models.SqlDataPackTableManifest}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.#ctor(System.String,System.String,System.String,System.Int64,System.Int64,System.Int64,System.Int32,System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest})
+  commentId: M:SqlDataPack.Models.SqlDataPackTableManifest.#ctor(System.String,System.String,System.String,System.Int64,System.Int64,System.Int64,System.Int32,System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest})
+  id: '#ctor(System.String,System.String,System.String,System.Int64,System.Int64,System.Int64,System.Int32,System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest})'
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackTableManifest(string, string, string, long, long, long, int, IReadOnlyList<SqlDataPackColumnManifest>)
+  nameWithType: SqlDataPackTableManifest.SqlDataPackTableManifest(string, string, string, long, long, long, int, IReadOnlyList<SqlDataPackColumnManifest>)
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SqlDataPackTableManifest(string, string, string, long, long, long, int, System.Collections.Generic.IReadOnlyList<SqlDataPack.Models.SqlDataPackColumnManifest>)
+  type: Constructor
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: .ctor
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 214
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Initializes a new instance of the <xref href="SqlDataPack.Models.SqlDataPackTableManifest" data-throw-if-not-resolved="false"></xref> record.
+  example: []
+  syntax:
+    content: public SqlDataPackTableManifest(string SourceSchema, string SourceTable, string SqliteTable, long ExportedRowCount, long EstimatedSourceRowCount, long EstimatedSourceBytes, int ExportBatchSize, IReadOnlyList<SqlDataPackColumnManifest> Columns)
+    parameters:
+    - id: SourceSchema
+      type: System.String
+      description: The source table's SQL Server schema name.
+    - id: SourceTable
+      type: System.String
+      description: The source table name.
+    - id: SqliteTable
+      type: System.String
+      description: The name of the data table this maps to inside the SQLite package.
+    - id: ExportedRowCount
+      type: System.Int64
+      description: The rows actually written to the package, or <code>0</code> for a planned manifest.
+    - id: EstimatedSourceRowCount
+      type: System.Int64
+      description: The source row count SQL Server estimated at plan time.
+    - id: EstimatedSourceBytes
+      type: System.Int64
+      description: The source table size SQL Server estimated at plan time.
+    - id: ExportBatchSize
+      type: System.Int32
+      description: The batch size the export used, or planned to use, for this table.
+    - id: Columns
+      type: System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest}
+      description: The table's columns, ordered by source ordinal.
+    content.vb: Public Sub New(SourceSchema As String, SourceTable As String, SqliteTable As String, ExportedRowCount As Long, EstimatedSourceRowCount As Long, EstimatedSourceBytes As Long, ExportBatchSize As Integer, Columns As IReadOnlyList(Of SqlDataPackColumnManifest))
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.#ctor*
+  nameWithType.vb: SqlDataPackTableManifest.New(String, String, String, Long, Long, Long, Integer, IReadOnlyList(Of SqlDataPackColumnManifest))
+  fullName.vb: SqlDataPack.Models.SqlDataPackTableManifest.New(String, String, String, Long, Long, Long, Integer, System.Collections.Generic.IReadOnlyList(Of SqlDataPack.Models.SqlDataPackColumnManifest))
+  name.vb: New(String, String, String, Long, Long, Long, Integer, IReadOnlyList(Of SqlDataPackColumnManifest))
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema
+  id: SourceSchema
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: SourceSchema
+  nameWithType: SqlDataPackTableManifest.SourceSchema
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SourceSchema
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 228
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source table's SQL Server schema name.
+  example: []
+  syntax:
+    content: public string SourceSchema { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SourceSchema As String
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.SourceTable
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.SourceTable
+  id: SourceTable
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: SourceTable
+  nameWithType: SqlDataPackTableManifest.SourceTable
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SourceTable
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SourceTable
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 233
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source table name.
+  example: []
+  syntax:
+    content: public string SourceTable { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SourceTable As String
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.SourceTable*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable
+  id: SqliteTable
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: SqliteTable
+  nameWithType: SqlDataPackTableManifest.SqliteTable
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SqliteTable
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 238
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The name of the data table this maps to inside the SQLite package.
+  example: []
+  syntax:
+    content: public string SqliteTable { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SqliteTable As String
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount
+  id: ExportedRowCount
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: ExportedRowCount
+  nameWithType: SqlDataPackTableManifest.ExportedRowCount
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ExportedRowCount
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 243
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The rows actually written to the package, or <code>0</code> for a planned manifest.
+  example: []
+  syntax:
+    content: public long ExportedRowCount { get; init; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property ExportedRowCount As Long
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount
+  id: EstimatedSourceRowCount
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: EstimatedSourceRowCount
+  nameWithType: SqlDataPackTableManifest.EstimatedSourceRowCount
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: EstimatedSourceRowCount
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 248
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source row count SQL Server estimated at plan time.
+  example: []
+  syntax:
+    content: public long EstimatedSourceRowCount { get; init; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property EstimatedSourceRowCount As Long
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes
+  id: EstimatedSourceBytes
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: EstimatedSourceBytes
+  nameWithType: SqlDataPackTableManifest.EstimatedSourceBytes
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: EstimatedSourceBytes
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 253
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source table size, in bytes, SQL Server estimated at plan time.
+  example: []
+  syntax:
+    content: public long EstimatedSourceBytes { get; init; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property EstimatedSourceBytes As Long
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize
+  id: ExportBatchSize
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: ExportBatchSize
+  nameWithType: SqlDataPackTableManifest.ExportBatchSize
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ExportBatchSize
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 258
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The batch size the export used, or planned to use, for this table.
+  example: []
+  syntax:
+    content: public int ExportBatchSize { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ExportBatchSize As Integer
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.Columns
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.Columns
+  id: Columns
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: Columns
+  nameWithType: SqlDataPackTableManifest.Columns
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.Columns
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Columns
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 263
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The table's columns, ordered by source ordinal.
+  example: []
+  syntax:
+    content: public IReadOnlyList<SqlDataPackColumnManifest> Columns { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest}
+    content.vb: Public Property Columns As IReadOnlyList(Of SqlDataPackColumnManifest)
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.Columns*
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.FullName
+  commentId: P:SqlDataPack.Models.SqlDataPackTableManifest.FullName
+  id: FullName
+  parent: SqlDataPack.Models.SqlDataPackTableManifest
+  langs:
+  - csharp
+  - vb
+  name: FullName
+  nameWithType: SqlDataPackTableManifest.FullName
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.FullName
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: FullName
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 268
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Gets the source SQL Server table full name.
+  example: []
+  syntax:
+    content: public string FullName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property FullName As String
+  overload: SqlDataPack.Models.SqlDataPackTableManifest.FullName*
+references:
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{SqlDataPack.Models.SqlDataPackTableManifest}
+  commentId: T:System.IEquatable{SqlDataPack.Models.SqlDataPackTableManifest}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<SqlDataPackTableManifest>
+  nameWithType: IEquatable<SqlDataPackTableManifest>
+  fullName: System.IEquatable<SqlDataPack.Models.SqlDataPackTableManifest>
+  nameWithType.vb: IEquatable(Of SqlDataPackTableManifest)
+  fullName.vb: System.IEquatable(Of SqlDataPack.Models.SqlDataPackTableManifest)
+  name.vb: IEquatable(Of SqlDataPackTableManifest)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackTableManifest
+    name: SqlDataPackTableManifest
+    href: SqlDataPack.Models.SqlDataPackTableManifest.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackTableManifest
+    name: SqlDataPackTableManifest
+    href: SqlDataPack.Models.SqlDataPackTableManifest.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.SqlDataPackTableManifest
+  commentId: T:SqlDataPack.Models.SqlDataPackTableManifest
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html
+  name: SqlDataPackTableManifest
+  nameWithType: SqlDataPackTableManifest
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.#ctor*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.#ctor
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest__ctor_System_String_System_String_System_String_System_Int64_System_Int64_System_Int64_System_Int32_System_Collections_Generic_IReadOnlyList_SqlDataPack_Models_SqlDataPackColumnManifest__
+  name: SqlDataPackTableManifest
+  nameWithType: SqlDataPackTableManifest.SqlDataPackTableManifest
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SqlDataPackTableManifest
+  nameWithType.vb: SqlDataPackTableManifest.New
+  fullName.vb: SqlDataPack.Models.SqlDataPackTableManifest.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest}
+  commentId: T:System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackColumnManifest}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<SqlDataPackColumnManifest>
+  nameWithType: IReadOnlyList<SqlDataPackColumnManifest>
+  fullName: System.Collections.Generic.IReadOnlyList<SqlDataPack.Models.SqlDataPackColumnManifest>
+  nameWithType.vb: IReadOnlyList(Of SqlDataPackColumnManifest)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of SqlDataPack.Models.SqlDataPackColumnManifest)
+  name.vb: IReadOnlyList(Of SqlDataPackColumnManifest)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackColumnManifest
+    name: SqlDataPackColumnManifest
+    href: SqlDataPack.Models.SqlDataPackColumnManifest.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackColumnManifest
+    name: SqlDataPackColumnManifest
+    href: SqlDataPack.Models.SqlDataPackColumnManifest.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_SourceSchema
+  name: SourceSchema
+  nameWithType: SqlDataPackTableManifest.SourceSchema
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SourceSchema
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.SourceTable*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.SourceTable
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_SourceTable
+  name: SourceTable
+  nameWithType: SqlDataPackTableManifest.SourceTable
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SourceTable
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_SqliteTable
+  name: SqliteTable
+  nameWithType: SqlDataPackTableManifest.SqliteTable
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.SqliteTable
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_ExportedRowCount
+  name: ExportedRowCount
+  nameWithType: SqlDataPackTableManifest.ExportedRowCount
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.ExportedRowCount
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_EstimatedSourceRowCount
+  name: EstimatedSourceRowCount
+  nameWithType: SqlDataPackTableManifest.EstimatedSourceRowCount
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceRowCount
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_EstimatedSourceBytes
+  name: EstimatedSourceBytes
+  nameWithType: SqlDataPackTableManifest.EstimatedSourceBytes
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.EstimatedSourceBytes
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_ExportBatchSize
+  name: ExportBatchSize
+  nameWithType: SqlDataPackTableManifest.ExportBatchSize
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.ExportBatchSize
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.Columns*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.Columns
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_Columns
+  name: Columns
+  nameWithType: SqlDataPackTableManifest.Columns
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.Columns
+- uid: SqlDataPack.Models.SqlDataPackTableManifest.FullName*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTableManifest.FullName
+  href: SqlDataPack.Models.SqlDataPackTableManifest.html#SqlDataPack_Models_SqlDataPackTableManifest_FullName
+  name: FullName
+  nameWithType: SqlDataPackTableManifest.FullName
+  fullName: SqlDataPack.Models.SqlDataPackTableManifest.FullName

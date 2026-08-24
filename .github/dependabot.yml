@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      nuget:
+        patterns:
+          - "*"
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # The documentation site's build toolchain. Tracked so the lockfile does not
+  # rot, but deliberately not gated in CI: these dependencies run at build time
+  # and ship nothing in the NuGet package, and Docusaurus pins several
+  # transitively vulnerable packages that no upgrade from here can clear.
+  # Grouped because Docusaurus releases its core, preset, theme, and plugin
+  # packages in lockstep. See SECURITY.md for the full position.
+  - package-ecosystem: npm
+    directory: "/website"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      npm:
+        patterns:
+          - "*"

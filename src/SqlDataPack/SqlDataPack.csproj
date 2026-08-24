@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>zachtbeer</Authors>
+    <PackageId>SqlDataPack</PackageId>
+    <AssemblyName>SqlDataPack</AssemblyName>
+    <RootNamespace>SqlDataPack</RootNamespace>
+    <Description>A .NET library that exports a slice of a SQL Server database into a single SQLite file and lets you import it back into SQL Server. Not a backup: you choose the tables, columns, and rows that come out, rewrite values in the file with plain SQL, then load it into a dev or test database or send it to someone who has no access to the source. Nothing to install on the server, no telemetry.</Description>
+    <PackageTags>sqlserver;sqlite;database;export;import;test-data;data-masking;dev-environment;bug-repro;dacpac</PackageTags>
+    <PackageProjectUrl>https://github.com/zachtbeer/sqldatapack</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zachtbeer/sqldatapack</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <Copyright>Copyright (c) 2026 zachtbeer</Copyright>
+    <PackageReleaseNotes>https://github.com/zachtbeer/sqldatapack/releases</PackageReleaseNotes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!--
+    Package Validation is off. The baseline half compared against the previous published
+    package, which no longer exists under this package id; the framework half compared the
+    net8.0 and net10.0 builds against each other. Both are worth turning on once 1.0.0 is
+    published, tracked in issues #10 and #11. Until then PublicApiContractTests is the only
+    thing pinning the public shape.
+  -->
+
+  <!--
+    Reproducible build settings (Deterministic, ContinuousIntegrationBuild, PublishRepositoryUrl,
+    EmbedUntrackedSources, IncludeSymbols/snupkg) and the SourceLink package reference are defined
+    once in Directory.Build.props at the repository root and apply here too.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,130 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.ExportTableSelectionMode
+  commentId: T:SqlDataPack.Models.ExportTableSelectionMode
+  id: ExportTableSelectionMode
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  - SqlDataPack.Models.ExportTableSelectionMode.Only
+  langs:
+  - csharp
+  - vb
+  name: ExportTableSelectionMode
+  nameWithType: ExportTableSelectionMode
+  fullName: SqlDataPack.Models.ExportTableSelectionMode
+  type: Enum
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ExportTableSelectionMode
+    path: src/SqlDataPack/Options.cs
+    startLine: 53
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Selects how <xref href="SqlDataPack.Models.ExportOptions.Tables" data-throw-if-not-resolved="false"></xref> patterns filter the export. Defaults to <xref href="SqlDataPack.Models.ExportTableSelectionMode.AllExcept" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public enum ExportTableSelectionMode
+    content.vb: Public Enum ExportTableSelectionMode
+- uid: SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  commentId: F:SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  id: AllExcept
+  parent: SqlDataPack.Models.ExportTableSelectionMode
+  langs:
+  - csharp
+  - vb
+  name: AllExcept
+  nameWithType: ExportTableSelectionMode.AllExcept
+  fullName: SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: AllExcept
+    path: src/SqlDataPack/Options.cs
+    startLine: 57
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Exports every user table except those matching <xref href="SqlDataPack.Models.ExportOptions.Tables" data-throw-if-not-resolved="false"></xref> (i.e. patterns act as an exclusion list). This is the default.
+  example: []
+  syntax:
+    content: AllExcept = 0
+    return:
+      type: SqlDataPack.Models.ExportTableSelectionMode
+- uid: SqlDataPack.Models.ExportTableSelectionMode.Only
+  commentId: F:SqlDataPack.Models.ExportTableSelectionMode.Only
+  id: Only
+  parent: SqlDataPack.Models.ExportTableSelectionMode
+  langs:
+  - csharp
+  - vb
+  name: Only
+  nameWithType: ExportTableSelectionMode.Only
+  fullName: SqlDataPack.Models.ExportTableSelectionMode.Only
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Only
+    path: src/SqlDataPack/Options.cs
+    startLine: 62
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Exports only the user tables matching <xref href="SqlDataPack.Models.ExportOptions.Tables" data-throw-if-not-resolved="false"></xref> (i.e. patterns act as an inclusion list).
+  example: []
+  syntax:
+    content: Only = 1
+    return:
+      type: SqlDataPack.Models.ExportTableSelectionMode
+references:
+- uid: SqlDataPack.Models.ExportOptions.Tables
+  commentId: P:SqlDataPack.Models.ExportOptions.Tables
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Tables
+  name: Tables
+  nameWithType: ExportOptions.Tables
+  fullName: SqlDataPack.Models.ExportOptions.Tables
+- uid: SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  commentId: F:SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  href: SqlDataPack.Models.ExportTableSelectionMode.html#SqlDataPack_Models_ExportTableSelectionMode_AllExcept
+  name: AllExcept
+  nameWithType: ExportTableSelectionMode.AllExcept
+  fullName: SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: SqlDataPack.Models.ExportTableSelectionMode
+  commentId: T:SqlDataPack.Models.ExportTableSelectionMode
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.ExportTableSelectionMode.html
+  name: ExportTableSelectionMode
+  nameWithType: ExportTableSelectionMode
+  fullName: SqlDataPack.Models.ExportTableSelectionMode

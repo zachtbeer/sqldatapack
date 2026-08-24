@@ -1,0 +1,240 @@
+name: Prerelease
+
+# Publishes one release candidate, by hand, from the Actions tab. You type the full
+# version; this workflow tags it, builds it, and publishes it. Nothing about it is
+# automatic and nothing else triggers it.
+#
+#     Actions -> Prerelease -> Run workflow -> version: 1.0.0-rc.1
+#
+# Stable versions are rejected here on purpose. Those go through publish.yml, which
+# takes the number from the semver: label on the merged pull request. Keeping the two
+# apart means this workflow gets its own trusted publishing policy on nuget.org, and
+# a mistake here can only ever produce a prerelease.
+#
+# Self-contained rather than calling release.yml, so the OIDC token nuget.org sees is
+# issued for this file. Register the trusted publishing policy against prerelease.yml.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Full prerelease version, no leading v (e.g. 1.0.0-rc.1)"
+        type: string
+        required: true
+      dry_run:
+        description: "Build and validate without tagging or publishing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prerelease-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    name: Version guard
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+      publish: ${{ steps.mode.outputs.publish }}
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          # Full history so VersionGuard and the tag check can see the tags.
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Resolve mode
+        id: mode
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Dry run. Nothing will be tagged or published."
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # The guarantee this workflow exists to make. Trusted publishing policies scope
+      # by package id, never by version, so "prereleases only" cannot be enforced on
+      # nuget.org. It is enforced here instead.
+      - name: Reject stable versions
+        id: check
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          version="${INPUT_VERSION#v}"
+
+          case "${version}" in
+            *-*) ;;
+            *)
+              echo "::error::'${version}' is a stable version. This workflow publishes prereleases only."
+              echo "Stable releases come from merging a labelled pull request to main. See docs/RELEASE.md."
+              exit 1
+              ;;
+          esac
+
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Publishing ${version}." >> "$GITHUB_STEP_SUMMARY"
+
+      # SemVer form, and sorts strictly above everything already on nuget.org.
+      # --no-git-check because the tag does not exist yet; it is created below.
+      - name: Check the version
+        run: dotnet run build/VersionGuard.cs -- "${{ steps.check.outputs.version }}" --no-git-check
+
+      - name: Refuse to reuse a tag
+        run: |
+          if git rev-parse -q --verify "refs/tags/v${{ steps.check.outputs.version }}" >/dev/null; then
+            echo "::error::v${{ steps.check.outputs.version }} is already tagged. Pick the next number."
+            exit 1
+          fi
+
+  prerelease:
+    name: Build and publish
+    needs: guard
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
+          restore-keys: nuget-
+
+      # The version has to reach the build, not just the pack. Packing with --no-build
+      # and a version the build never saw produces a package whose assembly and nupkg
+      # disagree.
+      - run: dotnet restore SqlDataPack.slnx --locked-mode
+      - run: dotnet build SqlDataPack.slnx -c Release --no-restore -p:Version=${{ needs.guard.outputs.version }}
+      # Unit tests only. The integration suite needs SQL Server containers and runs in
+      # ci.yml's matrix against 2017/2019/2022/2025; re-running it here would pull those
+      # images on every release.
+      - run: dotnet test tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj -c Release --no-build --verbosity normal
+
+      - name: Pack
+        run: dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./release-packages -p:Version=${{ needs.guard.outputs.version }}
+
+      # The version is passed into build and pack explicitly, so this asserts the
+      # artifact on disk is the one you asked for before anything is published.
+      - name: Verify package version matches
+        env:
+          EXPECTED: ${{ needs.guard.outputs.version }}
+        run: |
+          if [ ! -f "./release-packages/SqlDataPack.${EXPECTED}.nupkg" ]; then
+            echo "::error::Expected SqlDataPack.${EXPECTED}.nupkg. Pack produced:"
+            ls -1 ./release-packages/
+            exit 1
+          fi
+
+      - name: Upload packages
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: nuget-packages
+          path: |
+            ./release-packages/*.nupkg
+            ./release-packages/*.snupkg
+
+      # Tag only once it has built, tested and packed, so a failed run leaves no tag
+      # behind and a dry run never creates one.
+      - name: Tag
+        if: needs.guard.outputs.publish == 'true'
+        env:
+          VERSION: ${{ needs.guard.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push origin "v${VERSION}"
+
+      # Attest the nupkg bytes we built, before publishing. nuget.org appends a
+      # repository signature to the published package, which changes its bytes and
+      # invalidates this attestation when verified against the nuget.org file. The
+      # attestation bundle and the exact attested nupkg are attached to the GitHub
+      # release below, and the README documents verifying against that file.
+      - name: Attest build provenance
+        id: attest
+        if: needs.guard.outputs.publish == 'true'
+        uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4
+        with:
+          subject-path: "./release-packages/*.nupkg"
+
+      - name: Generate SBOM (CycloneDX)
+        run: |
+          dotnet tool install --global CycloneDX --version 6.2.0
+          dotnet CycloneDX src/SqlDataPack/SqlDataPack.csproj -o ./sbom -j --set-version "${{ needs.guard.outputs.version }}"
+
+      - name: NuGet login (OIDC trusted publishing)
+        if: needs.guard.outputs.publish == 'true'
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1
+        id: nuget-login
+        with:
+          user: ${{ vars.NUGET_USER }}
+
+      - name: Push to NuGet.org
+        if: needs.guard.outputs.publish == 'true'
+        run: dotnet nuget push "./release-packages/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
+
+      - name: Push symbols to NuGet.org
+        if: needs.guard.outputs.publish == 'true'
+        run: dotnet nuget push "./release-packages/*.snupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
+
+      # Notes are generated from the pull requests merged since the previous tag.
+      # Runs on dry runs too, so a rehearsal shows exactly what the release would say.
+      - name: Generate release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.guard.outputs.version }}
+        run: |
+          previous=$(git tag --list 'v*' --sort=-v:refname | grep -Fxv "v${VERSION}" | head -1)
+          if [ -n "${previous}" ]; then
+            gh api "repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
+              -f tag_name="v${VERSION}" -f previous_tag_name="${previous}" \
+              --jq '.body' > ./release-notes.md
+          else
+            gh api "repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
+              -f tag_name="v${VERSION}" --jq '.body' > ./release-notes.md
+          fi
+          echo "## Release notes for v${VERSION}" >> "$GITHUB_STEP_SUMMARY"
+          cat ./release-notes.md >> "$GITHUB_STEP_SUMMARY"
+
+      # Always --prerelease. The guard job rejects anything else, so a candidate never
+      # displays as "Latest" on the releases page.
+      - name: Create GitHub Release
+        if: needs.guard.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.guard.outputs.version }}
+        run: |
+          cp "${{ steps.attest.outputs.bundle-path }}" ./release-packages/provenance.intoto.jsonl
+          gh release create "v${VERSION}" \
+            ./release-packages/*.nupkg \
+            ./sbom/bom.json \
+            ./release-packages/provenance.intoto.jsonl \
+            -t "v${VERSION}" \
+            --notes-file ./release-notes.md \
+            --prerelease

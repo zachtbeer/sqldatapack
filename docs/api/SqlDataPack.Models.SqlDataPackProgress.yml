@@ -1,0 +1,671 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.SqlDataPackProgress
+  commentId: T:SqlDataPack.Models.SqlDataPackProgress
+  id: SqlDataPackProgress
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.SqlDataPackProgress.#ctor(SqlDataPack.Models.SqlDataPackProgressKind,System.String,System.Int64,System.Nullable{System.Int64},System.String)
+  - SqlDataPack.Models.SqlDataPackProgress.Kind
+  - SqlDataPack.Models.SqlDataPackProgress.Message
+  - SqlDataPack.Models.SqlDataPackProgress.RowsProcessed
+  - SqlDataPack.Models.SqlDataPackProgress.TableName
+  - SqlDataPack.Models.SqlDataPackProgress.TotalRows
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackProgress
+  nameWithType: SqlDataPackProgress
+  fullName: SqlDataPack.Models.SqlDataPackProgress
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SqlDataPackProgress
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 51
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Reports progress from an export or import operation.
+  example: []
+  syntax:
+    content: 'public sealed record SqlDataPackProgress : IEquatable<SqlDataPackProgress>'
+    content.vb: Public NotInheritable Class SqlDataPackProgress Implements IEquatable(Of SqlDataPackProgress)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{SqlDataPack.Models.SqlDataPackProgress}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Models.SqlDataPackProgress.#ctor(SqlDataPack.Models.SqlDataPackProgressKind,System.String,System.Int64,System.Nullable{System.Int64},System.String)
+  commentId: M:SqlDataPack.Models.SqlDataPackProgress.#ctor(SqlDataPack.Models.SqlDataPackProgressKind,System.String,System.Int64,System.Nullable{System.Int64},System.String)
+  id: '#ctor(SqlDataPack.Models.SqlDataPackProgressKind,System.String,System.Int64,System.Nullable{System.Int64},System.String)'
+  parent: SqlDataPack.Models.SqlDataPackProgress
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackProgress(SqlDataPackProgressKind, string?, long, long?, string?)
+  nameWithType: SqlDataPackProgress.SqlDataPackProgress(SqlDataPackProgressKind, string?, long, long?, string?)
+  fullName: SqlDataPack.Models.SqlDataPackProgress.SqlDataPackProgress(SqlDataPack.Models.SqlDataPackProgressKind, string?, long, long?, string?)
+  type: Constructor
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: .ctor
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 60
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Initializes a new instance of the <xref href="SqlDataPack.Models.SqlDataPackProgress" data-throw-if-not-resolved="false"></xref> record.
+  example: []
+  syntax:
+    content: public SqlDataPackProgress(SqlDataPackProgressKind Kind, string? TableName = null, long RowsProcessed = 0, long? TotalRows = null, string? Message = null)
+    parameters:
+    - id: Kind
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+      description: The progress event kind.
+    - id: TableName
+      type: System.String
+      description: The source table full name when the event is table-specific.
+    - id: RowsProcessed
+      type: System.Int64
+      description: The rows processed for the table or operation.
+    - id: TotalRows
+      type: System.Nullable{System.Int64}
+      description: The expected rows when known.
+    - id: Message
+      type: System.String
+      description: An optional human-readable message.
+    content.vb: Public Sub New(Kind As SqlDataPackProgressKind, TableName As String = Nothing, RowsProcessed As Long = 0, TotalRows As Long? = Nothing, Message As String = Nothing)
+  overload: SqlDataPack.Models.SqlDataPackProgress.#ctor*
+  nameWithType.vb: SqlDataPackProgress.New(SqlDataPackProgressKind, String, Long, Long?, String)
+  fullName.vb: SqlDataPack.Models.SqlDataPackProgress.New(SqlDataPack.Models.SqlDataPackProgressKind, String, Long, Long?, String)
+  name.vb: New(SqlDataPackProgressKind, String, Long, Long?, String)
+- uid: SqlDataPack.Models.SqlDataPackProgress.Kind
+  commentId: P:SqlDataPack.Models.SqlDataPackProgress.Kind
+  id: Kind
+  parent: SqlDataPack.Models.SqlDataPackProgress
+  langs:
+  - csharp
+  - vb
+  name: Kind
+  nameWithType: SqlDataPackProgress.Kind
+  fullName: SqlDataPack.Models.SqlDataPackProgress.Kind
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Kind
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 71
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The progress event kind.
+  example: []
+  syntax:
+    content: public SqlDataPackProgressKind Kind { get; init; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+    content.vb: Public Property Kind As SqlDataPackProgressKind
+  overload: SqlDataPack.Models.SqlDataPackProgress.Kind*
+- uid: SqlDataPack.Models.SqlDataPackProgress.TableName
+  commentId: P:SqlDataPack.Models.SqlDataPackProgress.TableName
+  id: TableName
+  parent: SqlDataPack.Models.SqlDataPackProgress
+  langs:
+  - csharp
+  - vb
+  name: TableName
+  nameWithType: SqlDataPackProgress.TableName
+  fullName: SqlDataPack.Models.SqlDataPackProgress.TableName
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: TableName
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 76
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source table full name when the event is table-specific.
+  example: []
+  syntax:
+    content: public string? TableName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TableName As String
+  overload: SqlDataPack.Models.SqlDataPackProgress.TableName*
+- uid: SqlDataPack.Models.SqlDataPackProgress.RowsProcessed
+  commentId: P:SqlDataPack.Models.SqlDataPackProgress.RowsProcessed
+  id: RowsProcessed
+  parent: SqlDataPack.Models.SqlDataPackProgress
+  langs:
+  - csharp
+  - vb
+  name: RowsProcessed
+  nameWithType: SqlDataPackProgress.RowsProcessed
+  fullName: SqlDataPack.Models.SqlDataPackProgress.RowsProcessed
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: RowsProcessed
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 81
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The rows processed for the table or operation.
+  example: []
+  syntax:
+    content: public long RowsProcessed { get; init; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property RowsProcessed As Long
+  overload: SqlDataPack.Models.SqlDataPackProgress.RowsProcessed*
+- uid: SqlDataPack.Models.SqlDataPackProgress.TotalRows
+  commentId: P:SqlDataPack.Models.SqlDataPackProgress.TotalRows
+  id: TotalRows
+  parent: SqlDataPack.Models.SqlDataPackProgress
+  langs:
+  - csharp
+  - vb
+  name: TotalRows
+  nameWithType: SqlDataPackProgress.TotalRows
+  fullName: SqlDataPack.Models.SqlDataPackProgress.TotalRows
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: TotalRows
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 86
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The expected rows when known.
+  example: []
+  syntax:
+    content: public long? TotalRows { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int64}
+    content.vb: Public Property TotalRows As Long?
+  overload: SqlDataPack.Models.SqlDataPackProgress.TotalRows*
+- uid: SqlDataPack.Models.SqlDataPackProgress.Message
+  commentId: P:SqlDataPack.Models.SqlDataPackProgress.Message
+  id: Message
+  parent: SqlDataPack.Models.SqlDataPackProgress
+  langs:
+  - csharp
+  - vb
+  name: Message
+  nameWithType: SqlDataPackProgress.Message
+  fullName: SqlDataPack.Models.SqlDataPackProgress.Message
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Message
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 91
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: An optional human-readable message.
+  example: []
+  syntax:
+    content: public string? Message { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Message As String
+  overload: SqlDataPack.Models.SqlDataPackProgress.Message*
+references:
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{SqlDataPack.Models.SqlDataPackProgress}
+  commentId: T:System.IEquatable{SqlDataPack.Models.SqlDataPackProgress}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<SqlDataPackProgress>
+  nameWithType: IEquatable<SqlDataPackProgress>
+  fullName: System.IEquatable<SqlDataPack.Models.SqlDataPackProgress>
+  nameWithType.vb: IEquatable(Of SqlDataPackProgress)
+  fullName.vb: System.IEquatable(Of SqlDataPack.Models.SqlDataPackProgress)
+  name.vb: IEquatable(Of SqlDataPackProgress)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackProgress
+    name: SqlDataPackProgress
+    href: SqlDataPack.Models.SqlDataPackProgress.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackProgress
+    name: SqlDataPackProgress
+    href: SqlDataPack.Models.SqlDataPackProgress.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.SqlDataPackProgress
+  commentId: T:SqlDataPack.Models.SqlDataPackProgress
+  href: SqlDataPack.Models.SqlDataPackProgress.html
+  name: SqlDataPackProgress
+  nameWithType: SqlDataPackProgress
+  fullName: SqlDataPack.Models.SqlDataPackProgress
+- uid: SqlDataPack.Models.SqlDataPackProgress.#ctor*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackProgress.#ctor
+  href: SqlDataPack.Models.SqlDataPackProgress.html#SqlDataPack_Models_SqlDataPackProgress__ctor_SqlDataPack_Models_SqlDataPackProgressKind_System_String_System_Int64_System_Nullable_System_Int64__System_String_
+  name: SqlDataPackProgress
+  nameWithType: SqlDataPackProgress.SqlDataPackProgress
+  fullName: SqlDataPack.Models.SqlDataPackProgress.SqlDataPackProgress
+  nameWithType.vb: SqlDataPackProgress.New
+  fullName.vb: SqlDataPack.Models.SqlDataPackProgress.New
+  name.vb: New
+- uid: SqlDataPack.Models.SqlDataPackProgressKind
+  commentId: T:SqlDataPack.Models.SqlDataPackProgressKind
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.SqlDataPackProgressKind.html
+  name: SqlDataPackProgressKind
+  nameWithType: SqlDataPackProgressKind
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.Nullable{System.Int64}
+  commentId: T:System.Nullable{System.Int64}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long?
+  nameWithType: long?
+  fullName: long?
+  nameWithType.vb: Long?
+  fullName.vb: Long?
+  name.vb: Long?
+  spec.csharp:
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '?'
+  spec.vb:
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.SqlDataPackProgress.Kind*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackProgress.Kind
+  href: SqlDataPack.Models.SqlDataPackProgress.html#SqlDataPack_Models_SqlDataPackProgress_Kind
+  name: Kind
+  nameWithType: SqlDataPackProgress.Kind
+  fullName: SqlDataPack.Models.SqlDataPackProgress.Kind
+- uid: SqlDataPack.Models.SqlDataPackProgress.TableName*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackProgress.TableName
+  href: SqlDataPack.Models.SqlDataPackProgress.html#SqlDataPack_Models_SqlDataPackProgress_TableName
+  name: TableName
+  nameWithType: SqlDataPackProgress.TableName
+  fullName: SqlDataPack.Models.SqlDataPackProgress.TableName
+- uid: SqlDataPack.Models.SqlDataPackProgress.RowsProcessed*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackProgress.RowsProcessed
+  href: SqlDataPack.Models.SqlDataPackProgress.html#SqlDataPack_Models_SqlDataPackProgress_RowsProcessed
+  name: RowsProcessed
+  nameWithType: SqlDataPackProgress.RowsProcessed
+  fullName: SqlDataPack.Models.SqlDataPackProgress.RowsProcessed
+- uid: SqlDataPack.Models.SqlDataPackProgress.TotalRows*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackProgress.TotalRows
+  href: SqlDataPack.Models.SqlDataPackProgress.html#SqlDataPack_Models_SqlDataPackProgress_TotalRows
+  name: TotalRows
+  nameWithType: SqlDataPackProgress.TotalRows
+  fullName: SqlDataPack.Models.SqlDataPackProgress.TotalRows
+- uid: SqlDataPack.Models.SqlDataPackProgress.Message*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackProgress.Message
+  href: SqlDataPack.Models.SqlDataPackProgress.html#SqlDataPack_Models_SqlDataPackProgress_Message
+  name: Message
+  nameWithType: SqlDataPackProgress.Message
+  fullName: SqlDataPack.Models.SqlDataPackProgress.Message

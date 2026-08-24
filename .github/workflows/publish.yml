@@ -1,0 +1,168 @@
+name: Publish
+
+# A merge to main publishes a release, with the size of the version bump taken from
+# the semver: label on the pull request that merged. version-label.yml is what makes
+# sure that label exists. Merges that changed nothing in the package, or that were
+# deliberately labelled semver:none, stop at the decide job and publish nothing.
+#
+# nuget.org supports no permanent deletion, so a release here is irreversible. The
+# guard against a mistake is the label gate plus branch protection on main; without
+# branch protection a direct push reaches this workflow with no pull request to read
+# a label from, and is counted as semver:none.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Two merges landing close together queue rather than race for the same tag.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  decide:
+    name: Decide the version
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.compute.outputs.version }}
+      release: ${{ steps.compute.outputs.release }}
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          # Full history so git tag and git log can see the releases.
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Compute the next version
+        id: compute
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          # Stable tags only. A hand-pushed prerelease like v1.1.0-rc.1 is not a base
+          # for an automatic bump, so it is filtered out here.
+          last=$(git tag --list 'v*' --sort=-v:refname | grep -v -- '-' | head -1 || true)
+
+          if [ -n "${last}" ]; then
+            echo "Last stable release: ${last}"
+            commits=$(git log --format=%H "${last}..HEAD")
+          else
+            echo "No release yet."
+            commits=$(git log --format=%H)
+          fi
+
+          # Normally one commit, because every publish tags. The walk covers several
+          # merges landing while a run is queued, and recovery after a failed run.
+          rank=0
+          for sha in ${commits}; do
+            labels=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${sha}/pulls" --jq '.[].labels[].name' 2>/dev/null || true)
+
+            if [ -z "${labels}" ]; then
+              echo "${sha:0:7}  no pull request, counted as none"
+              continue
+            fi
+
+            for label in ${labels}; do
+              case "${label}" in
+                semver:major) this=3 ;;
+                semver:minor) this=2 ;;
+                semver:patch) this=1 ;;
+                *) continue ;;
+              esac
+              echo "${sha:0:7}  ${label}"
+              if [ "${this}" -gt "${rank}" ]; then
+                rank=${this}
+              fi
+            done
+          done
+
+          # Quoted because 'patch' is also the name of a command, which shellcheck
+          # otherwise reads as a missing command substitution.
+          case "${rank}" in
+            3) bump="major" ;;
+            2) bump="minor" ;;
+            1) bump="patch" ;;
+            *) bump="" ;;
+          esac
+
+          if [ -z "${bump}" ]; then
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            echo "Nothing to release." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          # tail -1 because a cold runner can print restore output ahead of the
+          # version. NextVersion.cs prints the version as its last line and nothing
+          # after it.
+          version=$(dotnet run build/NextVersion.cs -- --from "${last}" --bump "${bump}" | tail -1)
+
+          if ! printf '%s' "${version}" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::NextVersion.cs produced '${version}', which is not a version."
+            exit 1
+          fi
+          echo "release=true" >> "$GITHUB_OUTPUT"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Releasing ${version} (${bump} bump from ${last:-nothing})." >> "$GITHUB_STEP_SUMMARY"
+
+  tag:
+    name: Tag
+    needs: decide
+    if: needs.decide.outputs.release == 'true'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      # The tag does not exist yet, so the tag-on-HEAD check is skipped here. It runs
+      # for real inside release.yml once the tag has been pushed.
+      - name: Check the version
+        run: dotnet run build/VersionGuard.cs -- "${{ needs.decide.outputs.version }}" --no-git-check
+
+      - name: Push the tag
+        env:
+          VERSION: ${{ needs.decide.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push origin "v${VERSION}"
+
+  release:
+    name: Release
+    needs: [decide, tag]
+    if: needs.decide.outputs.release == 'true'
+
+    # A called workflow gets the calling job's token permissions, not the ones it
+    # declares on its own jobs. Without these three the release would fail at the
+    # attestation and OIDC steps rather than at the call.
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+
+    uses: ./.github/workflows/release.yml
+    with:
+      version: ${{ needs.decide.outputs.version }}
+    secrets: inherit

@@ -1,0 +1,1339 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.ImportOptions
+  commentId: T:SqlDataPack.Models.ImportOptions
+  id: ImportOptions
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled
+  - SqlDataPack.Models.ImportOptions.BatchSize
+  - SqlDataPack.Models.ImportOptions.BulkCopyTimeout
+  - SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+  - SqlDataPack.Models.ImportOptions.Default
+  - SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch
+  - SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+  - SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+  - SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+  - SqlDataPack.Models.ImportOptions.Latest
+  - SqlDataPack.Models.ImportOptions.Logger
+  - SqlDataPack.Models.ImportOptions.MaxBatchBytes
+  - SqlDataPack.Models.ImportOptions.Progress
+  - SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  - SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+  - SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck
+  - SqlDataPack.Models.ImportOptions.ValidationCommandTimeout
+  langs:
+  - csharp
+  - vb
+  name: ImportOptions
+  nameWithType: ImportOptions
+  fullName: SqlDataPack.Models.ImportOptions
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ImportOptions
+    path: src/SqlDataPack/Options.cs
+    startLine: 452
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Configures a SQLite package import into SQL Server.
+  example: []
+  syntax:
+    content: public sealed class ImportOptions
+    content.vb: Public NotInheritable Class ImportOptions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Models.ImportOptions.Default
+  commentId: P:SqlDataPack.Models.ImportOptions.Default
+  id: Default
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: ImportOptions.Default
+  fullName: SqlDataPack.Models.ImportOptions.Default
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Default
+    path: src/SqlDataPack/Options.cs
+    startLine: 463
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Returns a new <xref href="SqlDataPack.Models.ImportOptions" data-throw-if-not-resolved="false"></xref> populated with the conservative, <strong>value-stable</strong> defaults — a convenient starting point to tweak.
+
+    Each access returns a fresh instance, so mutating the returned object never affects subsequent callers.
+
+    Value-identical to <code>new ImportOptions()</code>; the property initializers below are the single source of truth.
+  remarks: >-
+    The values returned here are part of the library's stable contract: they will not change across releases. Pin to
+
+    <xref href="SqlDataPack.Models.ImportOptions.Default" data-throw-if-not-resolved="false"></xref> (or set the relevant properties explicitly) when you need behaviour that stays identical on upgrade.
+
+    For tuning that tracks the library's latest recommendations, use <xref href="SqlDataPack.Models.ImportOptions.Latest" data-throw-if-not-resolved="false"></xref> instead.
+  example: []
+  syntax:
+    content: public static ImportOptions Default { get; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.ImportOptions
+    content.vb: Public Shared ReadOnly Property [Default] As ImportOptions
+  overload: SqlDataPack.Models.ImportOptions.Default*
+- uid: SqlDataPack.Models.ImportOptions.Latest
+  commentId: P:SqlDataPack.Models.ImportOptions.Latest
+  id: Latest
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: Latest
+  nameWithType: ImportOptions.Latest
+  fullName: SqlDataPack.Models.ImportOptions.Latest
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Latest
+    path: src/SqlDataPack/Options.cs
+    startLine: 482
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Returns a new <xref href="SqlDataPack.Models.ImportOptions" data-throw-if-not-resolved="false"></xref> populated with the library's current best-throughput tuning. Use this when you
+
+    want the import to follow our latest recommendations automatically rather than pinning specific values.
+  remarks: >-
+    <p>
+
+    Unlike <xref href="SqlDataPack.Models.ImportOptions.Default" data-throw-if-not-resolved="false"></xref>, the values returned here are <strong>not value-stable</strong>: they may change in any minor
+
+    release as the recommended tuning evolves (changes are called out in the release notes). If you need behaviour that stays
+
+    byte-for-byte identical across upgrades, use <xref href="SqlDataPack.Models.ImportOptions.Default" data-throw-if-not-resolved="false"></xref> or set the properties explicitly.
+
+    </p>
+
+    <p>
+
+    As of this release it raises <xref href="SqlDataPack.Models.ImportOptions.BatchSize" data-throw-if-not-resolved="false"></xref> to <code>5,000</code> and <xref href="SqlDataPack.Models.ImportOptions.MaxBatchBytes" data-throw-if-not-resolved="false"></xref> to 8 MiB versus
+
+    <xref href="SqlDataPack.Models.ImportOptions.Default" data-throw-if-not-resolved="false"></xref> — faster bulk-copy on typical and narrow tables while the per-batch memory ceiling stays bounded. The
+
+    large-table safety net (<xref href="SqlDataPack.Models.ImportOptions.LargeTableBatchSize" data-throw-if-not-resolved="false"></xref> and its thresholds) is left at the conservative defaults, so
+
+    genuinely huge tables stay memory-safe.
+
+    </p>
+  example: []
+  syntax:
+    content: public static ImportOptions Latest { get; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.ImportOptions
+    content.vb: Public Shared ReadOnly Property Latest As ImportOptions
+  overload: SqlDataPack.Models.ImportOptions.Latest*
+- uid: SqlDataPack.Models.ImportOptions.BatchSize
+  commentId: P:SqlDataPack.Models.ImportOptions.BatchSize
+  id: BatchSize
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: BatchSize
+  nameWithType: ImportOptions.BatchSize
+  fullName: SqlDataPack.Models.ImportOptions.BatchSize
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: BatchSize
+    path: src/SqlDataPack/Options.cs
+    startLine: 490
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Row count per bulk-copy batch for normal-sized tables. Defaults to <code>1000</code>.
+  example: []
+  syntax:
+    content: public int BatchSize { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property BatchSize As Integer
+  overload: SqlDataPack.Models.ImportOptions.BatchSize*
+- uid: SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled
+  commentId: P:SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled
+  id: AdaptiveBatchingEnabled
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: AdaptiveBatchingEnabled
+  nameWithType: ImportOptions.AdaptiveBatchingEnabled
+  fullName: SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: AdaptiveBatchingEnabled
+    path: src/SqlDataPack/Options.cs
+    startLine: 495
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Enables the large-table planner that shrinks bulk-copy batch sizes for tables exceeding <xref href="SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes" data-throw-if-not-resolved="false"></xref>/<xref href="SqlDataPack.Models.ImportOptions.LargeTableRowThreshold" data-throw-if-not-resolved="false"></xref>, trading throughput for lower memory pressure. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>; set to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> to always use <xref href="SqlDataPack.Models.ImportOptions.BatchSize" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public bool AdaptiveBatchingEnabled { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AdaptiveBatchingEnabled As Boolean
+  overload: SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled*
+- uid: SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+  commentId: P:SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+  id: LargeTableThresholdBytes
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: LargeTableThresholdBytes
+  nameWithType: ImportOptions.LargeTableThresholdBytes
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: LargeTableThresholdBytes
+    path: src/SqlDataPack/Options.cs
+    startLine: 500
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Estimated table size, in bytes, at or above which a table is treated as "large" and switched to <xref href="SqlDataPack.Models.ImportOptions.LargeTableBatchSize" data-throw-if-not-resolved="false"></xref>. Defaults to 50 MiB.
+  example: []
+  syntax:
+    content: public long LargeTableThresholdBytes { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property LargeTableThresholdBytes As Long
+  overload: SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes*
+- uid: SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+  commentId: P:SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+  id: LargeTableRowThreshold
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: LargeTableRowThreshold
+  nameWithType: ImportOptions.LargeTableRowThreshold
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: LargeTableRowThreshold
+    path: src/SqlDataPack/Options.cs
+    startLine: 505
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Estimated row count at or above which a table is treated as "large" when size metadata is unavailable. Defaults to <code>100,000</code> rows.
+  example: []
+  syntax:
+    content: public long LargeTableRowThreshold { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property LargeTableRowThreshold As Long
+  overload: SqlDataPack.Models.ImportOptions.LargeTableRowThreshold*
+- uid: SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+  commentId: P:SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+  id: LargeTableBatchSize
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: LargeTableBatchSize
+  nameWithType: ImportOptions.LargeTableBatchSize
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: LargeTableBatchSize
+    path: src/SqlDataPack/Options.cs
+    startLine: 510
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Row count per bulk-copy batch used when a table crosses either large-table threshold. Defaults to <code>250</code>.
+  example: []
+  syntax:
+    content: public int LargeTableBatchSize { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property LargeTableBatchSize As Integer
+  overload: SqlDataPack.Models.ImportOptions.LargeTableBatchSize*
+- uid: SqlDataPack.Models.ImportOptions.MaxBatchBytes
+  commentId: P:SqlDataPack.Models.ImportOptions.MaxBatchBytes
+  id: MaxBatchBytes
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: MaxBatchBytes
+  nameWithType: ImportOptions.MaxBatchBytes
+  fullName: SqlDataPack.Models.ImportOptions.MaxBatchBytes
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: MaxBatchBytes
+    path: src/SqlDataPack/Options.cs
+    startLine: 515
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Approximate upper bound, in bytes, on the in-memory size of a single bulk-copy batch when size and row-count metadata are both available — caps memory regardless of <xref href="SqlDataPack.Models.ImportOptions.BatchSize" data-throw-if-not-resolved="false"></xref>. Defaults to 4 MiB.
+  example: []
+  syntax:
+    content: public long MaxBatchBytes { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property MaxBatchBytes As Long
+  overload: SqlDataPack.Models.ImportOptions.MaxBatchBytes*
+- uid: SqlDataPack.Models.ImportOptions.ValidationCommandTimeout
+  commentId: P:SqlDataPack.Models.ImportOptions.ValidationCommandTimeout
+  id: ValidationCommandTimeout
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: ValidationCommandTimeout
+  nameWithType: ImportOptions.ValidationCommandTimeout
+  fullName: SqlDataPack.Models.ImportOptions.ValidationCommandTimeout
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ValidationCommandTimeout
+    path: src/SqlDataPack/Options.cs
+    startLine: 520
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: SQL Server command timeout, in seconds, for the target validation queries run before bulk copy begins. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> (use the provider's default).
+  example: []
+  syntax:
+    content: public int? ValidationCommandTimeout { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property ValidationCommandTimeout As Integer?
+  overload: SqlDataPack.Models.ImportOptions.ValidationCommandTimeout*
+- uid: SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch
+  commentId: P:SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch
+  id: FailOnLossyTypeMismatch
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: FailOnLossyTypeMismatch
+  nameWithType: ImportOptions.FailOnLossyTypeMismatch
+  fullName: SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: FailOnLossyTypeMismatch
+    path: src/SqlDataPack/Options.cs
+    startLine: 534
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Fails the import before any row is copied when a target column would lose data relative to the package:
+
+    a shorter <code>char</code>, <code>varchar</code>, <code>nchar</code>, <code>nvarchar</code>, <code>binary</code> or <code>varbinary</code>,
+
+    a smaller <code>decimal</code> precision or scale, or a smaller <code>datetime2</code>, <code>datetimeoffset</code> or
+
+    <code>time</code> scale. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>, in which case every type difference is reported
+
+    as a warning on <xref href="SqlDataPack.Models.SqlDataPackResult.Warnings" data-throw-if-not-resolved="false"></xref> and the import proceeds.
+  remarks: >-
+    Widening differences and collation differences are always warnings and are never affected by this
+
+    setting. A collation difference can mangle non-ASCII text but cannot be judged from catalog metadata
+
+    alone, and blocking on it would fail every import into a differently collated server.
+  example: []
+  syntax:
+    content: public bool FailOnLossyTypeMismatch { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property FailOnLossyTypeMismatch As Boolean
+  overload: SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch*
+- uid: SqlDataPack.Models.ImportOptions.BulkCopyTimeout
+  commentId: P:SqlDataPack.Models.ImportOptions.BulkCopyTimeout
+  id: BulkCopyTimeout
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: BulkCopyTimeout
+  nameWithType: ImportOptions.BulkCopyTimeout
+  fullName: SqlDataPack.Models.ImportOptions.BulkCopyTimeout
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: BulkCopyTimeout
+    path: src/SqlDataPack/Options.cs
+    startLine: 539
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Timeout, in seconds, for each <code>SqlBulkCopy</code> operation. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> (use <code>SqlBulkCopy</code>'s default of 30 seconds); raise this for very large or slow tables.
+  example: []
+  syntax:
+    content: public int? BulkCopyTimeout { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property BulkCopyTimeout As Integer?
+  overload: SqlDataPack.Models.ImportOptions.BulkCopyTimeout*
+- uid: SqlDataPack.Models.ImportOptions.Progress
+  commentId: P:SqlDataPack.Models.ImportOptions.Progress
+  id: Progress
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: Progress
+  nameWithType: ImportOptions.Progress
+  fullName: SqlDataPack.Models.ImportOptions.Progress
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Progress
+    path: src/SqlDataPack/Options.cs
+    startLine: 544
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Progress reporter that receives table- and row-level updates as the import runs. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> (no progress reporting).
+  example: []
+  syntax:
+    content: public IProgress<SqlDataPackProgress>? Progress { get; set; }
+    parameters: []
+    return:
+      type: System.IProgress{SqlDataPack.Models.SqlDataPackProgress}
+    content.vb: Public Property Progress As IProgress(Of SqlDataPackProgress)
+  overload: SqlDataPack.Models.ImportOptions.Progress*
+- uid: SqlDataPack.Models.ImportOptions.Logger
+  commentId: P:SqlDataPack.Models.ImportOptions.Logger
+  id: Logger
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: Logger
+  nameWithType: ImportOptions.Logger
+  fullName: SqlDataPack.Models.ImportOptions.Logger
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Logger
+    path: src/SqlDataPack/Options.cs
+    startLine: 551
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Logger that receives the same lifecycle, table, row-batch, and warning events as <xref href="SqlDataPack.Models.ImportOptions.Progress" data-throw-if-not-resolved="false"></xref>, mapped
+
+    to log levels (row batches at <xref href="Microsoft.Extensions.Logging.LogLevel.Trace" data-throw-if-not-resolved="false"></xref>; table and operation events at <xref href="Microsoft.Extensions.Logging.LogLevel.Information" data-throw-if-not-resolved="false"></xref>;
+
+    warnings at <xref href="Microsoft.Extensions.Logging.LogLevel.Warning" data-throw-if-not-resolved="false"></xref>). Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> (no logging). May be set alongside <xref href="SqlDataPack.Models.ImportOptions.Progress" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public ILogger? Logger { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Extensions.Logging.ILogger
+    content.vb: Public Property Logger As ILogger
+  overload: SqlDataPack.Models.ImportOptions.Logger*
+- uid: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  commentId: P:SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  id: SchemaDeploymentMode
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: SchemaDeploymentMode
+  nameWithType: ImportOptions.SchemaDeploymentMode
+  fullName: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SchemaDeploymentMode
+    path: src/SqlDataPack/Options.cs
+    startLine: 556
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Selects whether to deploy the package's embedded schema before loading data. Defaults to <xref href="SqlDataPack.Models.SchemaDeploymentMode.None" data-throw-if-not-resolved="false"></xref> (assume target schema already exists); set to <xref href="SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac" data-throw-if-not-resolved="false"></xref> to apply the captured dacpac first.
+  example: []
+  syntax:
+    content: public SchemaDeploymentMode SchemaDeploymentMode { get; set; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.SchemaDeploymentMode
+    content.vb: Public Property SchemaDeploymentMode As SchemaDeploymentMode
+  overload: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode*
+- uid: SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+  commentId: P:SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+  id: DacpacDeploymentOptions
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: DacpacDeploymentOptions
+  nameWithType: ImportOptions.DacpacDeploymentOptions
+  fullName: SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DacpacDeploymentOptions
+    path: src/SqlDataPack/Options.cs
+    startLine: 561
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Dacpac deployment settings used only when <xref href="SqlDataPack.Models.ImportOptions.SchemaDeploymentMode" data-throw-if-not-resolved="false"></xref> is <xref href="SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac" data-throw-if-not-resolved="false"></xref>. Defaults to a new <xref href="SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions" data-throw-if-not-resolved="false"></xref> with its own defaults.
+  example: []
+  syntax:
+    content: public DacpacDeploymentOptions DacpacDeploymentOptions { get; set; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.DacpacDeploymentOptions
+    content.vb: Public Property DacpacDeploymentOptions As DacpacDeploymentOptions
+  overload: SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions*
+- uid: SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+  commentId: P:SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+  id: SuspendTemporalSystemVersioning
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: SuspendTemporalSystemVersioning
+  nameWithType: ImportOptions.SuspendTemporalSystemVersioning
+  fullName: SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SuspendTemporalSystemVersioning
+    path: src/SqlDataPack/Options.cs
+    startLine: 580
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Handles system-versioned temporal tables on the target by temporarily setting <code>SYSTEM_VERSIONING = OFF</code>
+
+    and dropping the <code>SYSTEM_TIME</code> period before loading, then re-adding the period and re-enabling versioning.
+
+    Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.
+  remarks: >-
+    Without this, importing a temporal table fails: SQL Server rejects direct inserts into the history table
+
+    (Msg 13560) and into the <code>GENERATED ALWAYS</code> period columns of the current table (Msg 13536). The
+
+    ceremony lets the import reload both the current and history rows with their original
+
+    <code>ValidFrom</code>/<code>ValidTo</code> values, and re-applies a finite <code>HISTORY_RETENTION_PERIOD</code> (which
+
+    <code>SET SYSTEM_VERSIONING = OFF</code> would otherwise reset to INFINITE). The period is dropped only when the
+
+    package actually carries the period columns; when it does not (a non-temporal source loaded into a
+
+    temporal target, or period columns excluded during export) versioning stays on and SQL Server
+
+    auto-populates the period. Set to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> to load every target table as-is and let those
+
+    inserts fail loudly — useful when the target has no temporal tables and you want to skip the catalog
+
+    probe, or when temporal handling is managed externally.
+  example: []
+  syntax:
+    content: public bool SuspendTemporalSystemVersioning { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property SuspendTemporalSystemVersioning As Boolean
+  overload: SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning*
+- uid: SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck
+  commentId: P:SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck
+  id: TemporalDataConsistencyCheck
+  parent: SqlDataPack.Models.ImportOptions
+  langs:
+  - csharp
+  - vb
+  name: TemporalDataConsistencyCheck
+  nameWithType: ImportOptions.TemporalDataConsistencyCheck
+  fullName: SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: TemporalDataConsistencyCheck
+    path: src/SqlDataPack/Options.cs
+    startLine: 594
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    When re-enabling system versioning after a temporal load, runs SQL Server's <code>DATA_CONSISTENCY_CHECK</code>
+
+    to validate that the current and history period ranges do not overlap. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.
+
+    Only applies when <xref href="SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning" data-throw-if-not-resolved="false"></xref> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.
+  remarks: >-
+    A faithful full-table export passes the check. It fails (and aborts the import with a descriptive
+
+    <xref href="SqlDataPack.Models.SqlDataPackException" data-throw-if-not-resolved="false"></xref>) when the temporal data is inconsistent — for example when the temporal table
+
+    or its history was filtered with a WHERE clause, a period column was excluded, or the source changed
+
+    mid-export. Set to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> to re-enable versioning without validation, at the risk of a
+
+    temporal table that returns incorrect <code>AS OF</code> query results.
+  example: []
+  syntax:
+    content: public bool TemporalDataConsistencyCheck { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property TemporalDataConsistencyCheck As Boolean
+  overload: SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck*
+references:
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SqlDataPack.Models.ImportOptions
+  commentId: T:SqlDataPack.Models.ImportOptions
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.ImportOptions.html
+  name: ImportOptions
+  nameWithType: ImportOptions
+  fullName: SqlDataPack.Models.ImportOptions
+- uid: SqlDataPack.Models.ImportOptions.Default
+  commentId: P:SqlDataPack.Models.ImportOptions.Default
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_Default
+  name: Default
+  nameWithType: ImportOptions.Default
+  fullName: SqlDataPack.Models.ImportOptions.Default
+- uid: SqlDataPack.Models.ImportOptions.Latest
+  commentId: P:SqlDataPack.Models.ImportOptions.Latest
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_Latest
+  name: Latest
+  nameWithType: ImportOptions.Latest
+  fullName: SqlDataPack.Models.ImportOptions.Latest
+- uid: SqlDataPack.Models.ImportOptions.Default*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.Default
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_Default
+  name: Default
+  nameWithType: ImportOptions.Default
+  fullName: SqlDataPack.Models.ImportOptions.Default
+- uid: SqlDataPack.Models.ImportOptions.BatchSize
+  commentId: P:SqlDataPack.Models.ImportOptions.BatchSize
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_BatchSize
+  name: BatchSize
+  nameWithType: ImportOptions.BatchSize
+  fullName: SqlDataPack.Models.ImportOptions.BatchSize
+- uid: SqlDataPack.Models.ImportOptions.MaxBatchBytes
+  commentId: P:SqlDataPack.Models.ImportOptions.MaxBatchBytes
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_MaxBatchBytes
+  name: MaxBatchBytes
+  nameWithType: ImportOptions.MaxBatchBytes
+  fullName: SqlDataPack.Models.ImportOptions.MaxBatchBytes
+- uid: SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+  commentId: P:SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_LargeTableBatchSize
+  name: LargeTableBatchSize
+  nameWithType: ImportOptions.LargeTableBatchSize
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+- uid: SqlDataPack.Models.ImportOptions.Latest*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.Latest
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_Latest
+  name: Latest
+  nameWithType: ImportOptions.Latest
+  fullName: SqlDataPack.Models.ImportOptions.Latest
+- uid: SqlDataPack.Models.ImportOptions.BatchSize*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.BatchSize
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_BatchSize
+  name: BatchSize
+  nameWithType: ImportOptions.BatchSize
+  fullName: SqlDataPack.Models.ImportOptions.BatchSize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+  commentId: P:SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_LargeTableThresholdBytes
+  name: LargeTableThresholdBytes
+  nameWithType: ImportOptions.LargeTableThresholdBytes
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+- uid: SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+  commentId: P:SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_LargeTableRowThreshold
+  name: LargeTableRowThreshold
+  nameWithType: ImportOptions.LargeTableRowThreshold
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+- uid: SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_AdaptiveBatchingEnabled
+  name: AdaptiveBatchingEnabled
+  nameWithType: ImportOptions.AdaptiveBatchingEnabled
+  fullName: SqlDataPack.Models.ImportOptions.AdaptiveBatchingEnabled
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_LargeTableThresholdBytes
+  name: LargeTableThresholdBytes
+  nameWithType: ImportOptions.LargeTableThresholdBytes
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableThresholdBytes
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: SqlDataPack.Models.ImportOptions.LargeTableRowThreshold*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_LargeTableRowThreshold
+  name: LargeTableRowThreshold
+  nameWithType: ImportOptions.LargeTableRowThreshold
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableRowThreshold
+- uid: SqlDataPack.Models.ImportOptions.LargeTableBatchSize*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_LargeTableBatchSize
+  name: LargeTableBatchSize
+  nameWithType: ImportOptions.LargeTableBatchSize
+  fullName: SqlDataPack.Models.ImportOptions.LargeTableBatchSize
+- uid: SqlDataPack.Models.ImportOptions.MaxBatchBytes*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.MaxBatchBytes
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_MaxBatchBytes
+  name: MaxBatchBytes
+  nameWithType: ImportOptions.MaxBatchBytes
+  fullName: SqlDataPack.Models.ImportOptions.MaxBatchBytes
+- uid: SqlDataPack.Models.ImportOptions.ValidationCommandTimeout*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.ValidationCommandTimeout
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_ValidationCommandTimeout
+  name: ValidationCommandTimeout
+  nameWithType: ImportOptions.ValidationCommandTimeout
+  fullName: SqlDataPack.Models.ImportOptions.ValidationCommandTimeout
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.SqlDataPackResult.Warnings
+  commentId: P:SqlDataPack.Models.SqlDataPackResult.Warnings
+  href: SqlDataPack.Models.SqlDataPackResult.html#SqlDataPack_Models_SqlDataPackResult_Warnings
+  name: Warnings
+  nameWithType: SqlDataPackResult.Warnings
+  fullName: SqlDataPack.Models.SqlDataPackResult.Warnings
+- uid: SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_FailOnLossyTypeMismatch
+  name: FailOnLossyTypeMismatch
+  nameWithType: ImportOptions.FailOnLossyTypeMismatch
+  fullName: SqlDataPack.Models.ImportOptions.FailOnLossyTypeMismatch
+- uid: SqlDataPack.Models.ImportOptions.BulkCopyTimeout*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.BulkCopyTimeout
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_BulkCopyTimeout
+  name: BulkCopyTimeout
+  nameWithType: ImportOptions.BulkCopyTimeout
+  fullName: SqlDataPack.Models.ImportOptions.BulkCopyTimeout
+- uid: SqlDataPack.Models.ImportOptions.Progress*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.Progress
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_Progress
+  name: Progress
+  nameWithType: ImportOptions.Progress
+  fullName: SqlDataPack.Models.ImportOptions.Progress
+- uid: System.IProgress{SqlDataPack.Models.SqlDataPackProgress}
+  commentId: T:System.IProgress{SqlDataPack.Models.SqlDataPackProgress}
+  parent: System
+  definition: System.IProgress`1
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<SqlDataPackProgress>
+  nameWithType: IProgress<SqlDataPackProgress>
+  fullName: System.IProgress<SqlDataPack.Models.SqlDataPackProgress>
+  nameWithType.vb: IProgress(Of SqlDataPackProgress)
+  fullName.vb: System.IProgress(Of SqlDataPack.Models.SqlDataPackProgress)
+  name.vb: IProgress(Of SqlDataPackProgress)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackProgress
+    name: SqlDataPackProgress
+    href: SqlDataPack.Models.SqlDataPackProgress.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackProgress
+    name: SqlDataPackProgress
+    href: SqlDataPack.Models.SqlDataPackProgress.html
+  - name: )
+- uid: System.IProgress`1
+  commentId: T:System.IProgress`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<T>
+  nameWithType: IProgress<T>
+  fullName: System.IProgress<T>
+  nameWithType.vb: IProgress(Of T)
+  fullName.vb: System.IProgress(Of T)
+  name.vb: IProgress(Of T)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.ImportOptions.Progress
+  commentId: P:SqlDataPack.Models.ImportOptions.Progress
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_Progress
+  name: Progress
+  nameWithType: ImportOptions.Progress
+  fullName: SqlDataPack.Models.ImportOptions.Progress
+- uid: Microsoft.Extensions.Logging.LogLevel.Trace
+  commentId: F:Microsoft.Extensions.Logging.LogLevel.Trace
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel#microsoft-extensions-logging-loglevel-trace
+  name: Trace
+  nameWithType: LogLevel.Trace
+  fullName: Microsoft.Extensions.Logging.LogLevel.Trace
+- uid: Microsoft.Extensions.Logging.LogLevel.Information
+  commentId: F:Microsoft.Extensions.Logging.LogLevel.Information
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel#microsoft-extensions-logging-loglevel-information
+  name: Information
+  nameWithType: LogLevel.Information
+  fullName: Microsoft.Extensions.Logging.LogLevel.Information
+- uid: Microsoft.Extensions.Logging.LogLevel.Warning
+  commentId: F:Microsoft.Extensions.Logging.LogLevel.Warning
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel#microsoft-extensions-logging-loglevel-warning
+  name: Warning
+  nameWithType: LogLevel.Warning
+  fullName: Microsoft.Extensions.Logging.LogLevel.Warning
+- uid: SqlDataPack.Models.ImportOptions.Logger*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.Logger
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_Logger
+  name: Logger
+  nameWithType: ImportOptions.Logger
+  fullName: SqlDataPack.Models.ImportOptions.Logger
+- uid: Microsoft.Extensions.Logging.ILogger
+  commentId: T:Microsoft.Extensions.Logging.ILogger
+  parent: Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger
+  name: ILogger
+  nameWithType: ILogger
+  fullName: Microsoft.Extensions.Logging.ILogger
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: SqlDataPack.Models.SchemaDeploymentMode.None
+  commentId: F:SqlDataPack.Models.SchemaDeploymentMode.None
+  href: SqlDataPack.Models.SchemaDeploymentMode.html#SqlDataPack_Models_SchemaDeploymentMode_None
+  name: None
+  nameWithType: SchemaDeploymentMode.None
+  fullName: SqlDataPack.Models.SchemaDeploymentMode.None
+- uid: SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  commentId: F:SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+  href: SqlDataPack.Models.SchemaDeploymentMode.html#SqlDataPack_Models_SchemaDeploymentMode_DeployDacpac
+  name: DeployDacpac
+  nameWithType: SchemaDeploymentMode.DeployDacpac
+  fullName: SqlDataPack.Models.SchemaDeploymentMode.DeployDacpac
+- uid: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_SchemaDeploymentMode
+  name: SchemaDeploymentMode
+  nameWithType: ImportOptions.SchemaDeploymentMode
+  fullName: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+- uid: SqlDataPack.Models.SchemaDeploymentMode
+  commentId: T:SqlDataPack.Models.SchemaDeploymentMode
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.SchemaDeploymentMode.html
+  name: SchemaDeploymentMode
+  nameWithType: SchemaDeploymentMode
+  fullName: SqlDataPack.Models.SchemaDeploymentMode
+- uid: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  commentId: P:SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_SchemaDeploymentMode
+  name: SchemaDeploymentMode
+  nameWithType: ImportOptions.SchemaDeploymentMode
+  fullName: SqlDataPack.Models.ImportOptions.SchemaDeploymentMode
+- uid: SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+  commentId: P:SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_DacpacDeploymentOptions
+  name: DacpacDeploymentOptions
+  nameWithType: ImportOptions.DacpacDeploymentOptions
+  fullName: SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+- uid: SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_DacpacDeploymentOptions
+  name: DacpacDeploymentOptions
+  nameWithType: ImportOptions.DacpacDeploymentOptions
+  fullName: SqlDataPack.Models.ImportOptions.DacpacDeploymentOptions
+- uid: SqlDataPack.Models.DacpacDeploymentOptions
+  commentId: T:SqlDataPack.Models.DacpacDeploymentOptions
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.DacpacDeploymentOptions.html
+  name: DacpacDeploymentOptions
+  nameWithType: DacpacDeploymentOptions
+  fullName: SqlDataPack.Models.DacpacDeploymentOptions
+- uid: SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_SuspendTemporalSystemVersioning
+  name: SuspendTemporalSystemVersioning
+  nameWithType: ImportOptions.SuspendTemporalSystemVersioning
+  fullName: SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+- uid: SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+  commentId: P:SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_SuspendTemporalSystemVersioning
+  name: SuspendTemporalSystemVersioning
+  nameWithType: ImportOptions.SuspendTemporalSystemVersioning
+  fullName: SqlDataPack.Models.ImportOptions.SuspendTemporalSystemVersioning
+- uid: SqlDataPack.Models.SqlDataPackException
+  commentId: T:SqlDataPack.Models.SqlDataPackException
+  href: SqlDataPack.Models.SqlDataPackException.html
+  name: SqlDataPackException
+  nameWithType: SqlDataPackException
+  fullName: SqlDataPack.Models.SqlDataPackException
+- uid: SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck*
+  commentId: Overload:SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck
+  href: SqlDataPack.Models.ImportOptions.html#SqlDataPack_Models_ImportOptions_TemporalDataConsistencyCheck
+  name: TemporalDataConsistencyCheck
+  nameWithType: ImportOptions.TemporalDataConsistencyCheck
+  fullName: SqlDataPack.Models.ImportOptions.TemporalDataConsistencyCheck

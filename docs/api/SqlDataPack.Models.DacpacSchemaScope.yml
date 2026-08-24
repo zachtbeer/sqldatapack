@@ -1,0 +1,124 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.DacpacSchemaScope
+  commentId: T:SqlDataPack.Models.DacpacSchemaScope
+  id: DacpacSchemaScope
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.DacpacSchemaScope.Database
+  - SqlDataPack.Models.DacpacSchemaScope.SelectedExportTables
+  langs:
+  - csharp
+  - vb
+  name: DacpacSchemaScope
+  nameWithType: DacpacSchemaScope
+  fullName: SqlDataPack.Models.DacpacSchemaScope
+  type: Enum
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DacpacSchemaScope
+    path: src/SqlDataPack/Options.cs
+    startLine: 38
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Selects which schema objects an export-time dacpac extraction includes. Defaults to <xref href="SqlDataPack.Models.DacpacSchemaScope.Database" data-throw-if-not-resolved="false"></xref> (whole database model).
+  example: []
+  syntax:
+    content: public enum DacpacSchemaScope
+    content.vb: Public Enum DacpacSchemaScope
+- uid: SqlDataPack.Models.DacpacSchemaScope.Database
+  commentId: F:SqlDataPack.Models.DacpacSchemaScope.Database
+  id: Database
+  parent: SqlDataPack.Models.DacpacSchemaScope
+  langs:
+  - csharp
+  - vb
+  name: Database
+  nameWithType: DacpacSchemaScope.Database
+  fullName: SqlDataPack.Models.DacpacSchemaScope.Database
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Database
+    path: src/SqlDataPack/Options.cs
+    startLine: 42
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Captures the entire source database schema model. This is the default and matches DacFx's standard extract behavior.
+  example: []
+  syntax:
+    content: Database = 0
+    return:
+      type: SqlDataPack.Models.DacpacSchemaScope
+- uid: SqlDataPack.Models.DacpacSchemaScope.SelectedExportTables
+  commentId: F:SqlDataPack.Models.DacpacSchemaScope.SelectedExportTables
+  id: SelectedExportTables
+  parent: SqlDataPack.Models.DacpacSchemaScope
+  langs:
+  - csharp
+  - vb
+  name: SelectedExportTables
+  nameWithType: DacpacSchemaScope.SelectedExportTables
+  fullName: SqlDataPack.Models.DacpacSchemaScope.SelectedExportTables
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SelectedExportTables
+    path: src/SqlDataPack/Options.cs
+    startLine: 47
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Captures only the tables chosen by the export plan plus the dependencies DacFx needs to script them — produces a smaller, plan-scoped dacpac.
+  example: []
+  syntax:
+    content: SelectedExportTables = 1
+    return:
+      type: SqlDataPack.Models.DacpacSchemaScope
+references:
+- uid: SqlDataPack.Models.DacpacSchemaScope.Database
+  commentId: F:SqlDataPack.Models.DacpacSchemaScope.Database
+  href: SqlDataPack.Models.DacpacSchemaScope.html#SqlDataPack_Models_DacpacSchemaScope_Database
+  name: Database
+  nameWithType: DacpacSchemaScope.Database
+  fullName: SqlDataPack.Models.DacpacSchemaScope.Database
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: SqlDataPack.Models.DacpacSchemaScope
+  commentId: T:SqlDataPack.Models.DacpacSchemaScope
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.DacpacSchemaScope.html
+  name: DacpacSchemaScope
+  nameWithType: DacpacSchemaScope
+  fullName: SqlDataPack.Models.DacpacSchemaScope

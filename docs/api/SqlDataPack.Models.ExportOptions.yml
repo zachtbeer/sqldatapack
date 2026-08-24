@@ -1,0 +1,1652 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.ExportOptions
+  commentId: T:SqlDataPack.Models.ExportOptions
+  id: ExportOptions
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled
+  - SqlDataPack.Models.ExportOptions.BatchSize
+  - SqlDataPack.Models.ExportOptions.CommandTimeout
+  - SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+  - SqlDataPack.Models.ExportOptions.DataTablePrefix
+  - SqlDataPack.Models.ExportOptions.Default
+  - SqlDataPack.Models.ExportOptions.ExcludeColumns
+  - SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams
+  - SqlDataPack.Models.ExportOptions.GlobalWhereClauses
+  - SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+  - SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+  - SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+  - SqlDataPack.Models.ExportOptions.Latest
+  - SqlDataPack.Models.ExportOptions.Logger
+  - SqlDataPack.Models.ExportOptions.MaxBatchBytes
+  - SqlDataPack.Models.ExportOptions.OverwriteExistingPackage
+  - SqlDataPack.Models.ExportOptions.PerTableWhereClauses
+  - SqlDataPack.Models.ExportOptions.Progress
+  - SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+  - SqlDataPack.Models.ExportOptions.TableSelection
+  - SqlDataPack.Models.ExportOptions.Tables
+  langs:
+  - csharp
+  - vb
+  name: ExportOptions
+  nameWithType: ExportOptions
+  fullName: SqlDataPack.Models.ExportOptions
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ExportOptions
+    path: src/SqlDataPack/Options.cs
+    startLine: 308
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Configures a SQL Server to SQLite export.
+  example: []
+  syntax:
+    content: public sealed class ExportOptions
+    content.vb: Public NotInheritable Class ExportOptions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Models.ExportOptions.Default
+  commentId: P:SqlDataPack.Models.ExportOptions.Default
+  id: Default
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: ExportOptions.Default
+  fullName: SqlDataPack.Models.ExportOptions.Default
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Default
+    path: src/SqlDataPack/Options.cs
+    startLine: 319
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Returns a new <xref href="SqlDataPack.Models.ExportOptions" data-throw-if-not-resolved="false"></xref> populated with the conservative, <strong>value-stable</strong> defaults — a convenient starting point to tweak.
+
+    Each access returns a fresh instance, so mutating the returned object never affects subsequent callers.
+
+    Value-identical to <code>new ExportOptions()</code>; the property initializers below are the single source of truth.
+  remarks: >-
+    The values returned here are part of the library's stable contract: they will not change across releases. Pin to
+
+    <xref href="SqlDataPack.Models.ExportOptions.Default" data-throw-if-not-resolved="false"></xref> (or set the relevant properties explicitly) when you need behaviour that stays identical on upgrade.
+
+    For tuning that tracks the library's latest recommendations, use <xref href="SqlDataPack.Models.ExportOptions.Latest" data-throw-if-not-resolved="false"></xref> instead.
+  example: []
+  syntax:
+    content: public static ExportOptions Default { get; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.ExportOptions
+    content.vb: Public Shared ReadOnly Property [Default] As ExportOptions
+  overload: SqlDataPack.Models.ExportOptions.Default*
+- uid: SqlDataPack.Models.ExportOptions.Latest
+  commentId: P:SqlDataPack.Models.ExportOptions.Latest
+  id: Latest
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: Latest
+  nameWithType: ExportOptions.Latest
+  fullName: SqlDataPack.Models.ExportOptions.Latest
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Latest
+    path: src/SqlDataPack/Options.cs
+    startLine: 338
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Returns a new <xref href="SqlDataPack.Models.ExportOptions" data-throw-if-not-resolved="false"></xref> populated with the library's current best-throughput tuning. Use this when you
+
+    want the export to follow our latest recommendations automatically rather than pinning specific values.
+  remarks: >-
+    <p>
+
+    Unlike <xref href="SqlDataPack.Models.ExportOptions.Default" data-throw-if-not-resolved="false"></xref>, the values returned here are <strong>not value-stable</strong>: they may change in any minor
+
+    release as the recommended tuning evolves (changes are called out in the release notes). If you need behaviour that stays
+
+    byte-for-byte identical across upgrades, use <xref href="SqlDataPack.Models.ExportOptions.Default" data-throw-if-not-resolved="false"></xref> or set the properties explicitly.
+
+    </p>
+
+    <p>
+
+    As of this release it raises <xref href="SqlDataPack.Models.ExportOptions.BatchSize" data-throw-if-not-resolved="false"></xref> to <code>5,000</code> and <xref href="SqlDataPack.Models.ExportOptions.MaxBatchBytes" data-throw-if-not-resolved="false"></xref> to 8 MiB versus
+
+    <xref href="SqlDataPack.Models.ExportOptions.Default" data-throw-if-not-resolved="false"></xref> — faster on typical and narrow tables while the per-batch memory ceiling stays bounded. The
+
+    large-table safety net (<xref href="SqlDataPack.Models.ExportOptions.LargeTableBatchSize" data-throw-if-not-resolved="false"></xref> and its thresholds) is left at the conservative defaults, so
+
+    genuinely huge tables stay memory-safe.
+
+    </p>
+  example: []
+  syntax:
+    content: public static ExportOptions Latest { get; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.ExportOptions
+    content.vb: Public Shared ReadOnly Property Latest As ExportOptions
+  overload: SqlDataPack.Models.ExportOptions.Latest*
+- uid: SqlDataPack.Models.ExportOptions.TableSelection
+  commentId: P:SqlDataPack.Models.ExportOptions.TableSelection
+  id: TableSelection
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: TableSelection
+  nameWithType: ExportOptions.TableSelection
+  fullName: SqlDataPack.Models.ExportOptions.TableSelection
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: TableSelection
+    path: src/SqlDataPack/Options.cs
+    startLine: 346
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: 'Controls how <xref href="SqlDataPack.Models.ExportOptions.Tables" data-throw-if-not-resolved="false"></xref> is interpreted: <xref href="SqlDataPack.Models.ExportTableSelectionMode.AllExcept" data-throw-if-not-resolved="false"></xref> uses it as an exclusion list against a full export, <xref href="SqlDataPack.Models.ExportTableSelectionMode.Only" data-throw-if-not-resolved="false"></xref> uses it as an inclusion list. Defaults to <xref href="SqlDataPack.Models.ExportTableSelectionMode.AllExcept" data-throw-if-not-resolved="false"></xref>.'
+  example: []
+  syntax:
+    content: public ExportTableSelectionMode TableSelection { get; set; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.ExportTableSelectionMode
+    content.vb: Public Property TableSelection As ExportTableSelectionMode
+  overload: SqlDataPack.Models.ExportOptions.TableSelection*
+- uid: SqlDataPack.Models.ExportOptions.Tables
+  commentId: P:SqlDataPack.Models.ExportOptions.Tables
+  id: Tables
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: Tables
+  nameWithType: ExportOptions.Tables
+  fullName: SqlDataPack.Models.ExportOptions.Tables
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Tables
+    path: src/SqlDataPack/Options.cs
+    startLine: 351
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Table-name patterns that <xref href="SqlDataPack.Models.ExportOptions.TableSelection" data-throw-if-not-resolved="false"></xref> applies to (exact <code>schema.table</code> names or <code>*</code> wildcards). Defaults to an empty list, which under <xref href="SqlDataPack.Models.ExportTableSelectionMode.AllExcept" data-throw-if-not-resolved="false"></xref> means export everything.
+  example: []
+  syntax:
+    content: public IList<string> Tables { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IList{System.String}
+    content.vb: Public Property Tables As IList(Of String)
+  overload: SqlDataPack.Models.ExportOptions.Tables*
+- uid: SqlDataPack.Models.ExportOptions.ExcludeColumns
+  commentId: P:SqlDataPack.Models.ExportOptions.ExcludeColumns
+  id: ExcludeColumns
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: ExcludeColumns
+  nameWithType: ExportOptions.ExcludeColumns
+  fullName: SqlDataPack.Models.ExportOptions.ExcludeColumns
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ExcludeColumns
+    path: src/SqlDataPack/Options.cs
+    startLine: 356
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Fully qualified column paths (<code>schema.table.column</code>) to omit from the exported package. Defaults to an empty list (export every column of every selected table).
+  example: []
+  syntax:
+    content: public IList<string> ExcludeColumns { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IList{System.String}
+    content.vb: Public Property ExcludeColumns As IList(Of String)
+  overload: SqlDataPack.Models.ExportOptions.ExcludeColumns*
+- uid: SqlDataPack.Models.ExportOptions.GlobalWhereClauses
+  commentId: P:SqlDataPack.Models.ExportOptions.GlobalWhereClauses
+  id: GlobalWhereClauses
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: GlobalWhereClauses
+  nameWithType: ExportOptions.GlobalWhereClauses
+  fullName: SqlDataPack.Models.ExportOptions.GlobalWhereClauses
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: GlobalWhereClauses
+    path: src/SqlDataPack/Options.cs
+    startLine: 361
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: SQL Server WHERE predicates applied to every selected table that contains all of a clause's named columns — useful for tenant or soft-delete filtering. Defaults to an empty list. See <xref href="SqlDataPack.Models.GlobalWhereClause" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public IList<GlobalWhereClause> GlobalWhereClauses { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IList{SqlDataPack.Models.GlobalWhereClause}
+    content.vb: Public Property GlobalWhereClauses As IList(Of GlobalWhereClause)
+  overload: SqlDataPack.Models.ExportOptions.GlobalWhereClauses*
+- uid: SqlDataPack.Models.ExportOptions.PerTableWhereClauses
+  commentId: P:SqlDataPack.Models.ExportOptions.PerTableWhereClauses
+  id: PerTableWhereClauses
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: PerTableWhereClauses
+  nameWithType: ExportOptions.PerTableWhereClauses
+  fullName: SqlDataPack.Models.ExportOptions.PerTableWhereClauses
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: PerTableWhereClauses
+    path: src/SqlDataPack/Options.cs
+    startLine: 366
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: SQL Server WHERE predicates applied only to the specific tables they name. Defaults to an empty list.
+  example: []
+  syntax:
+    content: public IList<PerTableWhereClause> PerTableWhereClauses { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IList{SqlDataPack.Models.PerTableWhereClause}
+    content.vb: Public Property PerTableWhereClauses As IList(Of PerTableWhereClause)
+  overload: SqlDataPack.Models.ExportOptions.PerTableWhereClauses*
+- uid: SqlDataPack.Models.ExportOptions.DataTablePrefix
+  commentId: P:SqlDataPack.Models.ExportOptions.DataTablePrefix
+  id: DataTablePrefix
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: DataTablePrefix
+  nameWithType: ExportOptions.DataTablePrefix
+  fullName: SqlDataPack.Models.ExportOptions.DataTablePrefix
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DataTablePrefix
+    path: src/SqlDataPack/Options.cs
+    startLine: 371
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Prefix prepended to every exported data table inside the SQLite package. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>, which writes data tables under their bare generated name, for example <code>dbo__customers</code>. Set a value to group data tables behind a prefix instead. The package's own metadata tables are always named <code>zsdp_*</code> and are unaffected by this setting.
+  example: []
+  syntax:
+    content: public string? DataTablePrefix { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property DataTablePrefix As String
+  overload: SqlDataPack.Models.ExportOptions.DataTablePrefix*
+- uid: SqlDataPack.Models.ExportOptions.BatchSize
+  commentId: P:SqlDataPack.Models.ExportOptions.BatchSize
+  id: BatchSize
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: BatchSize
+  nameWithType: ExportOptions.BatchSize
+  fullName: SqlDataPack.Models.ExportOptions.BatchSize
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: BatchSize
+    path: src/SqlDataPack/Options.cs
+    startLine: 376
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Row count per SQLite write batch for normal-sized tables. Defaults to <code>1000</code>; raise for narrow tables to reduce commit overhead, lower for very wide rows.
+  example: []
+  syntax:
+    content: public int BatchSize { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property BatchSize As Integer
+  overload: SqlDataPack.Models.ExportOptions.BatchSize*
+- uid: SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled
+  commentId: P:SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled
+  id: AdaptiveBatchingEnabled
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: AdaptiveBatchingEnabled
+  nameWithType: ExportOptions.AdaptiveBatchingEnabled
+  fullName: SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: AdaptiveBatchingEnabled
+    path: src/SqlDataPack/Options.cs
+    startLine: 381
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Enables the large-table planner that shrinks batch sizes for tables exceeding <xref href="SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes" data-throw-if-not-resolved="false"></xref>/<xref href="SqlDataPack.Models.ExportOptions.LargeTableRowThreshold" data-throw-if-not-resolved="false"></xref>, trading throughput for memory pressure. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>; set to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> to always use <xref href="SqlDataPack.Models.ExportOptions.BatchSize" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public bool AdaptiveBatchingEnabled { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AdaptiveBatchingEnabled As Boolean
+  overload: SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled*
+- uid: SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+  commentId: P:SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+  id: LargeTableThresholdBytes
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: LargeTableThresholdBytes
+  nameWithType: ExportOptions.LargeTableThresholdBytes
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: LargeTableThresholdBytes
+    path: src/SqlDataPack/Options.cs
+    startLine: 386
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Estimated table size, in bytes, at or above which a table is treated as "large" and switched to <xref href="SqlDataPack.Models.ExportOptions.LargeTableBatchSize" data-throw-if-not-resolved="false"></xref>. Defaults to 50 MiB.
+  example: []
+  syntax:
+    content: public long LargeTableThresholdBytes { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property LargeTableThresholdBytes As Long
+  overload: SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes*
+- uid: SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+  commentId: P:SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+  id: LargeTableRowThreshold
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: LargeTableRowThreshold
+  nameWithType: ExportOptions.LargeTableRowThreshold
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: LargeTableRowThreshold
+    path: src/SqlDataPack/Options.cs
+    startLine: 391
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Estimated row count at or above which a table is treated as "large" when size metadata is unavailable. Defaults to <code>100,000</code> rows.
+  example: []
+  syntax:
+    content: public long LargeTableRowThreshold { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property LargeTableRowThreshold As Long
+  overload: SqlDataPack.Models.ExportOptions.LargeTableRowThreshold*
+- uid: SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+  commentId: P:SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+  id: LargeTableBatchSize
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: LargeTableBatchSize
+  nameWithType: ExportOptions.LargeTableBatchSize
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: LargeTableBatchSize
+    path: src/SqlDataPack/Options.cs
+    startLine: 396
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Row count per batch used when a table crosses either large-table threshold. Defaults to <code>250</code>.
+  example: []
+  syntax:
+    content: public int LargeTableBatchSize { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property LargeTableBatchSize As Integer
+  overload: SqlDataPack.Models.ExportOptions.LargeTableBatchSize*
+- uid: SqlDataPack.Models.ExportOptions.MaxBatchBytes
+  commentId: P:SqlDataPack.Models.ExportOptions.MaxBatchBytes
+  id: MaxBatchBytes
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: MaxBatchBytes
+  nameWithType: ExportOptions.MaxBatchBytes
+  fullName: SqlDataPack.Models.ExportOptions.MaxBatchBytes
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: MaxBatchBytes
+    path: src/SqlDataPack/Options.cs
+    startLine: 401
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Approximate upper bound, in bytes, on the in-memory size of a single batch when size and row-count metadata are both available — caps memory regardless of <xref href="SqlDataPack.Models.ExportOptions.BatchSize" data-throw-if-not-resolved="false"></xref>. Defaults to 4 MiB.
+  example: []
+  syntax:
+    content: public long MaxBatchBytes { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property MaxBatchBytes As Long
+  overload: SqlDataPack.Models.ExportOptions.MaxBatchBytes*
+- uid: SqlDataPack.Models.ExportOptions.CommandTimeout
+  commentId: P:SqlDataPack.Models.ExportOptions.CommandTimeout
+  id: CommandTimeout
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: CommandTimeout
+  nameWithType: ExportOptions.CommandTimeout
+  fullName: SqlDataPack.Models.ExportOptions.CommandTimeout
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: CommandTimeout
+    path: src/SqlDataPack/Options.cs
+    startLine: 406
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: SQL Server command timeout, in seconds, for metadata queries and data reads during export. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> (use the provider's default, typically 30 seconds).
+  example: []
+  syntax:
+    content: public int? CommandTimeout { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property CommandTimeout As Integer?
+  overload: SqlDataPack.Models.ExportOptions.CommandTimeout*
+- uid: SqlDataPack.Models.ExportOptions.Progress
+  commentId: P:SqlDataPack.Models.ExportOptions.Progress
+  id: Progress
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: Progress
+  nameWithType: ExportOptions.Progress
+  fullName: SqlDataPack.Models.ExportOptions.Progress
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Progress
+    path: src/SqlDataPack/Options.cs
+    startLine: 411
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Progress reporter that receives table- and row-level updates as the export runs. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> (no progress reporting).
+  example: []
+  syntax:
+    content: public IProgress<SqlDataPackProgress>? Progress { get; set; }
+    parameters: []
+    return:
+      type: System.IProgress{SqlDataPack.Models.SqlDataPackProgress}
+    content.vb: Public Property Progress As IProgress(Of SqlDataPackProgress)
+  overload: SqlDataPack.Models.ExportOptions.Progress*
+- uid: SqlDataPack.Models.ExportOptions.Logger
+  commentId: P:SqlDataPack.Models.ExportOptions.Logger
+  id: Logger
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: Logger
+  nameWithType: ExportOptions.Logger
+  fullName: SqlDataPack.Models.ExportOptions.Logger
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Logger
+    path: src/SqlDataPack/Options.cs
+    startLine: 418
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Logger that receives the same lifecycle, table, row-batch, and warning events as <xref href="SqlDataPack.Models.ExportOptions.Progress" data-throw-if-not-resolved="false"></xref>, mapped
+
+    to log levels (row batches at <xref href="Microsoft.Extensions.Logging.LogLevel.Trace" data-throw-if-not-resolved="false"></xref>; table and operation events at <xref href="Microsoft.Extensions.Logging.LogLevel.Information" data-throw-if-not-resolved="false"></xref>;
+
+    warnings at <xref href="Microsoft.Extensions.Logging.LogLevel.Warning" data-throw-if-not-resolved="false"></xref>). Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> (no logging). May be set alongside <xref href="SqlDataPack.Models.ExportOptions.Progress" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public ILogger? Logger { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Extensions.Logging.ILogger
+    content.vb: Public Property Logger As ILogger
+  overload: SqlDataPack.Models.ExportOptions.Logger*
+- uid: SqlDataPack.Models.ExportOptions.OverwriteExistingPackage
+  commentId: P:SqlDataPack.Models.ExportOptions.OverwriteExistingPackage
+  id: OverwriteExistingPackage
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: OverwriteExistingPackage
+  nameWithType: ExportOptions.OverwriteExistingPackage
+  fullName: SqlDataPack.Models.ExportOptions.OverwriteExistingPackage
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: OverwriteExistingPackage
+    path: src/SqlDataPack/Options.cs
+    startLine: 423
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Allows the export to replace an existing SQLite file at the destination path on successful completion. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>; an existing file otherwise fails the export.
+  example: []
+  syntax:
+    content: public bool OverwriteExistingPackage { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property OverwriteExistingPackage As Boolean
+  overload: SqlDataPack.Models.ExportOptions.OverwriteExistingPackage*
+- uid: SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams
+  commentId: P:SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams
+  id: ExcludeSsmsDiagrams
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: ExcludeSsmsDiagrams
+  nameWithType: ExportOptions.ExcludeSsmsDiagrams
+  fullName: SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ExcludeSsmsDiagrams
+    path: src/SqlDataPack/Options.cs
+    startLine: 436
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Excludes the <code>dbo.sysdiagrams</code> data rows from the export. SQL Server Management Studio's "Database Diagrams"
+
+    feature creates this table as a regular user table (<code>is_ms_shipped = 0</code>), so it is otherwise exported like any
+
+    other table even though its rows are editor metadata. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>.
+  remarks: >-
+    This affects only the exported data rows; the dacpac schema path is unaffected, so the diagram objects (the table,
+
+    helper procedures, and function) are still captured at the configured <xref href="SqlDataPack.Models.DacpacCaptureOptions.SchemaScope" data-throw-if-not-resolved="false"></xref>.
+
+    The exclusion is unconditional when <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>: even if you explicitly select <code>dbo.sysdiagrams</code> via
+
+    <xref href="SqlDataPack.Models.ExportOptions.TableSelection" data-throw-if-not-resolved="false"></xref>/<xref href="SqlDataPack.Models.ExportOptions.Tables" data-throw-if-not-resolved="false"></xref>, set this to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> to export its rows.
+  example: []
+  syntax:
+    content: public bool ExcludeSsmsDiagrams { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ExcludeSsmsDiagrams As Boolean
+  overload: SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams*
+- uid: SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+  commentId: P:SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+  id: SchemaCaptureMode
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: SchemaCaptureMode
+  nameWithType: ExportOptions.SchemaCaptureMode
+  fullName: SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SchemaCaptureMode
+    path: src/SqlDataPack/Options.cs
+    startLine: 441
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Selects whether to embed source-schema information in the package. Defaults to <xref href="SqlDataPack.Models.SchemaCaptureMode.None" data-throw-if-not-resolved="false"></xref> (data-only package); set to <xref href="SqlDataPack.Models.SchemaCaptureMode.Dacpac" data-throw-if-not-resolved="false"></xref> to extract a dacpac during export.
+  example: []
+  syntax:
+    content: public SchemaCaptureMode SchemaCaptureMode { get; set; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.SchemaCaptureMode
+    content.vb: Public Property SchemaCaptureMode As SchemaCaptureMode
+  overload: SqlDataPack.Models.ExportOptions.SchemaCaptureMode*
+- uid: SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+  commentId: P:SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+  id: DacpacCaptureOptions
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: DacpacCaptureOptions
+  nameWithType: ExportOptions.DacpacCaptureOptions
+  fullName: SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: DacpacCaptureOptions
+    path: src/SqlDataPack/Options.cs
+    startLine: 446
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Dacpac extraction settings used only when <xref href="SqlDataPack.Models.ExportOptions.SchemaCaptureMode" data-throw-if-not-resolved="false"></xref> is <xref href="SqlDataPack.Models.SchemaCaptureMode.Dacpac" data-throw-if-not-resolved="false"></xref>. Defaults to a new <xref href="SqlDataPack.Models.ExportOptions.DacpacCaptureOptions" data-throw-if-not-resolved="false"></xref> with its own defaults.
+  example: []
+  syntax:
+    content: public DacpacCaptureOptions DacpacCaptureOptions { get; set; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.DacpacCaptureOptions
+    content.vb: Public Property DacpacCaptureOptions As DacpacCaptureOptions
+  overload: SqlDataPack.Models.ExportOptions.DacpacCaptureOptions*
+references:
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SqlDataPack.Models.ExportOptions
+  commentId: T:SqlDataPack.Models.ExportOptions
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.ExportOptions.html
+  name: ExportOptions
+  nameWithType: ExportOptions
+  fullName: SqlDataPack.Models.ExportOptions
+- uid: SqlDataPack.Models.ExportOptions.Default
+  commentId: P:SqlDataPack.Models.ExportOptions.Default
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Default
+  name: Default
+  nameWithType: ExportOptions.Default
+  fullName: SqlDataPack.Models.ExportOptions.Default
+- uid: SqlDataPack.Models.ExportOptions.Latest
+  commentId: P:SqlDataPack.Models.ExportOptions.Latest
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Latest
+  name: Latest
+  nameWithType: ExportOptions.Latest
+  fullName: SqlDataPack.Models.ExportOptions.Latest
+- uid: SqlDataPack.Models.ExportOptions.Default*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.Default
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Default
+  name: Default
+  nameWithType: ExportOptions.Default
+  fullName: SqlDataPack.Models.ExportOptions.Default
+- uid: SqlDataPack.Models.ExportOptions.BatchSize
+  commentId: P:SqlDataPack.Models.ExportOptions.BatchSize
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_BatchSize
+  name: BatchSize
+  nameWithType: ExportOptions.BatchSize
+  fullName: SqlDataPack.Models.ExportOptions.BatchSize
+- uid: SqlDataPack.Models.ExportOptions.MaxBatchBytes
+  commentId: P:SqlDataPack.Models.ExportOptions.MaxBatchBytes
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_MaxBatchBytes
+  name: MaxBatchBytes
+  nameWithType: ExportOptions.MaxBatchBytes
+  fullName: SqlDataPack.Models.ExportOptions.MaxBatchBytes
+- uid: SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+  commentId: P:SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_LargeTableBatchSize
+  name: LargeTableBatchSize
+  nameWithType: ExportOptions.LargeTableBatchSize
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+- uid: SqlDataPack.Models.ExportOptions.Latest*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.Latest
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Latest
+  name: Latest
+  nameWithType: ExportOptions.Latest
+  fullName: SqlDataPack.Models.ExportOptions.Latest
+- uid: SqlDataPack.Models.ExportOptions.Tables
+  commentId: P:SqlDataPack.Models.ExportOptions.Tables
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Tables
+  name: Tables
+  nameWithType: ExportOptions.Tables
+  fullName: SqlDataPack.Models.ExportOptions.Tables
+- uid: SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  commentId: F:SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+  href: SqlDataPack.Models.ExportTableSelectionMode.html#SqlDataPack_Models_ExportTableSelectionMode_AllExcept
+  name: AllExcept
+  nameWithType: ExportTableSelectionMode.AllExcept
+  fullName: SqlDataPack.Models.ExportTableSelectionMode.AllExcept
+- uid: SqlDataPack.Models.ExportTableSelectionMode.Only
+  commentId: F:SqlDataPack.Models.ExportTableSelectionMode.Only
+  href: SqlDataPack.Models.ExportTableSelectionMode.html#SqlDataPack_Models_ExportTableSelectionMode_Only
+  name: Only
+  nameWithType: ExportTableSelectionMode.Only
+  fullName: SqlDataPack.Models.ExportTableSelectionMode.Only
+- uid: SqlDataPack.Models.ExportOptions.TableSelection*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.TableSelection
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_TableSelection
+  name: TableSelection
+  nameWithType: ExportOptions.TableSelection
+  fullName: SqlDataPack.Models.ExportOptions.TableSelection
+- uid: SqlDataPack.Models.ExportTableSelectionMode
+  commentId: T:SqlDataPack.Models.ExportTableSelectionMode
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.ExportTableSelectionMode.html
+  name: ExportTableSelectionMode
+  nameWithType: ExportTableSelectionMode
+  fullName: SqlDataPack.Models.ExportTableSelectionMode
+- uid: SqlDataPack.Models.ExportOptions.TableSelection
+  commentId: P:SqlDataPack.Models.ExportOptions.TableSelection
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_TableSelection
+  name: TableSelection
+  nameWithType: ExportOptions.TableSelection
+  fullName: SqlDataPack.Models.ExportOptions.TableSelection
+- uid: SqlDataPack.Models.ExportOptions.Tables*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.Tables
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Tables
+  name: Tables
+  nameWithType: ExportOptions.Tables
+  fullName: SqlDataPack.Models.ExportOptions.Tables
+- uid: System.Collections.Generic.IList{System.String}
+  commentId: T:System.Collections.Generic.IList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<string>
+  nameWithType: IList<string>
+  fullName: System.Collections.Generic.IList<string>
+  nameWithType.vb: IList(Of String)
+  fullName.vb: System.Collections.Generic.IList(Of String)
+  name.vb: IList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IList`1
+  commentId: T:System.Collections.Generic.IList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SqlDataPack.Models.ExportOptions.ExcludeColumns*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.ExcludeColumns
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_ExcludeColumns
+  name: ExcludeColumns
+  nameWithType: ExportOptions.ExcludeColumns
+  fullName: SqlDataPack.Models.ExportOptions.ExcludeColumns
+- uid: SqlDataPack.Models.GlobalWhereClause
+  commentId: T:SqlDataPack.Models.GlobalWhereClause
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.GlobalWhereClause.html
+  name: GlobalWhereClause
+  nameWithType: GlobalWhereClause
+  fullName: SqlDataPack.Models.GlobalWhereClause
+- uid: SqlDataPack.Models.ExportOptions.GlobalWhereClauses*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.GlobalWhereClauses
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_GlobalWhereClauses
+  name: GlobalWhereClauses
+  nameWithType: ExportOptions.GlobalWhereClauses
+  fullName: SqlDataPack.Models.ExportOptions.GlobalWhereClauses
+- uid: System.Collections.Generic.IList{SqlDataPack.Models.GlobalWhereClause}
+  commentId: T:System.Collections.Generic.IList{SqlDataPack.Models.GlobalWhereClause}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<GlobalWhereClause>
+  nameWithType: IList<GlobalWhereClause>
+  fullName: System.Collections.Generic.IList<SqlDataPack.Models.GlobalWhereClause>
+  nameWithType.vb: IList(Of GlobalWhereClause)
+  fullName.vb: System.Collections.Generic.IList(Of SqlDataPack.Models.GlobalWhereClause)
+  name.vb: IList(Of GlobalWhereClause)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - uid: SqlDataPack.Models.GlobalWhereClause
+    name: GlobalWhereClause
+    href: SqlDataPack.Models.GlobalWhereClause.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.GlobalWhereClause
+    name: GlobalWhereClause
+    href: SqlDataPack.Models.GlobalWhereClause.html
+  - name: )
+- uid: SqlDataPack.Models.ExportOptions.PerTableWhereClauses*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.PerTableWhereClauses
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_PerTableWhereClauses
+  name: PerTableWhereClauses
+  nameWithType: ExportOptions.PerTableWhereClauses
+  fullName: SqlDataPack.Models.ExportOptions.PerTableWhereClauses
+- uid: System.Collections.Generic.IList{SqlDataPack.Models.PerTableWhereClause}
+  commentId: T:System.Collections.Generic.IList{SqlDataPack.Models.PerTableWhereClause}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<PerTableWhereClause>
+  nameWithType: IList<PerTableWhereClause>
+  fullName: System.Collections.Generic.IList<SqlDataPack.Models.PerTableWhereClause>
+  nameWithType.vb: IList(Of PerTableWhereClause)
+  fullName.vb: System.Collections.Generic.IList(Of SqlDataPack.Models.PerTableWhereClause)
+  name.vb: IList(Of PerTableWhereClause)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - uid: SqlDataPack.Models.PerTableWhereClause
+    name: PerTableWhereClause
+    href: SqlDataPack.Models.PerTableWhereClause.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.PerTableWhereClause
+    name: PerTableWhereClause
+    href: SqlDataPack.Models.PerTableWhereClause.html
+  - name: )
+- uid: SqlDataPack.Models.ExportOptions.DataTablePrefix*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.DataTablePrefix
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_DataTablePrefix
+  name: DataTablePrefix
+  nameWithType: ExportOptions.DataTablePrefix
+  fullName: SqlDataPack.Models.ExportOptions.DataTablePrefix
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SqlDataPack.Models.ExportOptions.BatchSize*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.BatchSize
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_BatchSize
+  name: BatchSize
+  nameWithType: ExportOptions.BatchSize
+  fullName: SqlDataPack.Models.ExportOptions.BatchSize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+  commentId: P:SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_LargeTableThresholdBytes
+  name: LargeTableThresholdBytes
+  nameWithType: ExportOptions.LargeTableThresholdBytes
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+- uid: SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+  commentId: P:SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_LargeTableRowThreshold
+  name: LargeTableRowThreshold
+  nameWithType: ExportOptions.LargeTableRowThreshold
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+- uid: SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_AdaptiveBatchingEnabled
+  name: AdaptiveBatchingEnabled
+  nameWithType: ExportOptions.AdaptiveBatchingEnabled
+  fullName: SqlDataPack.Models.ExportOptions.AdaptiveBatchingEnabled
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_LargeTableThresholdBytes
+  name: LargeTableThresholdBytes
+  nameWithType: ExportOptions.LargeTableThresholdBytes
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableThresholdBytes
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int64
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: SqlDataPack.Models.ExportOptions.LargeTableRowThreshold*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_LargeTableRowThreshold
+  name: LargeTableRowThreshold
+  nameWithType: ExportOptions.LargeTableRowThreshold
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableRowThreshold
+- uid: SqlDataPack.Models.ExportOptions.LargeTableBatchSize*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_LargeTableBatchSize
+  name: LargeTableBatchSize
+  nameWithType: ExportOptions.LargeTableBatchSize
+  fullName: SqlDataPack.Models.ExportOptions.LargeTableBatchSize
+- uid: SqlDataPack.Models.ExportOptions.MaxBatchBytes*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.MaxBatchBytes
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_MaxBatchBytes
+  name: MaxBatchBytes
+  nameWithType: ExportOptions.MaxBatchBytes
+  fullName: SqlDataPack.Models.ExportOptions.MaxBatchBytes
+- uid: SqlDataPack.Models.ExportOptions.CommandTimeout*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.CommandTimeout
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_CommandTimeout
+  name: CommandTimeout
+  nameWithType: ExportOptions.CommandTimeout
+  fullName: SqlDataPack.Models.ExportOptions.CommandTimeout
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.ExportOptions.Progress*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.Progress
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Progress
+  name: Progress
+  nameWithType: ExportOptions.Progress
+  fullName: SqlDataPack.Models.ExportOptions.Progress
+- uid: System.IProgress{SqlDataPack.Models.SqlDataPackProgress}
+  commentId: T:System.IProgress{SqlDataPack.Models.SqlDataPackProgress}
+  parent: System
+  definition: System.IProgress`1
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<SqlDataPackProgress>
+  nameWithType: IProgress<SqlDataPackProgress>
+  fullName: System.IProgress<SqlDataPack.Models.SqlDataPackProgress>
+  nameWithType.vb: IProgress(Of SqlDataPackProgress)
+  fullName.vb: System.IProgress(Of SqlDataPack.Models.SqlDataPackProgress)
+  name.vb: IProgress(Of SqlDataPackProgress)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackProgress
+    name: SqlDataPackProgress
+    href: SqlDataPack.Models.SqlDataPackProgress.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackProgress
+    name: SqlDataPackProgress
+    href: SqlDataPack.Models.SqlDataPackProgress.html
+  - name: )
+- uid: System.IProgress`1
+  commentId: T:System.IProgress`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<T>
+  nameWithType: IProgress<T>
+  fullName: System.IProgress<T>
+  nameWithType.vb: IProgress(Of T)
+  fullName.vb: System.IProgress(Of T)
+  name.vb: IProgress(Of T)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.ExportOptions.Progress
+  commentId: P:SqlDataPack.Models.ExportOptions.Progress
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Progress
+  name: Progress
+  nameWithType: ExportOptions.Progress
+  fullName: SqlDataPack.Models.ExportOptions.Progress
+- uid: Microsoft.Extensions.Logging.LogLevel.Trace
+  commentId: F:Microsoft.Extensions.Logging.LogLevel.Trace
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel#microsoft-extensions-logging-loglevel-trace
+  name: Trace
+  nameWithType: LogLevel.Trace
+  fullName: Microsoft.Extensions.Logging.LogLevel.Trace
+- uid: Microsoft.Extensions.Logging.LogLevel.Information
+  commentId: F:Microsoft.Extensions.Logging.LogLevel.Information
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel#microsoft-extensions-logging-loglevel-information
+  name: Information
+  nameWithType: LogLevel.Information
+  fullName: Microsoft.Extensions.Logging.LogLevel.Information
+- uid: Microsoft.Extensions.Logging.LogLevel.Warning
+  commentId: F:Microsoft.Extensions.Logging.LogLevel.Warning
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel#microsoft-extensions-logging-loglevel-warning
+  name: Warning
+  nameWithType: LogLevel.Warning
+  fullName: Microsoft.Extensions.Logging.LogLevel.Warning
+- uid: SqlDataPack.Models.ExportOptions.Logger*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.Logger
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Logger
+  name: Logger
+  nameWithType: ExportOptions.Logger
+  fullName: SqlDataPack.Models.ExportOptions.Logger
+- uid: Microsoft.Extensions.Logging.ILogger
+  commentId: T:Microsoft.Extensions.Logging.ILogger
+  parent: Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger
+  name: ILogger
+  nameWithType: ILogger
+  fullName: Microsoft.Extensions.Logging.ILogger
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: SqlDataPack.Models.ExportOptions.OverwriteExistingPackage*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.OverwriteExistingPackage
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_OverwriteExistingPackage
+  name: OverwriteExistingPackage
+  nameWithType: ExportOptions.OverwriteExistingPackage
+  fullName: SqlDataPack.Models.ExportOptions.OverwriteExistingPackage
+- uid: SqlDataPack.Models.DacpacCaptureOptions.SchemaScope
+  commentId: P:SqlDataPack.Models.DacpacCaptureOptions.SchemaScope
+  href: SqlDataPack.Models.DacpacCaptureOptions.html#SqlDataPack_Models_DacpacCaptureOptions_SchemaScope
+  name: SchemaScope
+  nameWithType: DacpacCaptureOptions.SchemaScope
+  fullName: SqlDataPack.Models.DacpacCaptureOptions.SchemaScope
+- uid: SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_ExcludeSsmsDiagrams
+  name: ExcludeSsmsDiagrams
+  nameWithType: ExportOptions.ExcludeSsmsDiagrams
+  fullName: SqlDataPack.Models.ExportOptions.ExcludeSsmsDiagrams
+- uid: SqlDataPack.Models.SchemaCaptureMode.None
+  commentId: F:SqlDataPack.Models.SchemaCaptureMode.None
+  href: SqlDataPack.Models.SchemaCaptureMode.html#SqlDataPack_Models_SchemaCaptureMode_None
+  name: None
+  nameWithType: SchemaCaptureMode.None
+  fullName: SqlDataPack.Models.SchemaCaptureMode.None
+- uid: SqlDataPack.Models.SchemaCaptureMode.Dacpac
+  commentId: F:SqlDataPack.Models.SchemaCaptureMode.Dacpac
+  href: SqlDataPack.Models.SchemaCaptureMode.html#SqlDataPack_Models_SchemaCaptureMode_Dacpac
+  name: Dacpac
+  nameWithType: SchemaCaptureMode.Dacpac
+  fullName: SqlDataPack.Models.SchemaCaptureMode.Dacpac
+- uid: SqlDataPack.Models.ExportOptions.SchemaCaptureMode*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_SchemaCaptureMode
+  name: SchemaCaptureMode
+  nameWithType: ExportOptions.SchemaCaptureMode
+  fullName: SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+- uid: SqlDataPack.Models.SchemaCaptureMode
+  commentId: T:SqlDataPack.Models.SchemaCaptureMode
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.SchemaCaptureMode.html
+  name: SchemaCaptureMode
+  nameWithType: SchemaCaptureMode
+  fullName: SqlDataPack.Models.SchemaCaptureMode
+- uid: SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+  commentId: P:SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_SchemaCaptureMode
+  name: SchemaCaptureMode
+  nameWithType: ExportOptions.SchemaCaptureMode
+  fullName: SqlDataPack.Models.ExportOptions.SchemaCaptureMode
+- uid: SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+  commentId: P:SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_DacpacCaptureOptions
+  name: DacpacCaptureOptions
+  nameWithType: ExportOptions.DacpacCaptureOptions
+  fullName: SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+- uid: SqlDataPack.Models.ExportOptions.DacpacCaptureOptions*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_DacpacCaptureOptions
+  name: DacpacCaptureOptions
+  nameWithType: ExportOptions.DacpacCaptureOptions
+  fullName: SqlDataPack.Models.ExportOptions.DacpacCaptureOptions
+- uid: SqlDataPack.Models.DacpacCaptureOptions
+  commentId: T:SqlDataPack.Models.DacpacCaptureOptions
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.DacpacCaptureOptions.html
+  name: DacpacCaptureOptions
+  nameWithType: DacpacCaptureOptions
+  fullName: SqlDataPack.Models.DacpacCaptureOptions

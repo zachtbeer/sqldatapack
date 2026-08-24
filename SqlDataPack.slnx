@@ -1,0 +1,19 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/samples/">
+    <Project Path="samples/SqlDataPack.DeployRepro/SqlDataPack.DeployRepro.csproj" />
+    <Project Path="samples/SqlDataPack.Sample/SqlDataPack.Sample.csproj" />
+    <Project Path="samples/SqlDataPack.WorkflowSample/SqlDataPack.WorkflowSample.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SqlDataPack.Benchmarks/SqlDataPack.Benchmarks.csproj" />
+    <Project Path="tests/SqlDataPack.Fuzzing/SqlDataPack.Fuzzing.csproj" />
+    <Project Path="tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj" />
+  </Folder>
+  <Project Path="src/SqlDataPack/SqlDataPack.csproj" />
+  <Project Path="tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj" />
+</Solution>

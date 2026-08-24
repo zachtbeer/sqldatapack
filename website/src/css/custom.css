@@ -1,0 +1,27 @@
+/**
+ * Site theme overrides. The palette uses .NET purple (#512bd4) to match the
+ * "Target frameworks" badge and the NuGet ecosystem.
+ */
+
+:root {
+  --ifm-color-primary: #512bd4;
+  --ifm-color-primary-dark: #4927bf;
+  --ifm-color-primary-darker: #4525b4;
+  --ifm-color-primary-darkest: #391e94;
+  --ifm-color-primary-light: #5f3dd8;
+  --ifm-color-primary-lighter: #6647da;
+  --ifm-color-primary-lightest: #8067e1;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #9c85f0;
+  --ifm-color-primary-dark: #8266ec;
+  --ifm-color-primary-darker: #7557ea;
+  --ifm-color-primary-darkest: #5429e3;
+  --ifm-color-primary-light: #b6a4f4;
+  --ifm-color-primary-lighter: #c3b3f6;
+  --ifm-color-primary-lightest: #eae4fc;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}

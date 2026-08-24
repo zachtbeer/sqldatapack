@@ -1,0 +1,21 @@
+# Normalize text files to LF in the repository. Working trees keep whatever the
+# platform's core.autocrlf produces, which is why .editorconfig deliberately does
+# not set end_of_line -- doing so would make `dotnet format` disagree between a
+# Windows checkout and the Ubuntu CI runner.
+* text=auto
+
+*.cs        text diff=csharp
+*.csproj    text
+*.props     text
+*.sln       text
+*.md        text
+*.json      text
+*.yml       text
+*.sql       text
+*.sh        text eol=lf
+
+*.png       binary
+*.dacpac    binary
+*.sqlite    binary
+*.nupkg     binary
+*.snupkg    binary

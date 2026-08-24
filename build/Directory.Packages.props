@@ -1,0 +1,13 @@
+<Project>
+
+  <!--
+    Central Package Management is off here so the file-based apps in this folder can
+    declare their own dependencies inline with a `#:package Name@Version` directive.
+    They are build tooling, not shipping code: they are outside SqlDataPack.slnx, so
+    they are never restored in locked mode and never packed.
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+</Project>

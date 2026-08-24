@@ -1,0 +1,668 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult
+  commentId: T:SqlDataPack.Models.SqlDataPackPreflightResult
+  id: SqlDataPackPreflightResult
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.SqlDataPackPreflightResult.#ctor(System.Boolean,System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String},SqlDataPack.Models.SqlDataPackManifest)
+  - SqlDataPack.Models.SqlDataPackPreflightResult.Errors
+  - SqlDataPack.Models.SqlDataPackPreflightResult.IsValid
+  - SqlDataPack.Models.SqlDataPackPreflightResult.Manifest
+  - SqlDataPack.Models.SqlDataPackPreflightResult.Warnings
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackPreflightResult
+  nameWithType: SqlDataPackPreflightResult
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SqlDataPackPreflightResult
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 395
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Summarizes validation performed before an export or import copies rows.
+  example: []
+  syntax:
+    content: 'public sealed record SqlDataPackPreflightResult : IEquatable<SqlDataPackPreflightResult>'
+    content.vb: Public NotInheritable Class SqlDataPackPreflightResult Implements IEquatable(Of SqlDataPackPreflightResult)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{SqlDataPack.Models.SqlDataPackPreflightResult}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.#ctor(System.Boolean,System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String},SqlDataPack.Models.SqlDataPackManifest)
+  commentId: M:SqlDataPack.Models.SqlDataPackPreflightResult.#ctor(System.Boolean,System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String},SqlDataPack.Models.SqlDataPackManifest)
+  id: '#ctor(System.Boolean,System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.String},SqlDataPack.Models.SqlDataPackManifest)'
+  parent: SqlDataPack.Models.SqlDataPackPreflightResult
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackPreflightResult(bool, IReadOnlyList<string>, IReadOnlyList<string>, SqlDataPackManifest?)
+  nameWithType: SqlDataPackPreflightResult.SqlDataPackPreflightResult(bool, IReadOnlyList<string>, IReadOnlyList<string>, SqlDataPackManifest?)
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.SqlDataPackPreflightResult(bool, System.Collections.Generic.IReadOnlyList<string>, System.Collections.Generic.IReadOnlyList<string>, SqlDataPack.Models.SqlDataPackManifest?)
+  type: Constructor
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: .ctor
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 403
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Initializes a new instance of the <xref href="SqlDataPack.Models.SqlDataPackPreflightResult" data-throw-if-not-resolved="false"></xref> record.
+  example: []
+  syntax:
+    content: public SqlDataPackPreflightResult(bool IsValid, IReadOnlyList<string> Errors, IReadOnlyList<string> Warnings, SqlDataPackManifest? Manifest)
+    parameters:
+    - id: IsValid
+      type: System.Boolean
+      description: Whether the operation can proceed.
+    - id: Errors
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+      description: The problems that would fail the operation.
+    - id: Warnings
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+      description: The non-fatal findings.
+    - id: Manifest
+      type: SqlDataPack.Models.SqlDataPackManifest
+      description: The package manifest, actual or planned, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> when it could not be built.
+    content.vb: Public Sub New(IsValid As Boolean, Errors As IReadOnlyList(Of String), Warnings As IReadOnlyList(Of String), Manifest As SqlDataPackManifest)
+  overload: SqlDataPack.Models.SqlDataPackPreflightResult.#ctor*
+  nameWithType.vb: SqlDataPackPreflightResult.New(Boolean, IReadOnlyList(Of String), IReadOnlyList(Of String), SqlDataPackManifest)
+  fullName.vb: SqlDataPack.Models.SqlDataPackPreflightResult.New(Boolean, System.Collections.Generic.IReadOnlyList(Of String), System.Collections.Generic.IReadOnlyList(Of String), SqlDataPack.Models.SqlDataPackManifest)
+  name.vb: New(Boolean, IReadOnlyList(Of String), IReadOnlyList(Of String), SqlDataPackManifest)
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.IsValid
+  commentId: P:SqlDataPack.Models.SqlDataPackPreflightResult.IsValid
+  id: IsValid
+  parent: SqlDataPack.Models.SqlDataPackPreflightResult
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: SqlDataPackPreflightResult.IsValid
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.IsValid
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: IsValid
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 413
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Whether the operation can proceed.
+  example: []
+  syntax:
+    content: public bool IsValid { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsValid As Boolean
+  overload: SqlDataPack.Models.SqlDataPackPreflightResult.IsValid*
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.Errors
+  commentId: P:SqlDataPack.Models.SqlDataPackPreflightResult.Errors
+  id: Errors
+  parent: SqlDataPack.Models.SqlDataPackPreflightResult
+  langs:
+  - csharp
+  - vb
+  name: Errors
+  nameWithType: SqlDataPackPreflightResult.Errors
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.Errors
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Errors
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 418
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The problems that would fail the operation.
+  example: []
+  syntax:
+    content: public IReadOnlyList<string> Errors { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    content.vb: Public Property Errors As IReadOnlyList(Of String)
+  overload: SqlDataPack.Models.SqlDataPackPreflightResult.Errors*
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.Warnings
+  commentId: P:SqlDataPack.Models.SqlDataPackPreflightResult.Warnings
+  id: Warnings
+  parent: SqlDataPack.Models.SqlDataPackPreflightResult
+  langs:
+  - csharp
+  - vb
+  name: Warnings
+  nameWithType: SqlDataPackPreflightResult.Warnings
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.Warnings
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Warnings
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 423
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The non-fatal findings.
+  example: []
+  syntax:
+    content: public IReadOnlyList<string> Warnings { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    content.vb: Public Property Warnings As IReadOnlyList(Of String)
+  overload: SqlDataPack.Models.SqlDataPackPreflightResult.Warnings*
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.Manifest
+  commentId: P:SqlDataPack.Models.SqlDataPackPreflightResult.Manifest
+  id: Manifest
+  parent: SqlDataPack.Models.SqlDataPackPreflightResult
+  langs:
+  - csharp
+  - vb
+  name: Manifest
+  nameWithType: SqlDataPackPreflightResult.Manifest
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.Manifest
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Manifest
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 428
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The package manifest, actual or planned, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> when it could not be built.
+  example: []
+  syntax:
+    content: public SqlDataPackManifest? Manifest { get; init; }
+    parameters: []
+    return:
+      type: SqlDataPack.Models.SqlDataPackManifest
+    content.vb: Public Property Manifest As SqlDataPackManifest
+  overload: SqlDataPack.Models.SqlDataPackPreflightResult.Manifest*
+references:
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{SqlDataPack.Models.SqlDataPackPreflightResult}
+  commentId: T:System.IEquatable{SqlDataPack.Models.SqlDataPackPreflightResult}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<SqlDataPackPreflightResult>
+  nameWithType: IEquatable<SqlDataPackPreflightResult>
+  fullName: System.IEquatable<SqlDataPack.Models.SqlDataPackPreflightResult>
+  nameWithType.vb: IEquatable(Of SqlDataPackPreflightResult)
+  fullName.vb: System.IEquatable(Of SqlDataPack.Models.SqlDataPackPreflightResult)
+  name.vb: IEquatable(Of SqlDataPackPreflightResult)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackPreflightResult
+    name: SqlDataPackPreflightResult
+    href: SqlDataPack.Models.SqlDataPackPreflightResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackPreflightResult
+    name: SqlDataPackPreflightResult
+    href: SqlDataPack.Models.SqlDataPackPreflightResult.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult
+  commentId: T:SqlDataPack.Models.SqlDataPackPreflightResult
+  href: SqlDataPack.Models.SqlDataPackPreflightResult.html
+  name: SqlDataPackPreflightResult
+  nameWithType: SqlDataPackPreflightResult
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.#ctor*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackPreflightResult.#ctor
+  href: SqlDataPack.Models.SqlDataPackPreflightResult.html#SqlDataPack_Models_SqlDataPackPreflightResult__ctor_System_Boolean_System_Collections_Generic_IReadOnlyList_System_String__System_Collections_Generic_IReadOnlyList_System_String__SqlDataPack_Models_SqlDataPackManifest_
+  name: SqlDataPackPreflightResult
+  nameWithType: SqlDataPackPreflightResult.SqlDataPackPreflightResult
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.SqlDataPackPreflightResult
+  nameWithType.vb: SqlDataPackPreflightResult.New
+  fullName.vb: SqlDataPack.Models.SqlDataPackPreflightResult.New
+  name.vb: New
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.IReadOnlyList{System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<string>
+  nameWithType: IReadOnlyList<string>
+  fullName: System.Collections.Generic.IReadOnlyList<string>
+  nameWithType.vb: IReadOnlyList(Of String)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of String)
+  name.vb: IReadOnlyList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: SqlDataPack.Models.SqlDataPackManifest
+  commentId: T:SqlDataPack.Models.SqlDataPackManifest
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.SqlDataPackManifest.html
+  name: SqlDataPackManifest
+  nameWithType: SqlDataPackManifest
+  fullName: SqlDataPack.Models.SqlDataPackManifest
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.IsValid*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackPreflightResult.IsValid
+  href: SqlDataPack.Models.SqlDataPackPreflightResult.html#SqlDataPack_Models_SqlDataPackPreflightResult_IsValid
+  name: IsValid
+  nameWithType: SqlDataPackPreflightResult.IsValid
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.IsValid
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.Errors*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackPreflightResult.Errors
+  href: SqlDataPack.Models.SqlDataPackPreflightResult.html#SqlDataPack_Models_SqlDataPackPreflightResult_Errors
+  name: Errors
+  nameWithType: SqlDataPackPreflightResult.Errors
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.Errors
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.Warnings*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackPreflightResult.Warnings
+  href: SqlDataPack.Models.SqlDataPackPreflightResult.html#SqlDataPack_Models_SqlDataPackPreflightResult_Warnings
+  name: Warnings
+  nameWithType: SqlDataPackPreflightResult.Warnings
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.Warnings
+- uid: SqlDataPack.Models.SqlDataPackPreflightResult.Manifest*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackPreflightResult.Manifest
+  href: SqlDataPack.Models.SqlDataPackPreflightResult.html#SqlDataPack_Models_SqlDataPackPreflightResult_Manifest
+  name: Manifest
+  nameWithType: SqlDataPackPreflightResult.Manifest
+  fullName: SqlDataPack.Models.SqlDataPackPreflightResult.Manifest

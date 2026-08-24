@@ -1,0 +1,14 @@
+CREATE TABLE dbo.Customer (
+    CustomerId INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(50) NOT NULL,
+    Created DATETIME2(3) NOT NULL CONSTRAINT DF_Customer_Created DEFAULT SYSUTCDATETIME(),
+    Rv ROWVERSION
+);
+
+CREATE TABLE dbo.[Order] (
+    OrderId INT IDENTITY(1,1) PRIMARY KEY,
+    CustomerId INT NOT NULL
+        CONSTRAINT FK_Order_Customer REFERENCES dbo.Customer(CustomerId),
+    Total DECIMAL(18,2) NOT NULL,
+    Notes NVARCHAR(MAX) NULL
+);

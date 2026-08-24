@@ -1,0 +1,124 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.SchemaCaptureMode
+  commentId: T:SqlDataPack.Models.SchemaCaptureMode
+  id: SchemaCaptureMode
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.SchemaCaptureMode.Dacpac
+  - SqlDataPack.Models.SchemaCaptureMode.None
+  langs:
+  - csharp
+  - vb
+  name: SchemaCaptureMode
+  nameWithType: SchemaCaptureMode
+  fullName: SqlDataPack.Models.SchemaCaptureMode
+  type: Enum
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SchemaCaptureMode
+    path: src/SqlDataPack/Options.cs
+    startLine: 8
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Selects whether export captures SQL Server schema alongside data. Defaults to <xref href="SqlDataPack.Models.SchemaCaptureMode.None" data-throw-if-not-resolved="false"></xref> (data-only).
+  example: []
+  syntax:
+    content: public enum SchemaCaptureMode
+    content.vb: Public Enum SchemaCaptureMode
+- uid: SqlDataPack.Models.SchemaCaptureMode.None
+  commentId: F:SqlDataPack.Models.SchemaCaptureMode.None
+  id: None
+  parent: SqlDataPack.Models.SchemaCaptureMode
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: SchemaCaptureMode.None
+  fullName: SqlDataPack.Models.SchemaCaptureMode.None
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: None
+    path: src/SqlDataPack/Options.cs
+    startLine: 12
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Skips schema capture; the package contains data only. This is the default.
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: SqlDataPack.Models.SchemaCaptureMode
+- uid: SqlDataPack.Models.SchemaCaptureMode.Dacpac
+  commentId: F:SqlDataPack.Models.SchemaCaptureMode.Dacpac
+  id: Dacpac
+  parent: SqlDataPack.Models.SchemaCaptureMode
+  langs:
+  - csharp
+  - vb
+  name: Dacpac
+  nameWithType: SchemaCaptureMode.Dacpac
+  fullName: SqlDataPack.Models.SchemaCaptureMode.Dacpac
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Dacpac
+    path: src/SqlDataPack/Options.cs
+    startLine: 17
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Extracts the source database schema as a dacpac and embeds it in the SQLite package, so import can recreate the schema.
+  example: []
+  syntax:
+    content: Dacpac = 1
+    return:
+      type: SqlDataPack.Models.SchemaCaptureMode
+references:
+- uid: SqlDataPack.Models.SchemaCaptureMode.None
+  commentId: F:SqlDataPack.Models.SchemaCaptureMode.None
+  href: SqlDataPack.Models.SchemaCaptureMode.html#SqlDataPack_Models_SchemaCaptureMode_None
+  name: None
+  nameWithType: SchemaCaptureMode.None
+  fullName: SqlDataPack.Models.SchemaCaptureMode.None
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: SqlDataPack.Models.SchemaCaptureMode
+  commentId: T:SqlDataPack.Models.SchemaCaptureMode
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.SchemaCaptureMode.html
+  name: SchemaCaptureMode
+  nameWithType: SchemaCaptureMode
+  fullName: SqlDataPack.Models.SchemaCaptureMode

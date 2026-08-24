@@ -1,0 +1,77 @@
+### YamlMime:TableOfContent
+items:
+- uid: SqlDataPack
+  name: SqlDataPack
+  type: Namespace
+  items:
+  - uid: SqlDataPack.SqlData
+    name: SqlData
+    type: Class
+  - uid: SqlDataPack.SqlDataPackExporter
+    name: SqlDataPackExporter
+    type: Class
+  - uid: SqlDataPack.SqlDataPackImporter
+    name: SqlDataPackImporter
+    type: Class
+- uid: SqlDataPack.Models
+  name: SqlDataPack.Models
+  type: Namespace
+  items:
+  - uid: SqlDataPack.Models.DacpacCaptureOptions
+    name: DacpacCaptureOptions
+    type: Class
+  - uid: SqlDataPack.Models.DacpacDeploymentOptions
+    name: DacpacDeploymentOptions
+    type: Class
+  - uid: SqlDataPack.Models.DacpacSchemaScope
+    name: DacpacSchemaScope
+    type: Enum
+  - uid: SqlDataPack.Models.ExportOptions
+    name: ExportOptions
+    type: Class
+  - uid: SqlDataPack.Models.ExportTableSelectionMode
+    name: ExportTableSelectionMode
+    type: Enum
+  - uid: SqlDataPack.Models.GlobalWhereClause
+    name: GlobalWhereClause
+    type: Class
+  - uid: SqlDataPack.Models.ImportOptions
+    name: ImportOptions
+    type: Class
+  - uid: SqlDataPack.Models.PerTableWhereClause
+    name: PerTableWhereClause
+    type: Class
+  - uid: SqlDataPack.Models.SchemaCaptureMode
+    name: SchemaCaptureMode
+    type: Enum
+  - uid: SqlDataPack.Models.SchemaDeploymentMode
+    name: SchemaDeploymentMode
+    type: Enum
+  - uid: SqlDataPack.Models.SqlDataPackColumnManifest
+    name: SqlDataPackColumnManifest
+    type: Class
+  - uid: SqlDataPack.Models.SqlDataPackException
+    name: SqlDataPackException
+    type: Class
+  - uid: SqlDataPack.Models.SqlDataPackManifest
+    name: SqlDataPackManifest
+    type: Class
+  - uid: SqlDataPack.Models.SqlDataPackPreflightResult
+    name: SqlDataPackPreflightResult
+    type: Class
+  - uid: SqlDataPack.Models.SqlDataPackProgress
+    name: SqlDataPackProgress
+    type: Class
+  - uid: SqlDataPack.Models.SqlDataPackProgressKind
+    name: SqlDataPackProgressKind
+    type: Enum
+  - uid: SqlDataPack.Models.SqlDataPackReader
+    name: SqlDataPackReader
+    type: Class
+  - uid: SqlDataPack.Models.SqlDataPackResult
+    name: SqlDataPackResult
+    type: Class
+  - uid: SqlDataPack.Models.SqlDataPackTableManifest
+    name: SqlDataPackTableManifest
+    type: Class
+memberLayout: SamePage

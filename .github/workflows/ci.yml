@@ -1,0 +1,225 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  format:
+    name: Formatting
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        with:
+          path: ~/.nuget/packages
+          key: nuget-format-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json', '.config/dotnet-tools.json') }}
+          restore-keys: nuget-format-
+
+      - run: dotnet restore SqlDataPack.slnx --locked-mode
+      - run: dotnet tool restore
+
+      # `Built-in: Reformat Code`, not the default `Built-in: Full Cleanup`: Full Cleanup applies
+      # ReSharper's `var`, expression-body and pattern-matching opinions repo-wide, and
+      # .editorconfig deliberately leaves those at `suggestion`. build/cleanup.sh explains why it
+      # has to generate a .sln to do this.
+      - name: Verify formatting
+        run: |
+          build/cleanup.sh
+          git diff --exit-code
+
+      # After the git diff check above, not before: running a file-based app in build/
+      # can rewrite build/packages.lock.json, which is deliberately outside
+      # SqlDataPack.slnx and never restored in locked mode.
+      - name: Version bump script self-test
+        run: dotnet run build/NextVersion.cs -- --self-test
+
+  build:
+    name: Build and unit tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ matrix.os }}-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
+          restore-keys: nuget-${{ matrix.os }}-
+
+      - run: dotnet restore SqlDataPack.slnx --locked-mode
+      - run: dotnet build SqlDataPack.slnx -c Release --no-restore
+      - run: dotnet test tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj -c Release --no-build --verbosity normal
+      - if: matrix.os == 'ubuntu-latest'
+        run: dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./packages
+
+  windows-smoke:
+    name: Windows smoke (LocalDB + samples)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: 8.0.x
+
+      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        with:
+          path: ~/.nuget/packages
+          key: nuget-windows-smoke-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
+          restore-keys: nuget-windows-smoke-
+
+      - name: Start LocalDB
+        shell: pwsh
+        run: |
+          sqllocaldb start MSSQLLocalDB
+          sqllocaldb info MSSQLLocalDB
+
+      - name: Create and seed databases
+        shell: pwsh
+        run: |
+          $instance = "(localdb)\MSSQLLocalDB"
+          sqlcmd -S $instance -b -Q "CREATE DATABASE SmokeSource; CREATE DATABASE SmokeTarget1; CREATE DATABASE SmokeTarget2;"
+          sqlcmd -S $instance -d SmokeSource -b -i samples/sql/smoke-schema.sql
+          sqlcmd -S $instance -d SmokeSource -b -i samples/sql/smoke-seed.sql
+          sqlcmd -S $instance -d SmokeTarget1 -b -i samples/sql/smoke-schema.sql
+          sqlcmd -S $instance -d SmokeTarget2 -b -i samples/sql/smoke-schema.sql
+
+      - name: Build samples
+        run: |
+          dotnet build samples/SqlDataPack.Sample/SqlDataPack.Sample.csproj -c Release
+          dotnet build samples/SqlDataPack.WorkflowSample/SqlDataPack.WorkflowSample.csproj -c Release
+
+      - name: Run SqlDataPack.Sample
+        shell: pwsh
+        env:
+          ZSB_SOURCE_SQLSERVER: 'Server=(localdb)\MSSQLLocalDB;Database=SmokeSource;Integrated Security=True;TrustServerCertificate=True'
+          ZSB_TARGET_SQLSERVER: 'Server=(localdb)\MSSQLLocalDB;Database=SmokeTarget1;Integrated Security=True;TrustServerCertificate=True'
+          ZSB_PACKAGE_PATH: 'sample-package.sqlite'
+        run: dotnet run --project samples/SqlDataPack.Sample -c Release --no-build
+
+      - name: Verify SqlDataPack.Sample results
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'sample-package.sqlite')) { throw 'Expected package file sample-package.sqlite was not produced.' }
+          $instance = '(localdb)\MSSQLLocalDB'
+          $customers = (sqlcmd -S $instance -d SmokeTarget1 -h -1 -W -Q 'SET NOCOUNT ON; SELECT COUNT(*) FROM dbo.Customer').Trim()
+          if ($customers -ne '2') { throw "Customer count: expected 2, got '$customers'" }
+          $orders = (sqlcmd -S $instance -d SmokeTarget1 -h -1 -W -Q 'SET NOCOUNT ON; SELECT COUNT(*) FROM dbo.[Order]').Trim()
+          if ($orders -ne '3') { throw "Order count: expected 3, got '$orders'" }
+          $rvNulls = (sqlcmd -S $instance -d SmokeTarget1 -h -1 -W -Q 'SET NOCOUNT ON; SELECT COUNT(*) FROM dbo.Customer WHERE Rv IS NULL').Trim()
+          if ($rvNulls -ne '0') { throw "Expected all target Rv values to be server-generated; '$rvNulls' were NULL." }
+
+      - name: Run SqlDataPack.WorkflowSample
+        shell: pwsh
+        env:
+          ZSB_SOURCE_SQLSERVER: 'Server=(localdb)\MSSQLLocalDB;Database=SmokeSource;Integrated Security=True;TrustServerCertificate=True'
+          ZSB_TARGET_SQLSERVER: 'Server=(localdb)\MSSQLLocalDB;Database=SmokeTarget2;Integrated Security=True;TrustServerCertificate=True'
+          ZSB_PACKAGE_PATH: 'workflow-sample.sqlite'
+        run: dotnet run --project samples/SqlDataPack.WorkflowSample -c Release --no-build
+
+      - name: Verify SqlDataPack.WorkflowSample results
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'workflow-sample.sqlite')) { throw 'Expected package file workflow-sample.sqlite was not produced.' }
+          $instance = '(localdb)\MSSQLLocalDB'
+          $customers = (sqlcmd -S $instance -d SmokeTarget2 -h -1 -W -Q 'SET NOCOUNT ON; SELECT COUNT(*) FROM dbo.Customer').Trim()
+          if ($customers -ne '2') { throw "Workflow Customer count: expected 2, got '$customers'" }
+          $orders = (sqlcmd -S $instance -d SmokeTarget2 -h -1 -W -Q 'SET NOCOUNT ON; SELECT COUNT(*) FROM dbo.[Order]').Trim()
+          if ($orders -ne '3') { throw "Workflow Order count: expected 3, got '$orders'" }
+
+  integration:
+    name: Integration tests (${{ matrix.sqlserver }}, ${{ matrix.tfm }})
+    runs-on: ubuntu-latest
+
+    # The suite multi-targets net8.0 and net10.0. Running the frameworks as a matrix
+    # dimension rather than letting one `dotnet test` invocation walk both keeps each
+    # job to a single Testcontainers SQL Server startup and runs them in parallel.
+    strategy:
+      fail-fast: false
+      matrix:
+        tfm: [net8.0, net10.0]
+        sqlserver: ["2017", "2019", "2022", "2025"]
+        # `sqlserver` is a matrix dimension above so these entries merge the image into
+        # each matching combination. Were it absent from the base matrix, GitHub would
+        # apply every include to every combination and the last one would win.
+        include:
+          - sqlserver: "2017"
+            image: mcr.microsoft.com/mssql/server:2017-latest
+          - sqlserver: "2019"
+            image: mcr.microsoft.com/mssql/server:2019-latest
+          - sqlserver: "2022"
+            image: mcr.microsoft.com/mssql/server:2022-latest
+          - sqlserver: "2025"
+            image: mcr.microsoft.com/mssql/server:2025-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ matrix.sqlserver }}-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
+          restore-keys: nuget-
+
+      - run: dotnet restore SqlDataPack.slnx --locked-mode
+      - run: dotnet build tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj -c Release --no-restore -f ${{ matrix.tfm }}
+      - run: dotnet test tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj -c Release --no-build -f ${{ matrix.tfm }} --verbosity normal
+        env:
+          SQLDATAPACK_SQLSERVER_IMAGE: ${{ matrix.image }}
+
+  security-scan:
+    name: Vulnerable dependency scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - run: dotnet restore SqlDataPack.slnx --locked-mode
+
+      - name: Fail on vulnerable packages
+        shell: bash
+        run: |
+          report=$(dotnet list SqlDataPack.slnx package --vulnerable --include-transitive 2>&1)
+          echo "$report"
+          if echo "$report" | grep -q -i 'has the following vulnerable packages'; then
+            echo "::error::Vulnerable NuGet packages detected."
+            exit 1
+          fi

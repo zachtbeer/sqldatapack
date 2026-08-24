@@ -1,0 +1,234 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.SqlDataPackProgressKind
+  commentId: T:SqlDataPack.Models.SqlDataPackProgressKind
+  id: SqlDataPackProgressKind
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.SqlDataPackProgressKind.OperationCompleted
+  - SqlDataPack.Models.SqlDataPackProgressKind.OperationStarted
+  - SqlDataPack.Models.SqlDataPackProgressKind.RowsCopied
+  - SqlDataPack.Models.SqlDataPackProgressKind.TableCompleted
+  - SqlDataPack.Models.SqlDataPackProgressKind.TableStarted
+  - SqlDataPack.Models.SqlDataPackProgressKind.Warning
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackProgressKind
+  nameWithType: SqlDataPackProgressKind
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind
+  type: Enum
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SqlDataPackProgressKind
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 16
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Describes the kind of progress reported by an export or import operation.
+  example: []
+  syntax:
+    content: public enum SqlDataPackProgressKind
+    content.vb: Public Enum SqlDataPackProgressKind
+- uid: SqlDataPack.Models.SqlDataPackProgressKind.OperationStarted
+  commentId: F:SqlDataPack.Models.SqlDataPackProgressKind.OperationStarted
+  id: OperationStarted
+  parent: SqlDataPack.Models.SqlDataPackProgressKind
+  langs:
+  - csharp
+  - vb
+  name: OperationStarted
+  nameWithType: SqlDataPackProgressKind.OperationStarted
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind.OperationStarted
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: OperationStarted
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 20
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The operation has started.
+  example: []
+  syntax:
+    content: OperationStarted = 0
+    return:
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+- uid: SqlDataPack.Models.SqlDataPackProgressKind.TableStarted
+  commentId: F:SqlDataPack.Models.SqlDataPackProgressKind.TableStarted
+  id: TableStarted
+  parent: SqlDataPack.Models.SqlDataPackProgressKind
+  langs:
+  - csharp
+  - vb
+  name: TableStarted
+  nameWithType: SqlDataPackProgressKind.TableStarted
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind.TableStarted
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: TableStarted
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 25
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: A table transfer has started.
+  example: []
+  syntax:
+    content: TableStarted = 1
+    return:
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+- uid: SqlDataPack.Models.SqlDataPackProgressKind.RowsCopied
+  commentId: F:SqlDataPack.Models.SqlDataPackProgressKind.RowsCopied
+  id: RowsCopied
+  parent: SqlDataPack.Models.SqlDataPackProgressKind
+  langs:
+  - csharp
+  - vb
+  name: RowsCopied
+  nameWithType: SqlDataPackProgressKind.RowsCopied
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind.RowsCopied
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: RowsCopied
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 30
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Rows have been copied for the current table.
+  example: []
+  syntax:
+    content: RowsCopied = 2
+    return:
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+- uid: SqlDataPack.Models.SqlDataPackProgressKind.TableCompleted
+  commentId: F:SqlDataPack.Models.SqlDataPackProgressKind.TableCompleted
+  id: TableCompleted
+  parent: SqlDataPack.Models.SqlDataPackProgressKind
+  langs:
+  - csharp
+  - vb
+  name: TableCompleted
+  nameWithType: SqlDataPackProgressKind.TableCompleted
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind.TableCompleted
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: TableCompleted
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 35
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: A table transfer has completed.
+  example: []
+  syntax:
+    content: TableCompleted = 3
+    return:
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+- uid: SqlDataPack.Models.SqlDataPackProgressKind.Warning
+  commentId: F:SqlDataPack.Models.SqlDataPackProgressKind.Warning
+  id: Warning
+  parent: SqlDataPack.Models.SqlDataPackProgressKind
+  langs:
+  - csharp
+  - vb
+  name: Warning
+  nameWithType: SqlDataPackProgressKind.Warning
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind.Warning
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Warning
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 40
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: A non-fatal warning was produced.
+  example: []
+  syntax:
+    content: Warning = 4
+    return:
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+- uid: SqlDataPack.Models.SqlDataPackProgressKind.OperationCompleted
+  commentId: F:SqlDataPack.Models.SqlDataPackProgressKind.OperationCompleted
+  id: OperationCompleted
+  parent: SqlDataPack.Models.SqlDataPackProgressKind
+  langs:
+  - csharp
+  - vb
+  name: OperationCompleted
+  nameWithType: SqlDataPackProgressKind.OperationCompleted
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind.OperationCompleted
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: main
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: OperationCompleted
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 45
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The operation has completed.
+  example: []
+  syntax:
+    content: OperationCompleted = 5
+    return:
+      type: SqlDataPack.Models.SqlDataPackProgressKind
+references:
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: SqlDataPack.Models.SqlDataPackProgressKind
+  commentId: T:SqlDataPack.Models.SqlDataPackProgressKind
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.SqlDataPackProgressKind.html
+  name: SqlDataPackProgressKind
+  nameWithType: SqlDataPackProgressKind
+  fullName: SqlDataPack.Models.SqlDataPackProgressKind
