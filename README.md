@@ -1,13 +1,18 @@
-![SqlDataPack](https://raw.githubusercontent.com/zachtbeer/sqldatapack/main/logo.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/zachtbeer/sqldatapack/main/logo.png" alt="SqlDataPack" width="140">
+</p>
 
-# SqlDataPack
+<h1 align="center">SqlDataPack</h1>
 
-[![CI](https://github.com/zachtbeer/sqldatapack/actions/workflows/ci.yml/badge.svg)](https://github.com/zachtbeer/sqldatapack/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/zachtbeer/sqldatapack/actions/workflows/codeql.yml/badge.svg)](https://github.com/zachtbeer/sqldatapack/actions/workflows/codeql.yml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/zachtbeer/sqldatapack/badge)](https://securityscorecards.dev/viewer/?uri=github.com/zachtbeer/sqldatapack)
-[![NuGet](https://img.shields.io/nuget/vpre/SqlDataPack.svg)](https://www.nuget.org/packages/SqlDataPack)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zachtbeer/sqldatapack/blob/main/LICENSE)
-[![Target frameworks](https://img.shields.io/badge/targets-net8.0%20%7C%20net10.0-512bd4.svg)](https://github.com/zachtbeer/sqldatapack/blob/main/src/SqlDataPack/SqlDataPack.csproj)
+<p align="center">
+<a href="https://github.com/zachtbeer/sqldatapack/actions/workflows/ci.yml"><img src="https://github.com/zachtbeer/sqldatapack/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+<a href="https://github.com/zachtbeer/sqldatapack/actions/workflows/codeql.yml"><img src="https://github.com/zachtbeer/sqldatapack/actions/workflows/codeql.yml/badge.svg" alt="CodeQL"></a>
+<a href="https://securityscorecards.dev/viewer/?uri=github.com/zachtbeer/sqldatapack"><img src="https://api.securityscorecards.dev/projects/github.com/zachtbeer/sqldatapack/badge" alt="OpenSSF Scorecard"></a>
+<a href="https://www.nuget.org/packages/SqlDataPack"><img src="https://img.shields.io/nuget/v/SqlDataPack.svg" alt="NuGet"></a>
+<a href="https://zachtbeer.github.io/sqldatapack/"><img src="https://img.shields.io/badge/docs-zachtbeer.github.io-blue.svg" alt="Docs"></a>
+<a href="https://github.com/zachtbeer/sqldatapack/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+<a href="https://github.com/zachtbeer/sqldatapack/blob/main/src/SqlDataPack/SqlDataPack.csproj"><img src="https://img.shields.io/badge/targets-net8.0%20%7C%20net10.0-512bd4.svg" alt="Target frameworks"></a>
+</p>
 
 SqlDataPack is a .NET library that exports a slice of a SQL Server database into a single SQLite file, and imports it back into SQL Server if and when you want. Not a backup: you pick what comes out, and you can edit it before it goes back in.
 
@@ -16,6 +21,8 @@ Have you ever needed a copy of a SQL Server database on your machine, but not al
 You choose which tables, columns, and rows come out. What you get is an ordinary SQLite file, so you can edit it in any SQLite tool and `UPDATE`, `DELETE`, or `INSERT` data before you ever import it back into SQL Server. Then import it into a dev database, or send the file to someone else. Nothing is installed on the SQL Server: it is a NuGet package you call from the application that already holds the connection string.
 
 If you have used `.bacpac`, think of it the same way, except the file it produces is plain SQLite.
+
+Full documentation, including recipes and known limitations: **https://zachtbeer.github.io/sqldatapack/**
 
 ## Install
 
