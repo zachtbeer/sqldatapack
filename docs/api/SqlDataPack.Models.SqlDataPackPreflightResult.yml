@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackPreflightResult
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -102,7 +102,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IsValid
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -133,7 +133,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Errors
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -164,7 +164,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Warnings
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -195,7 +195,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Manifest
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs

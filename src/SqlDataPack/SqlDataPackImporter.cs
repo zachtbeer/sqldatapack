@@ -50,6 +50,19 @@ public sealed class SqlDataPackImporter {
             var packageWarnings = await SqlitePackage.ReadWarningsAsync(sqlite, cancellationToken);
             var warnings = new List<string>(packageWarnings);
 
+            // Before the target is touched at all: the package is editable on purpose, so a count that moved
+            // is usually a deliberate edit. Warn and carry on unless the caller asked to be strict. Added to
+            // the list rather than through AddWarning because ReportWarnings below does the reporting; going
+            // through AddWarning would emit each one twice.
+            var drift = await EvaluateRowCountDriftAsync(sqlite, tables, cancellationToken);
+            if (drift.Count > 0) {
+                if (options.RowCountDrift == RowCountDrift.Fail) {
+                    throw new SqlDataPackException(DescribeDriftError(drift));
+                }
+
+                warnings.AddRange(drift.Select(DescribeDriftWarning));
+            }
+
             warnings.AddRange(await SqlServerSchemaReader.ValidateImportTargetAsync(sqlServerConnectionString, tables, options.ValidationCommandTimeout, options.FailOnLossyTypeMismatch, cancellationToken));
             ReportWarnings(progress, warnings);
 
@@ -96,10 +109,6 @@ public sealed class SqlDataPackImporter {
 
                     progress?.Report(new SqlDataPackProgress(SqlDataPackProgressKind.TableStarted, table.Name.FullName, TotalRows: expected));
                     var rows = await ImportTableAsync(sqlite, sqlServer, table, batchSize, options.BulkCopyTimeout, progress, expected, cancellationToken);
-                    if (rows != expected) {
-                        throw new SqlDataPackException($"Imported row count for '{table.Name.FullName}' was {rows}, expected {expected}. Earlier tables in this import have already committed; every target table in this import scope has to be emptied before you retry.");
-                    }
-
                     totalRows += rows;
                     progress?.Report(new SqlDataPackProgress(SqlDataPackProgressKind.TableCompleted, table.Name.FullName, rows, expected));
                 }
@@ -177,7 +186,20 @@ public sealed class SqlDataPackImporter {
                     errors.Add(exception.Message);
                 }
 
-                var warnings = BuildImportWarnings(tables, manifest.Warnings, options).Concat(typeWarnings).Distinct(StringComparer.Ordinal).ToArray();
+                // Same comparison ImportAsync runs, reported the way preflight reports everything: as an
+                // entry in errors rather than a throw, so IsValid falls out of errors.Count below.
+                var drift = await EvaluateRowCountDriftAsync(sqlite, tables, cancellationToken);
+                var driftWarnings = Array.Empty<string>();
+                if (drift.Count > 0) {
+                    if (options.RowCountDrift == RowCountDrift.Fail) {
+                        errors.Add(DescribeDriftError(drift));
+                    }
+                    else {
+                        driftWarnings = drift.Select(DescribeDriftWarning).ToArray();
+                    }
+                }
+
+                var warnings = BuildImportWarnings(tables, manifest.Warnings, options).Concat(typeWarnings).Concat(driftWarnings).Distinct(StringComparer.Ordinal).ToArray();
                 return new SqlDataPackPreflightResult(errors.Count == 0, errors, warnings, manifest);
             }
             finally {
@@ -375,6 +397,42 @@ public sealed class SqlDataPackImporter {
 
         return warnings.Distinct(StringComparer.Ordinal).ToArray();
     }
+
+    /// <summary>
+    /// One table whose row count no longer matches what the export recorded.
+    /// </summary>
+    internal readonly record struct RowCountDriftFinding(string TableName, long Expected, long Actual);
+
+    /// <summary>
+    /// Compares what each data table holds now against the count the export recorded. This answers
+    /// only whether the package changed since export, which the format allows on purpose. It is not
+    /// the check that a load completed: that one lives in <see cref="ImportTableAsync"/> and compares
+    /// the rows read out of the package against the rows that landed in the target.
+    /// </summary>
+    internal static async Task<IReadOnlyList<RowCountDriftFinding>> EvaluateRowCountDriftAsync(SqliteConnection sqlite, IReadOnlyList<TableMetadata> tables, CancellationToken cancellationToken) {
+        var expected = await SqlitePackage.ReadExpectedRowCountsAsync(sqlite, cancellationToken);
+        var findings = new List<RowCountDriftFinding>();
+        foreach (var table in tables) {
+            // A table with no stats row at all is a corrupt package, not drift, and
+            // SqlitePackage.ValidateForImportAsync has already rejected it by this point.
+            if (!expected.TryGetValue(table.Name.FullName, out var recorded)) {
+                continue;
+            }
+
+            var actual = await SqlitePackage.ReadActualRowCountAsync(sqlite, table.SqliteTableName, cancellationToken);
+            if (actual != recorded) {
+                findings.Add(new RowCountDriftFinding(table.Name.FullName, recorded, actual));
+            }
+        }
+
+        return findings;
+    }
+
+    private static string DescribeDriftWarning(RowCountDriftFinding drift) =>
+        $"Table '{drift.TableName}' holds {drift.Actual} rows but the export recorded {drift.Expected}. Importing the {drift.Actual} rows the package holds.";
+
+    private static string DescribeDriftError(IReadOnlyList<RowCountDriftFinding> drift) =>
+        $"Package row counts differ from what the export recorded: {string.Join("; ", drift.Select(d => $"'{d.TableName}' holds {d.Actual} rows, export recorded {d.Expected}"))}. Set ImportOptions.RowCountDrift to RowCountDrift.Warn to import the package as it stands.";
 
     private static void AddWarning(List<string> warnings, string warning, IProgress<SqlDataPackProgress>? progress) {
         if (!warnings.Contains(warning, StringComparer.Ordinal)) {

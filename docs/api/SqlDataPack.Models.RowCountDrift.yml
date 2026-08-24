@@ -1,0 +1,124 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.RowCountDrift
+  commentId: T:SqlDataPack.Models.RowCountDrift
+  id: RowCountDrift
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.RowCountDrift.Fail
+  - SqlDataPack.Models.RowCountDrift.Warn
+  langs:
+  - csharp
+  - vb
+  name: RowCountDrift
+  nameWithType: RowCountDrift
+  fullName: SqlDataPack.Models.RowCountDrift
+  type: Enum
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: RowCountDrift
+    path: src/SqlDataPack/Options.cs
+    startLine: 68
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Selects what an import does when a package holds a different number of rows than the export recorded. Defaults to <xref href="SqlDataPack.Models.RowCountDrift.Warn" data-throw-if-not-resolved="false"></xref> (import the package as it stands and report the difference).
+  example: []
+  syntax:
+    content: public enum RowCountDrift
+    content.vb: Public Enum RowCountDrift
+- uid: SqlDataPack.Models.RowCountDrift.Warn
+  commentId: F:SqlDataPack.Models.RowCountDrift.Warn
+  id: Warn
+  parent: SqlDataPack.Models.RowCountDrift
+  langs:
+  - csharp
+  - vb
+  name: Warn
+  nameWithType: RowCountDrift.Warn
+  fullName: SqlDataPack.Models.RowCountDrift.Warn
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Warn
+    path: src/SqlDataPack/Options.cs
+    startLine: 72
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Imports the rows the package actually holds and records a warning naming each table whose count moved. This is the default.
+  example: []
+  syntax:
+    content: Warn = 0
+    return:
+      type: SqlDataPack.Models.RowCountDrift
+- uid: SqlDataPack.Models.RowCountDrift.Fail
+  commentId: F:SqlDataPack.Models.RowCountDrift.Fail
+  id: Fail
+  parent: SqlDataPack.Models.RowCountDrift
+  langs:
+  - csharp
+  - vb
+  name: Fail
+  nameWithType: RowCountDrift.Fail
+  fullName: SqlDataPack.Models.RowCountDrift.Fail
+  type: Field
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Fail
+    path: src/SqlDataPack/Options.cs
+    startLine: 77
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Rejects the package before any row is written, naming every table whose count moved.
+  example: []
+  syntax:
+    content: Fail = 1
+    return:
+      type: SqlDataPack.Models.RowCountDrift
+references:
+- uid: SqlDataPack.Models.RowCountDrift.Warn
+  commentId: F:SqlDataPack.Models.RowCountDrift.Warn
+  href: SqlDataPack.Models.RowCountDrift.html#SqlDataPack_Models_RowCountDrift_Warn
+  name: Warn
+  nameWithType: RowCountDrift.Warn
+  fullName: SqlDataPack.Models.RowCountDrift.Warn
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: SqlDataPack.Models.RowCountDrift
+  commentId: T:SqlDataPack.Models.RowCountDrift
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.RowCountDrift.html
+  name: RowCountDrift
+  nameWithType: RowCountDrift
+  fullName: SqlDataPack.Models.RowCountDrift

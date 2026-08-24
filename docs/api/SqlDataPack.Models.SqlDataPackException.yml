@@ -17,15 +17,15 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackException
     path: src/SqlDataPack/Options.cs
-    startLine: 600
+    startLine: 623
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
-  summary: Represents a validation or bridge operation error that callers can handle explicitly.
+  summary: Represents a validation or export/import operation error that callers can handle explicitly.
   example: []
   syntax:
     content: 'public sealed class SqlDataPackException : Exception, ISerializable'
@@ -65,11 +65,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 605
+    startLine: 628
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -100,11 +100,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 613
+    startLine: 636
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

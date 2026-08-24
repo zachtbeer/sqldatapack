@@ -12,4 +12,4 @@ Every published version also has generated notes on the [releases page](https://
 
 Nothing published yet under the `SqlDataPack` package id. The first release will be `1.0.0`.
 
-The project was previously published as `Zachtbeer.SqlDataBridge`, up to `1.0.0-rc.12`. That package id is retired. See [Versioning](./versioning.md) for what the version numbers mean from `1.0.0` onward.
+Deleting and inserting rows in a package now works. Import used to compare the rows it copied against the count recorded at export and throw on any difference, from inside the per-table load loop, so a package you had deleted rows from failed halfway through and left a target that had to be emptied by hand before you could retry. The comparison now runs before anything is written, against the package's own contents, and a difference is reported as a warning per table instead of failing. The new `ImportOptions.RowCountDrift` restores the old strictness with `RowCountDrift.Fail`, which rejects the package up front rather than partway through. The separate check that a bulk copy landed every row it read is unchanged and still cannot be switched off.

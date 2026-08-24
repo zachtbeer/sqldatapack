@@ -93,7 +93,7 @@ public sealed record SqlDataPackProgress {
 }
 
 /// <summary>
-/// Describes a column stored in a SQLite bridge package.
+/// Describes a column stored in a SQLite package.
 /// </summary>
 public sealed record SqlDataPackColumnManifest {
     /// <summary>
@@ -198,7 +198,7 @@ public sealed record SqlDataPackColumnManifest {
 }
 
 /// <summary>
-/// Describes a table stored in or planned for a SQLite bridge package.
+/// Describes a table stored in or planned for a SQLite package.
 /// </summary>
 public sealed record SqlDataPackTableManifest {
     /// <summary>
@@ -270,7 +270,7 @@ public sealed record SqlDataPackTableManifest {
 }
 
 /// <summary>
-/// Describes a SQLite bridge package or planned package.
+/// Describes a SQLite package or planned package.
 /// </summary>
 public sealed record SqlDataPackManifest {
     /// <summary>

@@ -98,6 +98,7 @@ public sealed class PublicApiContractTests {
         options.MaxBatchBytes.ShouldBe(4L * 1024 * 1024);
         options.ValidationCommandTimeout.ShouldBeNull();
         options.FailOnLossyTypeMismatch.ShouldBeFalse();
+        options.RowCountDrift.ShouldBe(RowCountDrift.Warn);
         options.BulkCopyTimeout.ShouldBeNull();
         options.Progress.ShouldBeNull();
         options.Logger.ShouldBeNull();
@@ -107,6 +108,10 @@ public sealed class PublicApiContractTests {
         // These two are the only thing keeping a Default caller from silently wrong AS OF results.
         options.SuspendTemporalSystemVersioning.ShouldBeTrue();
         options.TemporalDataConsistencyCheck.ShouldBeTrue();
+
+        // The zero member is the permissive one here, unlike the schema enums: a default-constructed
+        // ImportOptions imports a package someone edited rows out of rather than refusing it.
+        default(RowCountDrift).ShouldBe(RowCountDrift.Warn);
     }
 
     [Fact]

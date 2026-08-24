@@ -2,11 +2,11 @@
 
 // Pre-flight checks for a release version. Run this before tagging:
 //
-//     dotnet run build/VersionGuard.cs -- 1.0.0-rc.13
+//     dotnet run build/VersionGuard.cs -- 1.0.0-preview.13
 //
 // The Release workflow runs the same command, so a version that passes here is a
 // version that will publish. Everything it checks used to be a step the maintainer
-// had to remember; see .github/AGENTS.md for the two incidents that motivated it.
+// had to remember.
 
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -42,7 +42,7 @@ for (var i = 0; i < args.Length; i++)
 if (arguments.Count != 1)
 {
     Console.Error.WriteLine("usage: dotnet run build/VersionGuard.cs -- <version> [--no-git-check]");
-    Console.Error.WriteLine("       <version> has no leading 'v', for example 1.0.0-rc.13");
+    Console.Error.WriteLine("       <version> has no leading 'v', for example 1.0.0-preview.13");
     return 64;
 }
 
@@ -76,9 +76,9 @@ Report(true, "Valid SemVer 2.0.0", isPrerelease ? "prerelease" : "stable release
 
 // 2. The version sorts strictly above everything already on NuGet.org.
 //
-// This is the check that both published incidents needed. SemVer compares numeric
-// prerelease identifiers numerically, so 1.0.0-rc.2 sorts BELOW 1.0.0-rc.10, and
-// nuget.org supports no permanent deletion, so getting this wrong is forever.
+// nuget.org supports no permanent deletion, so publishing a version that sorts below
+// something already there is forever. Prerelease ordering is where that goes wrong:
+// identifiers compare left to right, numerically when they are numbers.
 var published = await FetchPublishedVersionsAsync();
 NuGetVersion? newestPublished = null;
 

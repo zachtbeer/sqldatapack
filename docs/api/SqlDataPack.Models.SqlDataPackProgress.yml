@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackProgress
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -59,7 +59,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -106,7 +106,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Kind
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -137,7 +137,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TableName
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -168,7 +168,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: RowsProcessed
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -199,7 +199,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TotalRows
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -230,7 +230,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Message
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs

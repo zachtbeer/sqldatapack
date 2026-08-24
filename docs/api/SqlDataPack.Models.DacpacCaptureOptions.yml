@@ -22,11 +22,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacCaptureOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 68
+    startLine: 83
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -58,11 +58,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Default
     path: src/SqlDataPack/Options.cs
-    startLine: 74
+    startLine: 89
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -94,11 +94,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaScope
     path: src/SqlDataPack/Options.cs
-    startLine: 79
+    startLine: 94
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -125,11 +125,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExtractReferencedServerScopedElements
     path: src/SqlDataPack/Options.cs
-    startLine: 84
+    startLine: 99
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -156,11 +156,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExtractApplicationScopedObjectsOnly
     path: src/SqlDataPack/Options.cs
-    startLine: 89
+    startLine: 104
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -187,11 +187,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IgnorePermissions
     path: src/SqlDataPack/Options.cs
-    startLine: 94
+    startLine: 109
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -218,11 +218,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IgnoreUserLoginMappings
     path: src/SqlDataPack/Options.cs
-    startLine: 99
+    startLine: 114
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -249,11 +249,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: VerifyExtraction
     path: src/SqlDataPack/Options.cs
-    startLine: 112
+    startLine: 127
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

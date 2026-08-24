@@ -25,7 +25,7 @@ A .NET 10 console app that:
 
 ## Prerequisites (verify before invoking)
 
-Run from the repo root (`D:\code\sqldatabridge` or equivalent).
+Run from the repo root (`D:\code\sqldatapack` or equivalent).
 
 | Requirement | Check command | Pass criterion |
 |---|---|---|

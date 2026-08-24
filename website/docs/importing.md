@@ -58,13 +58,21 @@ Export builds the import order while it plans: it reads SQL Server foreign keys 
 
 ## Verification
 
-After each table copies, import compares the rows it actually copied against `exported_row_count`, the count recorded in `zsdp_table_stats` at export time, not a live `COUNT(*)` against the package. A mismatch throws:
+Two different counts are checked, and they answer different questions.
+
+Before anything is written, import compares `exported_row_count`, the count recorded in `zsdp_table_stats` at export time, against a live `COUNT(*)` on the package's own data table. That answers whether the package changed since export, which it is allowed to: editing the file is the point. A difference is reported as a warning per table and the import carries on with the rows the package holds. Set `RowCountDrift.Fail` to have it reject the package up front instead, before the target is touched.
 
 ```text
-Imported row count for 'dbo.Customers' was 4102, expected 4213.
+Table 'dbo.Customers' holds 4102 rows but the export recorded 4213. Importing the 4102 rows the package holds.
 ```
 
-That check exists so a partial copy, whatever the cause, fails loudly instead of leaving a target that looks complete but is not.
+After each table copies, import compares the rows it read out of the package against a `COUNT(*)` on the target. That answers whether the copy actually landed everything, and a mismatch throws:
+
+```text
+Bulk copy for 'dbo.Customers' read 4102 rows from the package but 4098 landed in the target.
+```
+
+That second check exists so a partial copy, whatever the cause, fails loudly instead of leaving a target that looks complete but is not. It runs on every import and there is no option to disable it.
 
 ## Progress and warnings
 
@@ -82,7 +90,7 @@ options.Progress = progress;
 await SqlData.ImportAsync("support-snapshot.sqlite", targetSqlServerConnectionString, options);
 ```
 
-Import also reads `zsdp_warnings`, the warnings recorded during export, and folds them into its own warning list alongside anything it discovers itself (adaptive batching, temporal table handling, columns whose values are skipped in favor of SQL Server generating fresh ones). Every warning is reported live as a `SqlDataPackProgress` with `Kind == SqlDataPackProgressKind.Warning`, and the full, de-duplicated list comes back on `SqlDataPackResult.Warnings` once the import finishes. An empty list means every table copied clean and every row count matched.
+Import also reads `zsdp_warnings`, the warnings recorded during export, and folds them into its own warning list alongside anything it discovers itself (adaptive batching, temporal table handling, columns whose values are skipped in favor of SQL Server generating fresh ones). Every warning is reported live as a `SqlDataPackProgress` with `Kind == SqlDataPackProgressKind.Warning`, and the full, de-duplicated list comes back on `SqlDataPackResult.Warnings` once the import finishes. An empty list means every table copied clean and nothing in the package had changed since export.
 
 ## Dacpac deployment safety
 

@@ -64,6 +64,21 @@ public enum ExportTableSelectionMode {
 }
 
 /// <summary>
+/// Selects what an import does when a package holds a different number of rows than the export recorded. Defaults to <see cref="Warn"/> (import the package as it stands and report the difference).
+/// </summary>
+public enum RowCountDrift {
+    /// <summary>
+    /// Imports the rows the package actually holds and records a warning naming each table whose count moved. This is the default.
+    /// </summary>
+    Warn = 0,
+
+    /// <summary>
+    /// Rejects the package before any row is written, naming every table whose count moved.
+    /// </summary>
+    Fail = 1
+}
+
+/// <summary>
 /// Tunes how the dacpac is extracted when <see cref="ExportOptions.SchemaCaptureMode"/> is <see cref="SchemaCaptureMode.Dacpac"/>.
 /// </summary>
 public sealed class DacpacCaptureOptions {
@@ -535,6 +550,14 @@ public sealed class ImportOptions {
     public bool FailOnLossyTypeMismatch { get; set; }
 
     /// <summary>
+    /// Selects what happens when the package holds a different number of rows than the export recorded, which is what deleting or inserting rows in the package produces. Defaults to <see cref="Models.RowCountDrift.Warn"/>, in which case the rows the package holds are imported and the difference is reported per table on <see cref="SqlDataPackResult.Warnings"/>.
+    /// </summary>
+    /// <remarks>
+    /// This compares the count recorded in the package manifest against the package's own contents, so it only ever answers whether the file changed since export. It is not the check that proves a load completed: that one compares the rows read out of the package against the rows that landed in the target, and it is always fatal. Set this to <see cref="Models.RowCountDrift.Fail"/> for unattended pipelines that scrub packages automatically, where a count that moved means a script bug rather than a deliberate edit.
+    /// </remarks>
+    public RowCountDrift RowCountDrift { get; set; } = RowCountDrift.Warn;
+
+    /// <summary>
     /// Timeout, in seconds, for each <c>SqlBulkCopy</c> operation. Defaults to <see langword="null"/> (use <c>SqlBulkCopy</c>'s default of 30 seconds); raise this for very large or slow tables.
     /// </summary>
     public int? BulkCopyTimeout { get; set; }
@@ -596,7 +619,7 @@ public sealed class ImportOptions {
 }
 
 /// <summary>
-/// Represents a validation or bridge operation error that callers can handle explicitly.
+/// Represents a validation or export/import operation error that callers can handle explicitly.
 /// </summary>
 public sealed class SqlDataPackException : Exception {
     /// <summary>

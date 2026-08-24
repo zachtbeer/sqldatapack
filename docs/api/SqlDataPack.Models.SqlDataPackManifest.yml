@@ -27,7 +27,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackManifest
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -35,7 +35,7 @@ items:
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
-  summary: Describes a SQLite bridge package or planned package.
+  summary: Describes a SQLite package or planned package.
   example: []
   syntax:
     content: 'public sealed record SqlDataPackManifest : IEquatable<SqlDataPackManifest>'
@@ -65,7 +65,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -130,7 +130,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: PackageFormatVersion
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -161,7 +161,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ApplicationVersion
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -192,7 +192,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExportedAtUtc
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -223,7 +223,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SourceSchemaHash
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -254,7 +254,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Tables
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -285,7 +285,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ImportOrder
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -316,7 +316,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Exclusions
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -347,7 +347,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Warnings
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -378,7 +378,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ContainsDacpac
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -409,7 +409,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacSchemaScope
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -440,7 +440,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SourceEngineEdition
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs

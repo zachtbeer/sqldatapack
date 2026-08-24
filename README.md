@@ -20,10 +20,10 @@ If you have used `.bacpac`, think of it the same way, except the file it produce
 ## Install
 
 ```bash
-dotnet add package SqlDataPack --prerelease
+dotnet add package SqlDataPack
 ```
 
-Targets `net8.0` and `net10.0`. The first published version is `1.0.0-preview1`, so `--prerelease` is required until 1.0.0 is out.
+Targets `net8.0` and `net10.0`.
 
 ## Export
 
@@ -59,7 +59,9 @@ dbo__orders           zsdp_export_runs      zsdp_table_stats
 $ sqlite3 dev-slice.sqlite "UPDATE dbo__customers SET Email = 'user' || CustomerId || '@example.invalid';"
 ```
 
-That replaces every real address with a fake one, in the file, before anything reaches SQL Server. See [Editing the package](https://zachtbeer.github.io/sqldatapack/editing-the-package).
+That replaces every real address with a fake one, in the file, before anything reaches SQL Server.
+
+Deleting rows works the same way. Drop every row for one customer and the import loads what is left, warning you per table that the count moved rather than refusing the package. Set `ImportOptions.RowCountDrift` to `RowCountDrift.Fail` if you would rather a moved count stopped the import, which is what an unattended scrubbing pipeline wants. See [Editing the package](https://zachtbeer.github.io/sqldatapack/editing-the-package).
 
 Or read the manifest (row counts, source types, foreign-key import order) without importing anything:
 
@@ -103,9 +105,7 @@ Full documentation: **https://zachtbeer.github.io/sqldatapack/**
 
 ## Supply chain and security
 
-No telemetry, no analytics, no update or license checks, and no outbound connection except to the SQL Server in your connection string, with a CI test that watches sockets during a real export and import to keep it that way. Releases carry signed build provenance and a CycloneDX SBOM, builds are deterministic with SourceLink and published symbols, and CodeQL, Scorecard, Dependabot, commit-pinned actions, and locked-mode NuGet restore are on. Details in the [FAQ](https://zachtbeer.github.io/sqldatapack/faq).
-
-Report a vulnerability through [private vulnerability reporting](https://github.com/zachtbeer/sqldatapack/security/advisories/new), not a public issue. See [SECURITY.md](https://github.com/zachtbeer/sqldatapack/blob/main/SECURITY.md).
+This has been taken seriously since the first commit: no telemetry, no outbound connection except to the SQL Server in your connection string, and every release carries signed build provenance and an SBOM. The [FAQ](https://zachtbeer.github.io/sqldatapack/faq) has the full list, and [SECURITY.md](https://github.com/zachtbeer/sqldatapack/blob/main/SECURITY.md) covers reporting a vulnerability privately.
 
 ## Contributing
 

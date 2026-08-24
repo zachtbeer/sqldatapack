@@ -37,13 +37,13 @@ Going straight to `1.0.0` means labelling that pull request `semver:major`. Once
 
 The GitHub release notes are generated from the pull requests in the release. Your pull request title and body are what readers see, so write them for a reader.
 
-The readable account of the project is `website/docs/changelog.md`, which deploys with the docs site and is not tied to a version. Edit it whenever you like. `CHANGELOG.md` at the repository root is a pointer to both and holds only the historic entries from the retired `Zachtbeer.SqlDataBridge` package id.
+The readable account of the project is `website/docs/changelog.md`, which deploys with the docs site and is not tied to a version. Edit it whenever you like. `CHANGELOG.md` at the repository root is a pointer to both and holds nothing else.
 
 ## Releasing a prerelease
 
-The automatic path only ever produces `X.Y.Z`. Release candidates come from `prerelease.yml`, which you run by hand:
+The automatic path only ever produces `X.Y.Z`. Previews come from `prerelease.yml`, which you run by hand:
 
-**Actions → Prerelease → Run workflow**, then type the full version, for example `1.0.0-rc.1`.
+**Actions → Prerelease → Run workflow**, then type the full version, for example `1.0.0-preview.1`.
 
 You pick the number. The workflow builds, tests and packs first, then tags, publishes to nuget.org, and creates a GitHub release marked as a prerelease. Tick `dry_run` to build and validate without tagging or publishing anything.
 
@@ -55,7 +55,7 @@ Three things stop a mistake:
 
 The tag is created after the build passes, so a failed run leaves nothing behind to clean up.
 
-`publish.yml` ignores prerelease tags when looking for the last release, so a candidate never becomes the base for the next automatic bump. That also means the eventual stable release computes from the last *stable* tag: after `1.0.0-rc.3` with no stable tag before it, the label on the finalizing pull request has to be `semver:major` to produce `1.0.0`.
+`publish.yml` ignores prerelease tags when looking for the last release, so a preview never becomes the base for the next automatic bump. That also means the eventual stable release computes from the last *stable* tag: after `1.0.0-preview.3` with no stable tag before it, the label on the finalizing pull request has to be `semver:major` to produce `1.0.0`.
 
 `prerelease.yml` is self-contained rather than calling `release.yml`, so nuget.org sees an OIDC token issued for `prerelease.yml`. It needs its own trusted publishing policy naming that file.
 

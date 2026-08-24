@@ -53,7 +53,7 @@ CI fails your pull request if it changes the package without one of these, or ca
 
 Use `semver:none` for a change nobody consuming the package could observe: a comment, a private refactor, a test-only edit that happens to live under `src/`.
 
-Merging then computes the version, tags it, and publishes to nuget.org. There is no preview feed: every package change ships a real version, and every other change leaves the package identical. See [docs/RELEASE.md](docs/RELEASE.md).
+Merging then computes the version, tags it, and publishes to nuget.org. There is no nightly or per-commit feed: every package change ships a real version, and every other change leaves the package identical. See [docs/RELEASE.md](docs/RELEASE.md).
 
 ## API Compatibility
 

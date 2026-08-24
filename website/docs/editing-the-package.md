@@ -17,17 +17,29 @@ Any SQLite tool works: `sqlite3`, a GUI, a Python script, an EF Core context, wh
 
 **Change values freely.** Rewriting values in place is fully supported and roundtrips through import: fix a typo, replace a real email with a synthetic one, correct a bad row, whatever the task calls for.
 
-## What breaks the import
+## Adding and removing rows
 
-**Deleting rows breaks the import.** At export, SqlDataPack records how many rows it wrote for each table as `exported_row_count` in `zsdp_table_stats`. At import, it compares the rows it actually copies from the package against that stored count, and throws on a mismatch:
+Supported. `DELETE` and `INSERT` against a data table both roundtrip through import.
+
+At export, SqlDataPack records how many rows it wrote for each table as `exported_row_count` in `zsdp_table_stats`. Before it writes anything to the target, import compares that number against a live `COUNT(*)` on the package's own data table. A difference is reported rather than refused: the rows the package actually holds are imported, and every table whose count moved produces a warning on `SqlDataPackResult.Warnings`.
 
 ```text
-Imported row count for 'dbo.Customers' was 4102, expected 4213.
+Table 'dbo.Customers' holds 4102 rows but the export recorded 4213. Importing the 4102 rows the package holds.
 ```
 
-That check is a stored-count comparison, not a live `COUNT(*)` against the package: import counts rows as it copies them and checks the running total against the number recorded at export time. It exists so a scrubbing script with a bad `WHERE` clause, or a `DELETE` that went further than intended, cannot quietly ship a partial dataset. If you genuinely need fewer rows, filter them out at export instead of deleting them from the package.
+If you would rather a moved count stopped the import, set `RowCountDrift.Fail`:
 
-A row-count match is not evidence that a scrub actually worked. The check catches `DELETE`. It does not catch an `UPDATE` that matched zero rows, a scrub applied to one table while a related table still holds every real value, or a column you forgot existed. Verify the scrub itself, separately, before the package travels.
+```csharp
+var options = new ImportOptions { RowCountDrift = RowCountDrift.Fail };
+```
+
+That rejects the package before a single row is written, naming every table whose count moved, so the target is left untouched and you can fix the package and run again. It is the setting for an unattended pipeline that scrubs packages on a schedule, where a count that moved means a bug in the scrub script rather than someone's deliberate edit.
+
+This comparison only ever answers whether the file changed since export. It is not the check that proves an import loaded everything: that one compares the rows read out of the package against the rows that landed in the target, it runs on every import, and it cannot be switched off.
+
+A row-count match is also not evidence that a scrub actually worked. It does not catch an `UPDATE` that matched zero rows, a scrub applied to one table while a related table still holds every real value, or a column you forgot existed. Verify the scrub itself, separately, before the package travels.
+
+## What breaks the import
 
 **Values must stay valid for their target SQL Server type.** Import converts each SQLite value back into what `SqlBulkCopy` expects for the column's original type, and an edited value has to survive that conversion:
 
@@ -45,7 +57,7 @@ If an edit breaks one of these, import fails with SQL Server's own conversion er
 
 | Package area | Safe to edit |
 | --- | --- |
-| Data tables (every bare-named table, e.g. `dbo__customers`) | Yes. This is the whole point: rewrite values freely. |
+| Data tables (every bare-named table, e.g. `dbo__customers`) | Yes. This is the whole point: rewrite values, delete rows, insert rows. |
 | Metadata tables (`zsdp_*`: manifests, stats, warnings, the import plan) | No. Internal to SqlDataPack. Read them through `SqlDataPackReader`, do not write to them. |
 
 ## The package is unsealed on purpose

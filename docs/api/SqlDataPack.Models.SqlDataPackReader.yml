@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackReader.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackReader
     path: src/SqlDataPack/SqlDataPackReader.cs
@@ -52,7 +52,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackReader.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ReadManifestAsync
     path: src/SqlDataPack/SqlDataPackReader.cs

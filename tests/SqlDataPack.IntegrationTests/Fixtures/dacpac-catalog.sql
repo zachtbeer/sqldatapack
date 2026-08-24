@@ -1,4 +1,4 @@
--- Source database for the dacpac tests: DacpacScopeAndDeployTests (scope, deploy, columnstore) and
+﻿-- Source database for the dacpac tests: DacpacScopeAndDeployTests (scope, deploy, columnstore) and
 -- DacpacEditAndDropTests (package editing, drop options). Two independent object groups, one file, so
 -- both suites can run the whole script as their source.
 --
@@ -192,7 +192,10 @@ INSERT INTO dbo.ProductPrices (ProductPriceId, Sku, ListPrice)
 VALUES (1, N'sku-hammer', 12.50),
        (2, N'sku-wrench', 19.95);
 
--- Two updates, two history rows in the auto-named history table.
+-- Two updates, two history rows in the auto-named history table. The WAITFOR forces a real
+-- clock tick so the closed row versions get a non-zero period; SQL Server hides zero-duration
+-- history rows from FOR SYSTEM_TIME queries.
+WAITFOR DELAY '00:00:00.050';
 UPDATE dbo.ProductPrices SET ListPrice = 13.50 WHERE ProductPriceId = 1;
 UPDATE dbo.ProductPrices SET ListPrice = 21.00 WHERE ProductPriceId = 2;
 

@@ -36,11 +36,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExportOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 308
+    startLine: 323
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -72,11 +72,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Default
     path: src/SqlDataPack/Options.cs
-    startLine: 319
+    startLine: 334
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -114,11 +114,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Latest
     path: src/SqlDataPack/Options.cs
-    startLine: 338
+    startLine: 353
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -170,11 +170,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TableSelection
     path: src/SqlDataPack/Options.cs
-    startLine: 346
+    startLine: 361
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -201,11 +201,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Tables
     path: src/SqlDataPack/Options.cs
-    startLine: 351
+    startLine: 366
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -232,11 +232,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExcludeColumns
     path: src/SqlDataPack/Options.cs
-    startLine: 356
+    startLine: 371
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -263,11 +263,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: GlobalWhereClauses
     path: src/SqlDataPack/Options.cs
-    startLine: 361
+    startLine: 376
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -294,11 +294,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: PerTableWhereClauses
     path: src/SqlDataPack/Options.cs
-    startLine: 366
+    startLine: 381
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -325,11 +325,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DataTablePrefix
     path: src/SqlDataPack/Options.cs
-    startLine: 371
+    startLine: 386
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -356,11 +356,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: BatchSize
     path: src/SqlDataPack/Options.cs
-    startLine: 376
+    startLine: 391
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -387,11 +387,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AdaptiveBatchingEnabled
     path: src/SqlDataPack/Options.cs
-    startLine: 381
+    startLine: 396
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -418,11 +418,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableThresholdBytes
     path: src/SqlDataPack/Options.cs
-    startLine: 386
+    startLine: 401
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -449,11 +449,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableRowThreshold
     path: src/SqlDataPack/Options.cs
-    startLine: 391
+    startLine: 406
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -480,11 +480,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableBatchSize
     path: src/SqlDataPack/Options.cs
-    startLine: 396
+    startLine: 411
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -511,11 +511,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: MaxBatchBytes
     path: src/SqlDataPack/Options.cs
-    startLine: 401
+    startLine: 416
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -542,11 +542,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: CommandTimeout
     path: src/SqlDataPack/Options.cs
-    startLine: 406
+    startLine: 421
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -573,11 +573,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Progress
     path: src/SqlDataPack/Options.cs
-    startLine: 411
+    startLine: 426
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -604,11 +604,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Logger
     path: src/SqlDataPack/Options.cs
-    startLine: 418
+    startLine: 433
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -640,11 +640,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: OverwriteExistingPackage
     path: src/SqlDataPack/Options.cs
-    startLine: 423
+    startLine: 438
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -671,11 +671,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExcludeSsmsDiagrams
     path: src/SqlDataPack/Options.cs
-    startLine: 436
+    startLine: 451
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -715,11 +715,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaCaptureMode
     path: src/SqlDataPack/Options.cs
-    startLine: 441
+    startLine: 456
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -746,11 +746,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacCaptureOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 446
+    startLine: 461
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

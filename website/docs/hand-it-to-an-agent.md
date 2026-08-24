@@ -54,13 +54,13 @@ The bare-named tables hold the actual rows, one SQLite table per exported SQL Se
 
 ## What it may change
 
-The agent can rewrite values freely: fix a typo, correct a data type mismatch, regenerate a bad row, whatever the task calls for. It cannot change how many rows are in a table and still have the package import cleanly. See [Editing the package](/editing-the-package) for the full list of what is safe to change and what is not.
+The agent can rewrite values freely: fix a typo, correct a data type mismatch, regenerate a bad row, whatever the task calls for. It can also delete and insert rows, which is usually what an instruction like "drop everything for this customer" turns into. What it cannot do is change the shape of the package: adding, renaming or dropping columns and tables breaks the import. See [Editing the package](/editing-the-package) for the full list of what is safe to change and what is not.
 
 ## The guardrails
 
 An editable, self-describing SQLite file is a good handoff format for an agent precisely because it is local, inspectable, and needs no live database or credentials to hand over. But "editable" cuts both ways, so import checks its work.
 
-At export, SqlDataPack records how many rows it actually copied for each table in `zsdp_table_stats`, as `exported_row_count`. At import, it recounts the rows it copies from the package and compares that count against what is stored there. A mismatch fails the import.
+At export, SqlDataPack records how many rows it actually copied for each table in `zsdp_table_stats`, as `exported_row_count`. At import, it counts what the package holds now and compares. A difference is reported as a warning and the import proceeds with the rows that are there, so an agent told to drop rows can do so and still import the result. Set `RowCountDrift.Fail` if a moved count should stop the import instead.
 
 That means a scrubbing script the agent wrote that accidentally drops rows, an overzealous `DELETE`, a `WHERE` clause with an off-by-one, does not silently ship a partial dataset. It fails the import loudly, with a count that does not match, instead of quietly loading fewer rows than the source had. Treat that as the guardrail it is: the file being ordinary SQLite makes it easy to edit, and this check is what catches an edit that went further than intended.
 

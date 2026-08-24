@@ -32,12 +32,12 @@ jobs:
       release: ${{ steps.compute.outputs.release }}
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           # Full history so git tag and git log can see the releases.
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
         with:
           dotnet-version: |
             8.0.x
@@ -50,7 +50,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Stable tags only. A hand-pushed prerelease like v1.1.0-rc.1 is not a base
+          # Stable tags only. A hand-pushed prerelease like v1.1.0-preview.1 is not a base
           # for an automatic bump, so it is filtered out here.
           last=$(git tag --list 'v*' --sort=-v:refname | grep -v -- '-' | head -1 || true)
 
@@ -125,11 +125,11 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
         with:
           dotnet-version: |
             8.0.x

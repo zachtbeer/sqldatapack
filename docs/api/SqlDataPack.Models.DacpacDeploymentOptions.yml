@@ -27,11 +27,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacDeploymentOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 118
+    startLine: 133
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -63,11 +63,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Default
     path: src/SqlDataPack/Options.cs
-    startLine: 124
+    startLine: 139
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -99,11 +99,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AllowIncompatiblePlatform
     path: src/SqlDataPack/Options.cs
-    startLine: 129
+    startLine: 144
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -130,11 +130,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: BlockOnPossibleDataLoss
     path: src/SqlDataPack/Options.cs
-    startLine: 134
+    startLine: 149
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -161,11 +161,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AllowObjectDrops
     path: src/SqlDataPack/Options.cs
-    startLine: 139
+    startLine: 154
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -192,11 +192,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployUsers
     path: src/SqlDataPack/Options.cs
-    startLine: 144
+    startLine: 159
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -223,11 +223,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployLogins
     path: src/SqlDataPack/Options.cs
-    startLine: 149
+    startLine: 164
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -254,11 +254,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployPermissions
     path: src/SqlDataPack/Options.cs
-    startLine: 154
+    startLine: 169
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -285,11 +285,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployRoleMembership
     path: src/SqlDataPack/Options.cs
-    startLine: 159
+    startLine: 174
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -316,11 +316,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployDatabaseFiles
     path: src/SqlDataPack/Options.cs
-    startLine: 164
+    startLine: 179
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -347,11 +347,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployDatabaseOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 170
+    startLine: 185
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -381,11 +381,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AdaptAzureSourceForOnPremTarget
     path: src/SqlDataPack/Options.cs
-    startLine: 193
+    startLine: 208
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -438,11 +438,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: VerifyDeployment
     path: src/SqlDataPack/Options.cs
-    startLine: 198
+    startLine: 213
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

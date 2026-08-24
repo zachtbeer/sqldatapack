@@ -29,7 +29,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackColumnManifest
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -37,7 +37,7 @@ items:
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
-  summary: Describes a column stored in a SQLite bridge package.
+  summary: Describes a column stored in a SQLite package.
   example: []
   syntax:
     content: 'public sealed record SqlDataPackColumnManifest : IEquatable<SqlDataPackColumnManifest>'
@@ -67,7 +67,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -138,7 +138,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Name
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -169,7 +169,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Ordinal
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -200,7 +200,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlServerTypeName
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -231,7 +231,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: MaxLength
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -262,7 +262,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Precision
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -293,7 +293,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Scale
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -324,7 +324,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IsNullable
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -355,7 +355,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IsIdentity
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -386,7 +386,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IsComputed
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -417,7 +417,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IsExcluded
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -448,7 +448,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: CollationName
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -479,7 +479,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: VectorBaseType
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
@@ -515,7 +515,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: VectorDimensions
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs

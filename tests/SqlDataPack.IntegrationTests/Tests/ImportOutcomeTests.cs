@@ -75,33 +75,95 @@ public sealed class ImportOutcomeTests {
     }
 
     /// <summary>
-    /// The only post-copy reconciliation the importer does: rows actually copied against the count the
-    /// package recorded at export time. Without it, row loss from a concurrent write during export or a
-    /// truncated package lands silently.
+    /// Deleting rows from a package is the documented edit workflow, so the default import takes the package
+    /// as it stands and says what moved rather than refusing it.
     /// </summary>
     [Fact]
-    public async Task Import_RowCountMismatch_FailsNamingTableAndBothNumbers() {
+    public async Task Import_RowsDeletedFromPackage_ImportsWhatRemainsAndWarns() {
         await using var source = await SqlServerFixtureDatabase.CreateAsync(_fixture);
         await source.ExecuteSqlAsync(SqlScriptLoader.LoadEmbeddedScript(CoreCommerce));
         await using var target = await SqlServerFixtureDatabase.CreateAsync(_fixture);
         await TargetSchemaScripts.ApplySourceSchemaUnseededAsync(target, CoreCommerce);
         await using var sqlite = new SqliteTempFileHarness();
+        var exportedRows = await ExportThenDeleteOneRowAsync(source, sqlite);
+
+        var result = await new SqlDataPackImporter().ImportAsync(sqlite.FilePath, target.ConnectionString);
+
+        result.RowCount.ShouldBe(exportedRows - 1);
+        (await target.ScalarIntAsync("SELECT COUNT(*) FROM dbo.GlobalSettings")).ShouldBe(exportedRows - 1);
+        result.Warnings.ShouldContain(w => w.Contains("dbo.GlobalSettings", StringComparison.Ordinal)
+                                           && w.Contains($"holds {exportedRows - 1} rows", StringComparison.Ordinal)
+                                           && w.Contains($"recorded {exportedRows}", StringComparison.Ordinal));
+    }
+
+    /// <summary>
+    /// The strict mode an unattended scrub pipeline sets, where a count that moved means a script bug. It has
+    /// to reject before writing rather than partway through, so the target stays usable and the run is
+    /// retryable -- which is exactly what the old in-loop check could not do.
+    /// </summary>
+    [Fact]
+    public async Task Import_RowsDeletedFromPackage_WithFail_RefusesBeforeWritingAnything() {
+        await using var source = await SqlServerFixtureDatabase.CreateAsync(_fixture);
+        await source.ExecuteSqlAsync(SqlScriptLoader.LoadEmbeddedScript(CoreCommerce));
+        await using var target = await SqlServerFixtureDatabase.CreateAsync(_fixture);
+        await TargetSchemaScripts.ApplySourceSchemaUnseededAsync(target, CoreCommerce);
+        await using var sqlite = new SqliteTempFileHarness();
+        var exportedRows = await ExportThenDeleteOneRowAsync(source, sqlite);
+
+        var exception = await Should.ThrowAsync<SqlDataPackException>(() => new SqlDataPackImporter()
+            .ImportAsync(sqlite.FilePath, target.ConnectionString, new ImportOptions { RowCountDrift = RowCountDrift.Fail }));
+
+        exception.Message.ShouldContain("dbo.GlobalSettings");
+        exception.Message.ShouldContain($"holds {exportedRows - 1} rows");
+        exception.Message.ShouldContain($"recorded {exportedRows}");
+
+        (await target.ScalarIntAsync("SELECT COUNT(*) FROM dbo.GlobalSettings")).ShouldBe(0);
+    }
+
+    /// <summary>
+    /// Preflight exists to answer "will this import work" without writing anything, so it has to reach the
+    /// same verdict the import will. Before this it called an edited package valid and the import then
+    /// refused it, which is the contradiction that made a half-loaded target so easy to hit.
+    /// </summary>
+    [Fact]
+    public async Task Preflight_RowsDeletedFromPackage_WarnsByDefaultAndErrorsUnderFail() {
+        await using var source = await SqlServerFixtureDatabase.CreateAsync(_fixture);
+        await source.ExecuteSqlAsync(SqlScriptLoader.LoadEmbeddedScript(CoreCommerce));
+        await using var target = await SqlServerFixtureDatabase.CreateAsync(_fixture);
+        await TargetSchemaScripts.ApplySourceSchemaUnseededAsync(target, CoreCommerce);
+        await using var sqlite = new SqliteTempFileHarness();
+        var exportedRows = await ExportThenDeleteOneRowAsync(source, sqlite);
+
+        var warnPreflight = await new SqlDataPackImporter().PreflightAsync(sqlite.FilePath, target.ConnectionString);
+
+        warnPreflight.IsValid.ShouldBeTrue();
+        warnPreflight.Errors.ShouldBeEmpty();
+        warnPreflight.Warnings.ShouldContain(w => w.Contains("dbo.GlobalSettings", StringComparison.Ordinal)
+                                                  && w.Contains($"holds {exportedRows - 1} rows", StringComparison.Ordinal));
+
+        var failPreflight = await new SqlDataPackImporter().PreflightAsync(sqlite.FilePath, target.ConnectionString, new ImportOptions { RowCountDrift = RowCountDrift.Fail });
+
+        failPreflight.IsValid.ShouldBeFalse();
+        failPreflight.Errors.ShouldContain(e => e.Contains("dbo.GlobalSettings", StringComparison.Ordinal));
+        failPreflight.Warnings.ShouldNotContain(w => w.Contains($"holds {exportedRows - 1} rows", StringComparison.Ordinal));
+    }
+
+    /// <summary>
+    /// Exports one table, deletes its first row from the package, and returns the count the export recorded.
+    /// The package then holds one row fewer than its manifest claims, which is what the documented edit
+    /// workflow produces. Resolves the data table from the manifest because DataTablePrefix is configurable.
+    /// </summary>
+    private static async Task<int> ExportThenDeleteOneRowAsync(SqlServerFixtureDatabase source, SqliteTempFileHarness sqlite) {
         var options = new ExportOptions { TableSelection = ExportTableSelectionMode.Only, Tables = ["dbo.GlobalSettings"] };
         await new SqlDataPackExporter().ExportAsync(source.ConnectionString, sqlite.FilePath, options);
         var exportedRows = await source.ScalarIntAsync("SELECT COUNT(*) FROM dbo.GlobalSettings");
+
         await using (var package = await sqlite.OpenConnectionAsync()) {
-            await package.ExecuteSqlAsync("UPDATE zsdp_table_stats SET exported_row_count = exported_row_count + 1");
+            var dataTable = await package.ScalarStringAsync("SELECT sqlite_table FROM zsdp_tables WHERE source_schema = 'dbo' AND source_table = 'GlobalSettings'");
+            await package.ExecuteSqlAsync($"""DELETE FROM "{dataTable}" WHERE rowid = (SELECT MIN(rowid) FROM "{dataTable}")""");
         }
 
-        var exception = await Should.ThrowAsync<SqlDataPackException>(() => new SqlDataPackImporter().ImportAsync(sqlite.FilePath, target.ConnectionString));
-
-        exception.Message.ShouldContain("dbo.GlobalSettings");
-        exception.Message.ShouldContain($"was {exportedRows}");
-        exception.Message.ShouldContain($"expected {exportedRows + 1}");
-
-        // Deliberate: reconciliation runs after the copy and is not transactional, so the caller is told the
-        // target is dirty rather than having the rows rolled back underneath them.
-        (await target.ScalarIntAsync("SELECT COUNT(*) FROM dbo.GlobalSettings")).ShouldBe(exportedRows);
+        return exportedRows;
     }
 
     /// <summary>

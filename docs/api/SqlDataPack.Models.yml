@@ -12,6 +12,7 @@ items:
   - SqlDataPack.Models.GlobalWhereClause
   - SqlDataPack.Models.ImportOptions
   - SqlDataPack.Models.PerTableWhereClause
+  - SqlDataPack.Models.RowCountDrift
   - SqlDataPack.Models.SchemaCaptureMode
   - SqlDataPack.Models.SchemaDeploymentMode
   - SqlDataPack.Models.SqlDataPackColumnManifest
@@ -61,6 +62,13 @@ references:
   name: ExportTableSelectionMode
   nameWithType: ExportTableSelectionMode
   fullName: SqlDataPack.Models.ExportTableSelectionMode
+- uid: SqlDataPack.Models.RowCountDrift
+  commentId: T:SqlDataPack.Models.RowCountDrift
+  parent: SqlDataPack.Models
+  href: SqlDataPack.Models.RowCountDrift.html
+  name: RowCountDrift
+  nameWithType: RowCountDrift
+  fullName: SqlDataPack.Models.RowCountDrift
 - uid: SqlDataPack.Models.DacpacCaptureOptions
   commentId: T:SqlDataPack.Models.DacpacCaptureOptions
   parent: SqlDataPack.Models

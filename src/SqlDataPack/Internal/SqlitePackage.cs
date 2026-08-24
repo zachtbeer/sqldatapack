@@ -521,7 +521,17 @@ internal static class SqlitePackage {
         return new RunMetadata(reader.GetInt32(0), reader.GetString(1), exportedAt, reader.GetString(3));
     }
 
-    private static async Task<IReadOnlyDictionary<string, long>> ReadExpectedRowCountsAsync(SqliteConnection connection, CancellationToken cancellationToken) {
+    /// <summary>
+    /// The rows the data table holds right now, which is not necessarily what the export recorded:
+    /// the package is editable on purpose, so a caller may have deleted or inserted rows since.
+    /// </summary>
+    public static async Task<long> ReadActualRowCountAsync(SqliteConnection connection, string sqliteTableName, CancellationToken cancellationToken) {
+        await using var command = connection.CreateCommand();
+        command.CommandText = $"SELECT COUNT(*) FROM {SqlDataPackIdentifier.QuoteSqliteName(sqliteTableName)}";
+        return Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken));
+    }
+
+    public static async Task<IReadOnlyDictionary<string, long>> ReadExpectedRowCountsAsync(SqliteConnection connection, CancellationToken cancellationToken) {
         var result = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
         await using var command = connection.CreateCommand();
         command.CommandText = """
