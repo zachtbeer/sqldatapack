@@ -122,9 +122,7 @@ internal sealed class ExportCommand : Command {
     /// </summary>
     public ExportRequest Bind(ParseResult parseResult) {
         var optionsFile = parseResult.GetValue(this.OptionsFilePath);
-        var options = optionsFile is null
-            ? new ExportOptions()
-            : OptionsFile.LoadExportOptions(optionsFile.FullName);
+        var options = optionsFile is null ? new ExportOptions() : OptionsFile.LoadExportOptions(optionsFile.FullName);
 
         var hasTables = CommandSupport.WasSpecified(parseResult, this.Tables);
         var hasExcludeTables = CommandSupport.WasSpecified(parseResult, this.ExcludeTables);
@@ -173,11 +171,7 @@ internal sealed class ExportCommand : Command {
             options.CommandTimeout = RequirePositive(parseResult.GetValue(this.Timeout), "--timeout");
         }
 
-        return new ExportRequest(
-            CommandSupport.ResolveConnectionString(parseResult, this.Connection),
-            parseResult.GetRequiredValue(this.Output),
-            options,
-            parseResult.GetValue(this.Quiet));
+        return new ExportRequest(CommandSupport.ResolveConnectionString(parseResult, this.Connection), parseResult.GetRequiredValue(this.Output), options, parseResult.GetValue(this.Quiet));
     }
 
     private static List<GlobalWhereClause> BuildGlobalWhereClauses(string[]? values) {

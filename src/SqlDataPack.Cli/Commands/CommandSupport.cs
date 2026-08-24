@@ -38,8 +38,7 @@ internal static class CommandSupport {
     /// "not typed" as "typed false" and quietly undoes the options file.
     /// </para>
     /// </summary>
-    public static bool WasSpecified(ParseResult parseResult, Option option) =>
-        parseResult.GetResult(option) is OptionResult { Implicit: false };
+    public static bool WasSpecified(ParseResult parseResult, Option option) => parseResult.GetResult(option) is OptionResult { Implicit: false };
 
     public static string ResolveConnectionString(ParseResult parseResult, Option<string> connectionOption) {
         var connection = parseResult.GetValue(connectionOption);

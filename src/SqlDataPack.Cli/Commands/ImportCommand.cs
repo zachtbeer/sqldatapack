@@ -77,9 +77,7 @@ internal sealed class ImportCommand : Command {
     /// </summary>
     public ImportRequest Bind(ParseResult parseResult) {
         var optionsFile = parseResult.GetValue(this.OptionsFilePath);
-        var options = optionsFile is null
-            ? new ImportOptions()
-            : OptionsFile.LoadImportOptions(optionsFile.FullName);
+        var options = optionsFile is null ? new ImportOptions() : OptionsFile.LoadImportOptions(optionsFile.FullName);
 
         if (CommandSupport.WasSpecified(parseResult, this.DeploySchema)) {
             options.SchemaDeploymentMode = parseResult.GetValue(this.DeploySchema) switch {
@@ -103,11 +101,7 @@ internal sealed class ImportCommand : Command {
             options.BulkCopyTimeout = RequirePositive(parseResult.GetValue(this.Timeout), "--timeout");
         }
 
-        return new ImportRequest(
-            parseResult.GetRequiredValue(this.Package),
-            CommandSupport.ResolveConnectionString(parseResult, this.Connection),
-            options,
-            parseResult.GetValue(this.Quiet));
+        return new ImportRequest(parseResult.GetRequiredValue(this.Package), CommandSupport.ResolveConnectionString(parseResult, this.Connection), options, parseResult.GetValue(this.Quiet));
     }
 
     private static int RequirePositive(int? value, string flagName) {
