@@ -186,7 +186,7 @@ jobs:
       - name: Generate SBOM (CycloneDX)
         run: |
           dotnet tool install --global CycloneDX --version 6.2.0
-          dotnet CycloneDX src/SqlDataPack/SqlDataPack.csproj -o ./sbom -j --set-version "${{ needs.guard.outputs.version }}"
+          dotnet CycloneDX src/SqlDataPack/SqlDataPack.csproj -o ./sbom --output-format Json --set-version "${{ needs.guard.outputs.version }}"
 
       - name: NuGet login (OIDC trusted publishing)
         if: needs.guard.outputs.publish == 'true'
