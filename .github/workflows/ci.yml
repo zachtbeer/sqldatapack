@@ -67,12 +67,6 @@ jobs:
           build/cleanup.sh
           git diff --exit-code
 
-      # After the git diff check above, not before: running a file-based app in build/
-      # can rewrite build/packages.lock.json, which is deliberately outside
-      # SqlDataPack.slnx and never restored in locked mode.
-      - name: Version bump script self-test
-        run: dotnet run build/NextVersion.cs -- --self-test
-
   build:
     name: Build and unit tests (${{ matrix.os }})
     runs-on: ${{ matrix.os }}

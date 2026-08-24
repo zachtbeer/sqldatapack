@@ -1,76 +1,94 @@
 # Cutting a Release
 
-You do not cut a release. Merging does.
+Push a tag. That is the whole process.
 
-Every pull request that changes the package carries one label saying how big the change is, and merging it to `main` computes the next version, tags it, and publishes to nuget.org.
+```
+dotnet run build/VersionGuard.cs -- 1.1.0
+git tag -a v1.1.0 -m "v1.1.0"
+git push origin v1.1.0
+```
 
-| Label | Effect |
-| --- | --- |
-| `semver:major` | `1.4.2` becomes `2.0.0` |
-| `semver:minor` | `1.4.2` becomes `1.5.0` |
-| `semver:patch` | `1.4.2` becomes `1.4.3` |
-| `semver:none` | Nothing is published |
+`VersionGuard` prints those last two lines for you when its checks pass, so in practice you run the first command and paste what it gives you.
 
-`version-label.yml` fails the pull request if it changes the package and carries no label, or carries a label and changes nothing in the package. A change counts as a package change when it touches `src/SqlDataPack/`, `src/SqlDataPack.Cli/`, `build/winget/`, `Directory.Build.props` or `Directory.Packages.props`.
+Nothing else publishes. `release.yml` is the only workflow in the repository that can reach `dotnet nuget push`, and a merge to `main` never releases anything.
 
-The library and the CLI release in lockstep off one tag and one version number. There is no way to ship a CLI fix without also publishing the library at that version, and that is deliberate: a CLI-only change still gets a label, and the library gets a version that changed nothing. Cheaper than two version lines that drift apart.
+## What the tag starts
 
-Use `semver:none` for a change nobody consuming the package could observe: a comment, a private refactor, a test-only edit that happens to live under `src/`.
+`release.yml` runs one guard job, then six standalone builds, then everything else:
 
-## What happens on merge
+1. **Guard.** `build/VersionGuard.cs` again, in CI this time, including the check that the tag is on `HEAD`.
+2. **Binaries.** `win-x64`, `win-arm64`, `linux-x64`, `linux-arm64`, `osx-x64`, `osx-arm64`, each self-contained and asserted to be exactly one file, each smoke-tested where the runner can execute what it built.
+3. **Publish.** Build, unit tests, pack both packages, verify the packed versions match the tag, checksums, provenance attestation, SBOMs, release notes, then push to nuget.org and create the GitHub release with the binaries, `SHA256SUMS` and SBOMs attached.
 
-`publish.yml` finds the most recent stable tag, walks the commits since it, reads the label off each merged pull request, takes the highest bump, and computes the version with `build/NextVersion.cs`. It runs `build/VersionGuard.cs`, pushes the tag, and hands over to `release.yml`, which builds, tests, packs, attests provenance, generates an SBOM, publishes to nuget.org, and creates the GitHub release with notes generated from the pull requests.
+The order matters: everything that can fail runs before the first `dotnet nuget push`. A nuget version cannot be taken back, so nothing reaches it until the rest has already worked.
 
-If the highest bump is `none`, nothing is published and the run summary says so. This is the ordinary outcome for a documentation or CI merge.
+## Previews
 
-## The first release
+Same three commands, with a prerelease version:
 
-With no tag to bump from, the version is computed against `0.0.0`, so the label picks the starting number like it picks every other one:
+```
+dotnet run build/VersionGuard.cs -- 1.1.0-preview.1
+git tag -a v1.1.0-preview.1 -m "v1.1.0-preview.1"
+git push origin v1.1.0-preview.1
+```
 
-| Label | First release |
-| --- | --- |
-| `semver:major` | `1.0.0` |
-| `semver:minor` | `0.1.0` |
-| `semver:patch` | `0.0.1` |
+There is no separate preview workflow. `release.yml` reads the prerelease part off the version string, marks the GitHub release as a prerelease so it does not show as "Latest", and skips the winget submission.
 
-Going straight to `1.0.0` means labelling that pull request `semver:major`. Once the project is on a `0.x` version, `semver:major` is what moves it to `1.0.0`; there is no separate 0.x bump convention here.
+A preview of the CLI installs with `dotnet tool install -g SqlDataPack.Cli --prerelease`. Previews are not published to winget.
+
+## Rehearsing
+
+**Actions → Release → Run workflow** with `dry_run` ticked. It builds, tests, packs and validates against an existing tag and publishes nothing.
+
+`dry_run` stops before the nuget push, so it proves the build and the packaging but not the push itself. It cannot tell you whether nuget.org will accept a credential.
+
+## Picking the number
+
+You pick it. The library and the CLI release in lockstep off one tag and one version, so there is no way to ship a CLI fix without also publishing the library at that version. That is deliberate. A CLI-only change still cuts a library version that contains nothing new, which is cheaper than two version lines that drift apart.
+
+`VersionGuard` will not let you publish a version that sorts at or below something already on nuget.org, and it checks both `SqlDataPack` and `SqlDataPack.Cli`. Do not reason about prerelease ordering by hand; let the guard decide.
 
 ## The release notes
 
-The GitHub release notes are generated from the pull requests in the release. Your pull request title and body are what readers see, so write them for a reader.
+Generated from the pull requests since the previous tag, so your pull request title is what readers see. Write it for a reader.
 
-The readable account of the project is `website/docs/changelog.md`, which deploys with the docs site and is not tied to a version. Edit it whenever you like. `CHANGELOG.md` at the repository root is a pointer to both and holds nothing else.
+The readable account of the project is `website/docs/changelog.md`, which deploys with the docs site and is not tied to a version. Edit it whenever you like. `CHANGELOG.md` at the repository root points at both and holds nothing else.
 
-## Releasing a prerelease
+## Trusted publishing
 
-The automatic path only ever produces `X.Y.Z`. Previews come from `prerelease.yml`, which you run by hand:
+nuget.org authenticates the workflow, not a stored key, so there is nothing to rotate. It needs exactly one policy:
 
-**Actions → Prerelease → Run workflow**, then type the full version, for example `1.0.0-preview.1`.
+| Field | Value |
+| --- | --- |
+| Repository Owner | `zachtbeer` |
+| Repository | `sqldatapack` |
+| Workflow File | `release.yml` |
+| Environment | empty |
+| Scopes | publish new packages and publish new versions, glob `SqlDataPack*` |
 
-You pick the number. The workflow builds, tests and packs first, then tags, publishes to nuget.org, and creates a GitHub release marked as a prerelease. Tick `dry_run` to build and validate without tagging or publishing anything.
+One policy because one file publishes. If you ever add a second workflow that pushes to nuget.org, or call this one with `workflow_call`, that is a second policy and a second thing to keep pointed at the right file. The repository had three of those and every one of them was misconfigured at some point. Add a trigger to `release.yml` instead.
 
-Three things stop a mistake:
-
-- A version with no prerelease part is rejected. This workflow cannot publish a stable release, whatever you type.
-- `VersionGuard` checks the SemVer form and that the version sorts strictly above everything on nuget.org.
-- A version that is already tagged is refused, so you cannot overwrite a candidate.
-
-The tag is created after the build passes, so a failed run leaves nothing behind to clean up.
-
-`publish.yml` ignores prerelease tags when looking for the last release, so a preview never becomes the base for the next automatic bump. That also means the eventual stable release computes from the last *stable* tag: after `1.0.0-preview.3` with no stable tag before it, the label on the finalizing pull request has to be `semver:major` to produce `1.0.0`.
-
-`prerelease.yml` is self-contained rather than calling `release.yml`, so nuget.org sees an OIDC token issued for `prerelease.yml`. It needs its own trusted publishing policy naming that file.
+The glob is `SqlDataPack*`, not `SqlDataPack.*`: nuget treats the period literally, so the dotted form matches `SqlDataPack.Cli` but misses the bare `SqlDataPack`.
 
 ## When it goes wrong
 
-**A merge published the wrong version number.** The label was wrong. nuget.org supports no permanent deletion, so the published version stays. Unlist it on nuget.org, then publish the version you meant next. A version that sorts below one already published cannot be used, which is what `VersionGuard` checks for.
+**Failed before any nuget push.** The common case: build, tests, binaries, SBOM, attestation, notes. Nothing is burned. Delete the tag, fix, re-tag the same version:
 
-**A merge published nothing and should have.** The pull request carried `semver:none`, or it reached `main` without a pull request, which the run summary names. Open a pull request with the right label; an empty commit is enough if there is nothing else to change.
+```
+git push origin :refs/tags/v1.1.0
+git tag -d v1.1.0
+```
 
-**The publish job failed after the tag was pushed.** The tag exists and some or all of the release did not happen. `gh release create` is the last step, so if the run got as far as pushing a package there is still no GitHub release. Fix the cause, then re-run `release.yml` manually against that tag with `dry_run` cleared: `--skip-duplicate` makes an already-published push a no-op, the failed push retries, and the GitHub release is created for the first time.
+**Failed after a nuget push.** That version is gone on whichever package ids made it through. Do not delete the tag. Re-run the failed jobs against the same tag:
 
-That manual re-run needs a trusted publishing policy on nuget.org naming `release.yml`. nuget.org matches the top-level workflow file, not the reusable one, so the policy covering `publish.yml` does not cover a direct run of `release.yml`: without its own policy the token exchange returns 401 with "Workflow mismatch" and the recovery path does not work. Same for publishing a preview by pushing a `v*` tag by hand.
+```
+gh run rerun <run-id> --failed
+```
 
-**One package published and the other did not.** The pushes are separate steps, CLI first, so this means the CLI landed and the library did not. Re-run the job as above. `VersionGuard` checks both ids, so it will refuse to reuse that version on a later tag.
+`--skip-duplicate` makes the already-published pushes no-ops, the failed push retries, and the GitHub release gets created. Use `gh run rerun` rather than a fresh manual run: a manual run resolves the version by describing `HEAD` on a branch, which only works if that branch's `HEAD` happens to be the tagged commit.
 
-**The packed version does not match the tag.** `release.yml` asserts this and stops before publishing. The version is passed into both `dotnet build` and `dotnet pack`, so a mismatch means one of those two lost its `-p:Version=`.
+**One package published and the other did not.** The pushes are separate steps with the CLI first, so this means the CLI landed and the library did not. Re-run as above. `VersionGuard` checks both ids, so it will refuse to reuse that version on a later tag.
+
+**The packed version does not match the tag.** `release.yml` asserts this and stops before publishing. The version is passed into both `dotnet build` and `dotnet pack`, so a mismatch means one of those lost its `-p:Version=`.
+
+**A published version is wrong.** nuget.org supports no permanent deletion. Unlist it, then publish the version you meant next. You cannot reuse or undercut the number.

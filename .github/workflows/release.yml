@@ -1,18 +1,19 @@
 name: Release
 
-# Builds and publishes one version. Normally called by publish.yml, which computes
-# the version from the semver: label on the merged pull request and pushes the tag
-# before calling. A pushed v* tag also triggers it directly, which is how a preview
-# gets published by hand:
+# Builds and publishes one version. Push a tag and this does the rest:
 #
-#     dotnet run build/VersionGuard.cs -- 1.1.0-preview.1   # same checks this workflow runs
-#     git tag -a v1.1.0-preview.1 -m "v1.1.0-preview.1"
-#     git push origin v1.1.0-preview.1
+#     dotnet run build/VersionGuard.cs -- 1.1.0    # prints the next two lines for you
+#     git tag -a v1.1.0 -m "v1.1.0"
+#     git push origin v1.1.0
 #
-# Both direct paths need a nuget.org trusted publishing policy that names this file.
-# nuget.org matches the top-level workflow, not the reusable one, so the policy covering
-# publish.yml does not cover a tag push or a manual run: the token exchange returns 401
-# with "Workflow mismatch". v1.0.0 hit exactly that.
+# A preview is the same three commands with 1.1.0-preview.1. Prerelease-ness is read off
+# the version string, so there is no separate workflow for it.
+#
+# This is deliberately the only file in the repository that can reach `dotnet nuget push`,
+# which is what keeps it to a single trusted publishing policy on nuget.org. That policy
+# names release.yml and covers every trigger below. Publishing from a second workflow, or
+# calling this one with workflow_call, means a second policy and a second thing to get
+# wrong; the repository had three of those and it went badly. Add triggers here instead.
 #
 # Use the manual trigger with dry_run to rehearse against an existing tag without
 # publishing anything.
@@ -27,15 +28,6 @@ on:
         description: "Build, pack and validate without publishing"
         type: boolean
         default: true
-  workflow_call:
-    inputs:
-      version:
-        description: "The version to publish, with no leading v"
-        type: string
-        required: true
-      dry_run:
-        type: boolean
-        default: false
 
 permissions:
   contents: read
@@ -73,9 +65,9 @@ jobs:
             8.0.x
             10.0.x
 
-      # A tag push and a call from publish.yml both publish. A manual run publishes
-      # only when dry_run is cleared, which is the rehearsal path. inputs.dry_run is
-      # empty on a tag push, so that case falls through to publishing.
+      # A tag push publishes. A manual run publishes only when dry_run is cleared, which
+      # is the rehearsal path. inputs.dry_run is empty on a tag push, so that case falls
+      # through to publishing.
       - name: Resolve mode
         id: mode
         run: |
@@ -86,15 +78,12 @@ jobs:
             echo "publish=true" >> "$GITHUB_OUTPUT"
           fi
 
-      # Called from publish.yml the version is given, and the tag was pushed just
-      # before the call. On a tag push it comes from the ref. On a manual run HEAD may
-      # sit on a tag pushed earlier, so fall back to describing HEAD.
+      # On a tag push the version comes from the ref. On a manual run HEAD may sit on a
+      # tag pushed earlier, so fall back to describing HEAD.
       - name: Resolve version
         id: tag
         run: |
-          if [ -n "${{ inputs.version }}" ]; then
-            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
-          elif [ "${GITHUB_REF}" != "${GITHUB_REF#refs/tags/}" ]; then
+          if [ "${GITHUB_REF}" != "${GITHUB_REF#refs/tags/}" ]; then
             tag="${GITHUB_REF#refs/tags/}"
             echo "version=${tag#v}" >> "$GITHUB_OUTPUT"
           elif tag=$(git describe --tags --exact-match HEAD 2>/dev/null); then
@@ -324,6 +313,31 @@ jobs:
           mv ./sbom/bom.json ./sbom/sqldatapack-sbom.json
           mv ./sbom-cli/bom.json ./sbom/sqldatapack-cli-sbom.json
 
+      # Before the pushes, not after. Generating notes calls the GitHub API and can fail;
+      # doing it afterwards means failing once the packages are already on nuget.org and
+      # cannot be taken back. Everything that can fail runs before the first push.
+      #
+      # Notes are generated from the pull requests merged since the previous tag, so a
+      # pull request title is what readers eventually see. The readable, narrative
+      # account of the project lives on the docs site and is not tied to a version.
+      # Runs on dry runs too, so a rehearsal shows exactly what the release would say.
+      - name: Generate release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.guard.outputs.version }}
+        run: |
+          previous=$(git tag --list 'v*' --sort=-v:refname | grep -Fxv "v${VERSION}" | head -1)
+          if [ -n "${previous}" ]; then
+            gh api "repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
+              -f tag_name="v${VERSION}" -f previous_tag_name="${previous}" \
+              --jq '.body' > ./release-notes.md
+          else
+            gh api "repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
+              -f tag_name="v${VERSION}" --jq '.body' > ./release-notes.md
+          fi
+          echo "## Release notes for v${VERSION}" >> "$GITHUB_STEP_SUMMARY"
+          cat ./release-notes.md >> "$GITHUB_STEP_SUMMARY"
+
       - name: NuGet login (OIDC trusted publishing)
         if: needs.guard.outputs.publish == 'true'
         uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1
@@ -347,27 +361,6 @@ jobs:
       - name: Push symbols to NuGet.org
         if: needs.guard.outputs.publish == 'true'
         run: dotnet nuget push "./release-packages/*.snupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
-
-      # Notes are generated from the pull requests merged since the previous tag, so a
-      # pull request title is what readers eventually see. The readable, narrative
-      # account of the project lives on the docs site and is not tied to a version.
-      # Runs on dry runs too, so a rehearsal shows exactly what the release would say.
-      - name: Generate release notes
-        env:
-          GH_TOKEN: ${{ github.token }}
-          VERSION: ${{ needs.guard.outputs.version }}
-        run: |
-          previous=$(git tag --list 'v*' --sort=-v:refname | grep -Fxv "v${VERSION}" | head -1)
-          if [ -n "${previous}" ]; then
-            gh api "repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
-              -f tag_name="v${VERSION}" -f previous_tag_name="${previous}" \
-              --jq '.body' > ./release-notes.md
-          else
-            gh api "repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
-              -f tag_name="v${VERSION}" --jq '.body' > ./release-notes.md
-          fi
-          echo "## Release notes for v${VERSION}" >> "$GITHUB_STEP_SUMMARY"
-          cat ./release-notes.md >> "$GITHUB_STEP_SUMMARY"
 
       # Prereleases are marked as such, so a preview does not display as
       # "Latest" on the releases page.
