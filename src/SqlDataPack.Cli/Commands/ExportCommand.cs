@@ -121,13 +121,13 @@ internal sealed class ExportCommand : Command {
     /// while one run tweaks a single value.
     /// </summary>
     public ExportRequest Bind(ParseResult parseResult) {
-        FileInfo? optionsFile = parseResult.GetValue(this.OptionsFilePath);
-        ExportOptions options = optionsFile is null
+        var optionsFile = parseResult.GetValue(this.OptionsFilePath);
+        var options = optionsFile is null
             ? new ExportOptions()
             : OptionsFile.LoadExportOptions(optionsFile.FullName);
 
-        bool hasTables = CommandSupport.WasSpecified(parseResult, this.Tables);
-        bool hasExcludeTables = CommandSupport.WasSpecified(parseResult, this.ExcludeTables);
+        var hasTables = CommandSupport.WasSpecified(parseResult, this.Tables);
+        var hasExcludeTables = CommandSupport.WasSpecified(parseResult, this.ExcludeTables);
 
         if (hasTables && hasExcludeTables) {
             throw new CliUsageException("--tables and --exclude-tables select in opposite directions. Use one or the other.");
@@ -182,9 +182,9 @@ internal sealed class ExportCommand : Command {
 
     private static List<GlobalWhereClause> BuildGlobalWhereClauses(string[]? values) {
         List<GlobalWhereClause> clauses = [];
-        foreach (string value in values ?? []) {
-            (string columns, string predicate) = CommandSupport.SplitKeyedPredicate(value, "--global-where", "Column");
-            List<string> columnNames = CommandSupport.SplitList([columns]);
+        foreach (var value in values ?? []) {
+            (var columns, var predicate) = CommandSupport.SplitKeyedPredicate(value, "--global-where", "Column");
+            var columnNames = CommandSupport.SplitList([columns]);
             if (columnNames.Count == 0) {
                 throw new CliUsageException($"--global-where needs at least one column name before the colon. Got: {value}");
             }
@@ -197,8 +197,8 @@ internal sealed class ExportCommand : Command {
 
     private static List<PerTableWhereClause> BuildPerTableWhereClauses(string[]? values) {
         List<PerTableWhereClause> clauses = [];
-        foreach (string value in values ?? []) {
-            (string table, string predicate) = CommandSupport.SplitKeyedPredicate(value, "--table-where", "schema.Table");
+        foreach (var value in values ?? []) {
+            (var table, var predicate) = CommandSupport.SplitKeyedPredicate(value, "--table-where", "schema.Table");
             clauses.Add(new PerTableWhereClause(table, predicate));
         }
 

@@ -427,7 +427,7 @@
         "type": "Project",
         "dependencies": {
           "SqlDataPack": "[1.0.0, )",
-          "System.CommandLine": "[2.0.6, )"
+          "System.CommandLine": "[2.0.11, )"
         }
       },
       "Microsoft.Data.SqlClient": {
@@ -521,9 +521,9 @@
       },
       "System.CommandLine": {
         "type": "CentralTransitive",
-        "requested": "[2.0.6, )",
-        "resolved": "2.0.6",
-        "contentHash": "10CL/VxB7N5FXP5mJD5aROrfyT7g3VIk0GH9DaSR3/QlD0q+GzRD+3+HnicYI1f391IZZ41vC5t+i62NjvEbDg=="
+        "requested": "[2.0.11, )",
+        "resolved": "2.0.11",
+        "contentHash": "Pmg3/T0M37ZS3ovwPHtfBNTCdqNpnxo+tnZMg8JDHVR0qD8KwcPUKlheEiZysb1En8IyH7yDoa9QDq97Ny/vhQ=="
       }
     }
   }

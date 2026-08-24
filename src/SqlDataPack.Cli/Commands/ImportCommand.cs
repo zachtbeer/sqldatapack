@@ -76,8 +76,8 @@ internal sealed class ImportCommand : Command {
     /// starting point and explicit flags overwriting it.
     /// </summary>
     public ImportRequest Bind(ParseResult parseResult) {
-        FileInfo? optionsFile = parseResult.GetValue(this.OptionsFilePath);
-        ImportOptions options = optionsFile is null
+        var optionsFile = parseResult.GetValue(this.OptionsFilePath);
+        var options = optionsFile is null
             ? new ImportOptions()
             : OptionsFile.LoadImportOptions(optionsFile.FullName);
 

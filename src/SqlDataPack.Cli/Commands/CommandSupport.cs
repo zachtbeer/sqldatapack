@@ -42,7 +42,7 @@ internal static class CommandSupport {
         parseResult.GetResult(option) is OptionResult { Implicit: false };
 
     public static string ResolveConnectionString(ParseResult parseResult, Option<string> connectionOption) {
-        string? connection = parseResult.GetValue(connectionOption);
+        var connection = parseResult.GetValue(connectionOption);
         if (!string.IsNullOrWhiteSpace(connection)) {
             return connection;
         }
@@ -64,8 +64,8 @@ internal static class CommandSupport {
             return result;
         }
 
-        foreach (string value in values) {
-            foreach (string part in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
+        foreach (var value in values) {
+            foreach (var part in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
                 result.Add(part);
             }
         }
@@ -78,13 +78,13 @@ internal static class CommandSupport {
     /// literal, say) without needing to be escaped.
     /// </summary>
     public static (string Key, string Predicate) SplitKeyedPredicate(string value, string flagName, string keyDescription) {
-        int separator = value.IndexOf(':');
+        var separator = value.IndexOf(':');
         if (separator <= 0) {
             throw new CliUsageException($"{flagName} expects \"{keyDescription}:predicate\", for example {flagName} \"CustomerId:CustomerId = 42\". Got: {value}");
         }
 
-        string key = value[..separator].Trim();
-        string predicate = value[(separator + 1)..].Trim();
+        var key = value[..separator].Trim();
+        var predicate = value[(separator + 1)..].Trim();
 
         if (key.Length == 0 || predicate.Length == 0) {
             throw new CliUsageException($"{flagName} expects \"{keyDescription}:predicate\", with something either side of the colon. Got: {value}");

@@ -25,7 +25,7 @@ internal static class OptionsFile {
             throw new CliUsageException($"Options file not found: {path}");
         }
 
-        string json = File.ReadAllText(path);
+        var json = File.ReadAllText(path);
 
         JsonDocument document;
         try {
@@ -59,7 +59,7 @@ internal static class OptionsFile {
     private static void RejectConnectionStrings(JsonElement element, string path, string jsonPath) {
         switch (element.ValueKind) {
             case JsonValueKind.Object:
-                foreach (JsonProperty property in element.EnumerateObject()) {
+                foreach (var property in element.EnumerateObject()) {
                     if (property.Name.Contains("connection", StringComparison.OrdinalIgnoreCase)) {
                         throw ConnectionStringRejected(path, $"{jsonPath}.{property.Name}");
                     }
@@ -70,8 +70,8 @@ internal static class OptionsFile {
                 break;
 
             case JsonValueKind.Array:
-                int index = 0;
-                foreach (JsonElement item in element.EnumerateArray()) {
+                var index = 0;
+                foreach (var item in element.EnumerateArray()) {
                     RejectConnectionStrings(item, path, $"{jsonPath}[{index++}]");
                 }
 
@@ -95,8 +95,8 @@ internal static class OptionsFile {
 
         // A WHERE clause can legitimately mention a column called Password, so a single hit is not
         // enough. Requiring a server or data source alongside it keeps false positives down.
-        bool hasServer = HasKeyword("server=") || HasKeyword("data source=");
-        bool hasSecret = HasKeyword("password=") || HasKeyword("integrated security=") || HasKeyword("authentication=");
+        var hasServer = HasKeyword("server=") || HasKeyword("data source=");
+        var hasSecret = HasKeyword("password=") || HasKeyword("integrated security=") || HasKeyword("authentication=");
 
         return hasServer && (hasSecret || HasKeyword("initial catalog=") || HasKeyword("database="));
     }
@@ -133,10 +133,10 @@ internal static class OptionsFile {
             return;
         }
 
-        for (int i = typeInfo.Properties.Count - 1; i >= 0; i--) {
-            Type propertyType = typeInfo.Properties[i].PropertyType;
-            bool isCallback = propertyType == typeof(ILogger)
-                              || (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IProgress<>));
+        for (var i = typeInfo.Properties.Count - 1; i >= 0; i--) {
+            var propertyType = typeInfo.Properties[i].PropertyType;
+            var isCallback = propertyType == typeof(ILogger)
+                             || (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IProgress<>));
 
             if (isCallback) {
                 typeInfo.Properties.RemoveAt(i);
@@ -162,7 +162,7 @@ internal static class OptionsFile {
                     continue;
                 }
 
-                string name = reader.GetString()!;
+                var name = reader.GetString()!;
                 reader.Read();
 
                 if (name.Equals("columnName", StringComparison.OrdinalIgnoreCase)) {
@@ -199,7 +199,7 @@ internal static class OptionsFile {
         public override void Write(Utf8JsonWriter writer, GlobalWhereClause value, JsonSerializerOptions options) {
             writer.WriteStartObject();
             writer.WriteStartArray("columnNames");
-            foreach (string columnName in value.ColumnNames) {
+            foreach (var columnName in value.ColumnNames) {
                 writer.WriteStringValue(columnName);
             }
 

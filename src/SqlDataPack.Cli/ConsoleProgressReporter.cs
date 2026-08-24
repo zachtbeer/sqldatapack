@@ -47,14 +47,14 @@ internal sealed class ConsoleProgressReporter : IProgress<SqlDataPackProgress> {
     }
 
     private void ReportRows(SqlDataPackProgress value) {
-        long now = Environment.TickCount64;
+        var now = Environment.TickCount64;
         if (now - this.lastReportedTicks < RowUpdateInterval.TotalMilliseconds) {
             return;
         }
 
         this.lastReportedTicks = now;
-        string table = value.TableName ?? this.currentTable ?? "(table)";
-        string of = value.TotalRows is { } total ? $" of {total:N0}" : string.Empty;
+        var table = value.TableName ?? this.currentTable ?? "(table)";
+        var of = value.TotalRows is { } total ? $" of {total:N0}" : string.Empty;
         this.writer.WriteLine($"  {table}: {value.RowsProcessed:N0}{of} rows");
     }
 }
