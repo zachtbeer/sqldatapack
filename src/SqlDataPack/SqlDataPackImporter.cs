@@ -50,6 +50,19 @@ public sealed class SqlDataPackImporter {
             var packageWarnings = await SqlitePackage.ReadWarningsAsync(sqlite, cancellationToken);
             var warnings = new List<string>(packageWarnings);
 
+            // Before the target is touched at all: the package is editable on purpose, so a count that moved
+            // is usually a deliberate edit. Warn and carry on unless the caller asked to be strict. Added to
+            // the list rather than through AddWarning because ReportWarnings below does the reporting; going
+            // through AddWarning would emit each one twice.
+            var drift = await EvaluateRowCountDriftAsync(sqlite, tables, cancellationToken);
+            if (drift.Count > 0) {
+                if (options.RowCountDrift == RowCountDrift.Fail) {
+                    throw new SqlDataPackException(DescribeDriftError(drift));
+                }
+
+                warnings.AddRange(drift.Select(DescribeDriftWarning));
+            }
+
             warnings.AddRange(await SqlServerSchemaReader.ValidateImportTargetAsync(sqlServerConnectionString, tables, options.ValidationCommandTimeout, options.FailOnLossyTypeMismatch, cancellationToken));
             ReportWarnings(progress, warnings);
 
@@ -96,10 +109,6 @@ public sealed class SqlDataPackImporter {
 
                     progress?.Report(new SqlDataPackProgress(SqlDataPackProgressKind.TableStarted, table.Name.FullName, TotalRows: expected));
                     var rows = await ImportTableAsync(sqlite, sqlServer, table, batchSize, options.BulkCopyTimeout, progress, expected, cancellationToken);
-                    if (rows != expected) {
-                        throw new SqlDataPackException($"Imported row count for '{table.Name.FullName}' was {rows}, expected {expected}. Earlier tables in this import have already committed; every target table in this import scope has to be emptied before you retry.");
-                    }
-
                     totalRows += rows;
                     progress?.Report(new SqlDataPackProgress(SqlDataPackProgressKind.TableCompleted, table.Name.FullName, rows, expected));
                 }
