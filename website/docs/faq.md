@@ -15,6 +15,12 @@ You can edit values freely, and delete or insert rows. `UPDATE`, `DELETE` and `I
 
 No. SqlDataPack makes no outbound network calls beyond the SQL Server connection you supply, and it has no telemetry, analytics, or update checks. Nothing else leaves the machine during export or import. See [Getting started](/getting-started) for what a run actually touches.
 
+## What is done about supply-chain security?
+
+Every release is built deterministically with SourceLink and published symbols, restored in `--locked-mode`, attested with [build provenance](https://github.com/zachtbeer/sqldatapack/releases), and shipped with a CycloneDX SBOM. CodeQL, OpenSSF Scorecard, Dependabot, and commit-pinned Actions run on the repository.
+
+Two caveats worth knowing. nuget.org appends its own signature to the package after upload, which changes the bytes, so the provenance attestation verifies against the `.nupkg` attached to the GitHub release rather than the one downloaded from nuget.org. And the CI test that watches sockets to prove nothing phones home covers export and import only, not the dacpac deploy path, which runs through DacFx.
+
 ## Does the target need the same schema?
 
 The target tables must already exist and be empty, unless you capture the schema as a dacpac at export and deploy it at import. Without dacpac deployment, SqlDataPack writes rows into existing structure; it does not create tables or columns for you. See [Importing](/importing) for the exact preconditions import checks.
