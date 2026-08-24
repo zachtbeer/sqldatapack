@@ -11,7 +11,9 @@ Every pull request that changes the package carries one label saying how big the
 | `semver:patch` | `1.4.2` becomes `1.4.3` |
 | `semver:none` | Nothing is published |
 
-`version-label.yml` fails the pull request if it changes the package and carries no label, or carries a label and changes nothing in the package. A change counts as a package change when it touches `src/SqlDataPack/`, `Directory.Build.props` or `Directory.Packages.props`.
+`version-label.yml` fails the pull request if it changes the package and carries no label, or carries a label and changes nothing in the package. A change counts as a package change when it touches `src/SqlDataPack/`, `src/SqlDataPack.Cli/`, `build/winget/`, `Directory.Build.props` or `Directory.Packages.props`.
+
+The library and the CLI release in lockstep off one tag and one version number. There is no way to ship a CLI fix without also publishing the library at that version, and that is deliberate: a CLI-only change still gets a label, and the library gets a version that changed nothing. Cheaper than two version lines that drift apart.
 
 Use `semver:none` for a change nobody consuming the package could observe: a comment, a private refactor, a test-only edit that happens to live under `src/`.
 
@@ -65,6 +67,10 @@ The tag is created after the build passes, so a failed run leaves nothing behind
 
 **A merge published nothing and should have.** The pull request carried `semver:none`, or it reached `main` without a pull request, which the run summary names. Open a pull request with the right label; an empty commit is enough if there is nothing else to change.
 
-**The publish job failed after the tag was pushed.** The tag exists but nothing was published. Fix the cause, then re-run `release.yml` manually against that tag with `dry_run` cleared.
+**The publish job failed after the tag was pushed.** The tag exists and some or all of the release did not happen. `gh release create` is the last step, so if the run got as far as pushing a package there is still no GitHub release. Fix the cause, then re-run `release.yml` manually against that tag with `dry_run` cleared: `--skip-duplicate` makes an already-published push a no-op, the failed push retries, and the GitHub release is created for the first time.
+
+That manual re-run needs a trusted publishing policy on nuget.org naming `release.yml`. nuget.org matches the top-level workflow file, not the reusable one, so the policy covering `publish.yml` does not cover a direct run of `release.yml`: without its own policy the token exchange returns 401 with "Workflow mismatch" and the recovery path does not work. Same for publishing a preview by pushing a `v*` tag by hand.
+
+**One package published and the other did not.** The pushes are separate steps, CLI first, so this means the CLI landed and the library did not. Re-run the job as above. `VersionGuard` checks both ids, so it will refuse to reuse that version on a later tag.
 
 **The packed version does not match the tag.** `release.yml` asserts this and stops before publishing. The version is passed into both `dotnet build` and `dotnet pack`, so a mismatch means one of those two lost its `-p:Version=`.

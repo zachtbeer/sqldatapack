@@ -9,6 +9,11 @@ name: Release
 #     git tag -a v1.1.0-preview.1 -m "v1.1.0-preview.1"
 #     git push origin v1.1.0-preview.1
 #
+# Both direct paths need a nuget.org trusted publishing policy that names this file.
+# nuget.org matches the top-level workflow, not the reusable one, so the policy covering
+# publish.yml does not cover a tag push or a manual run: the token exchange returns 401
+# with "Workflow mismatch". v1.0.0 hit exactly that.
+#
 # Use the manual trigger with dry_run to rehearse against an existing tag without
 # publishing anything.
 
@@ -35,6 +40,10 @@ on:
 permissions:
   contents: read
 
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
@@ -45,6 +54,7 @@ jobs:
   guard:
     name: Version guard
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     outputs:
       version: ${{ steps.guard.outputs.version }}
@@ -52,12 +62,12 @@ jobs:
       publish: ${{ steps.mode.outputs.publish }}
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # Full history so git describe can see the release tags.
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x
@@ -109,6 +119,7 @@ jobs:
     name: Build ${{ matrix.rid }}
     needs: guard
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
 
     strategy:
       fail-fast: false
@@ -128,9 +139,9 @@ jobs:
             os: macos-latest
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x
@@ -199,24 +210,25 @@ jobs:
   release:
     needs: [guard, binaries]
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
       id-token: write
       attestations: write
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # Full history so git describe can see the release tags.
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x
             10.0.x
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.nuget/packages
           key: nuget-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
@@ -231,6 +243,7 @@ jobs:
       # ci.yml's matrix against 2017/2019/2022/2025; re-running it here would pull those
       # images on every release.
       - run: dotnet test tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj -c Release --no-build --verbosity normal
+      - run: dotnet test tests/SqlDataPack.Cli.Tests/SqlDataPack.Cli.Tests.csproj -c Release --no-build --verbosity normal
 
       # Two packages: the library, and the CLI as a dotnet global tool. SqlDataPack.Cli
       # needs its own trusted-publishing policy on nuget.org or the push 403s after the
@@ -318,10 +331,19 @@ jobs:
         with:
           user: ${{ vars.NUGET_USER }}
 
-      - name: Push to NuGet.org
+      # One push per package, named rather than globbed, CLI first. A glob pushes the
+      # library first, so a refusal on the CLI would leave the library on nuget.org
+      # permanently with no CLI, no GitHub release and no winget submission. The CLI is
+      # the only push that can plausibly fail, so it goes where a failure costs nothing.
+      - name: Push the CLI to NuGet.org
         if: needs.guard.outputs.publish == 'true'
-        run: dotnet nuget push "./release-packages/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
+        run: dotnet nuget push "./release-packages/SqlDataPack.Cli.${{ needs.guard.outputs.version }}.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
 
+      - name: Push the library to NuGet.org
+        if: needs.guard.outputs.publish == 'true'
+        run: dotnet nuget push "./release-packages/SqlDataPack.${{ needs.guard.outputs.version }}.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
+
+      # Symbols stay a glob: a failed snupkg push does not half-release anything.
       - name: Push symbols to NuGet.org
         if: needs.guard.outputs.publish == 'true'
         run: dotnet nuget push "./release-packages/*.snupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
@@ -373,16 +395,22 @@ jobs:
   # copy for it live in build/winget/.
   #
   # Needs WINGET_TOKEN: a PAT with public_repo scope on an account that has forked
-  # microsoft/winget-pkgs. Without it this skips with a warning rather than failing the
-  # release, because the release itself has already succeeded by this point.
+  # microsoft/winget-pkgs. Set the WINGET_PACKAGE_LIVE repository variable to true at the
+  # same time, once the hand-submitted manifest has merged. Until then this skips with a
+  # warning, because wingetcreate cannot update an identifier winget-pkgs has never seen.
+  # After that a missing token is a hard failure: winget is the channel most people use,
+  # and a silently skipped submission leaves it stale until someone reports an old
+  # version. Failing here is safe, everything else has already published.
   winget:
     name: Submit winget manifest
     needs: [guard, release]
     if: needs.guard.outputs.publish == 'true' && needs.guard.outputs.prerelease != 'true'
     runs-on: windows-latest
+    timeout-minutes: 15
 
     env:
       WINGET_TOKEN: ${{ secrets.WINGET_TOKEN }}
+      PACKAGE_LIVE: ${{ vars.WINGET_PACKAGE_LIVE }}
       VERSION: ${{ needs.guard.outputs.version }}
       PACKAGE_ID: zachtbeer.SqlDataPack
 
@@ -391,9 +419,12 @@ jobs:
         id: token
         shell: bash
         run: |
-          if [ -z "${WINGET_TOKEN}" ]; then
-            echo "::warning::WINGET_TOKEN is not set, so the winget manifest was not submitted. Submit it by hand from build/winget/ and set the secret to automate later releases."
+          if [ "${PACKAGE_LIVE}" != "true" ]; then
+            echo "::warning::${PACKAGE_ID} is not in winget-pkgs yet, so nothing was submitted. Submit the manifests in build/winget/ by hand, then set the WINGET_TOKEN secret and the WINGET_PACKAGE_LIVE variable to true."
             echo "submit=false" >> "$GITHUB_OUTPUT"
+          elif [ -z "${WINGET_TOKEN}" ]; then
+            echo "::error::WINGET_PACKAGE_LIVE is set but WINGET_TOKEN is not, so ${PACKAGE_ID} would silently stay on an older version. Restore the secret and re-run this job."
+            exit 1
           else
             echo "submit=true" >> "$GITHUB_OUTPUT"
           fi

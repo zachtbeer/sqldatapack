@@ -17,6 +17,10 @@ on:
 permissions:
   contents: read
 
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
 # Two merges landing close together queue rather than race for the same tag.
 concurrency:
   group: publish
@@ -26,18 +30,19 @@ jobs:
   decide:
     name: Decide the version
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     outputs:
       version: ${{ steps.compute.outputs.version }}
       release: ${{ steps.compute.outputs.release }}
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # Full history so git tag and git log can see the releases.
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x
@@ -120,16 +125,17 @@ jobs:
     needs: decide
     if: needs.decide.outputs.release == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     permissions:
       contents: write
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x

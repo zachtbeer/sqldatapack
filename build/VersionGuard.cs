@@ -12,7 +12,9 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using NuGet.Versioning;
 
-const string PackageId = "SqlDataPack";
+// Both ids ship from one tag and are checked together. If a release ever half-finishes,
+// one id is published at a version the other is not, and this is what notices.
+string[] packageIds = ["SqlDataPack", "SqlDataPack.Cli"];
 
 // The official SemVer 2.0.0 regex from semver.org. NuGetVersion.Parse is more
 // permissive than the spec (it accepts "1.0" and four-part "1.0.0.0"), so the
@@ -57,7 +59,7 @@ var raw = arguments[0].TrimStart('v', 'V');
 var failures = new List<string>();
 var warnings = new List<string>();
 
-Console.WriteLine($"Checking {PackageId} {raw}");
+Console.WriteLine($"Checking {string.Join(" and ", packageIds)} {raw}");
 Console.WriteLine();
 
 // 1. The version is a well-formed SemVer 2.0.0 version.
@@ -74,39 +76,42 @@ var version = NuGetVersion.Parse(raw);
 var isPrerelease = version.IsPrerelease;
 Report(true, "Valid SemVer 2.0.0", isPrerelease ? "prerelease" : "stable release");
 
-// 2. The version sorts strictly above everything already on NuGet.org.
+// 2. The version sorts strictly above everything already on NuGet.org, for every id.
 //
 // nuget.org supports no permanent deletion, so publishing a version that sorts below
 // something already there is forever. Prerelease ordering is where that goes wrong:
 // identifiers compare left to right, numerically when they are numbers.
-var published = await FetchPublishedVersionsAsync();
-NuGetVersion? newestPublished = null;
+foreach (var packageId in packageIds)
+{
+    var check = $"Sorts above published ({packageId})";
+    var published = await FetchPublishedVersionsAsync(packageId);
 
-if (published is null)
-{
-    warnings.Add("Could not reach nuget.org, so the version was not compared against what is published.");
-    Report(null, "Sorts above published versions", "skipped, nuget.org unreachable");
-}
-else if (published.Count == 0)
-{
-    Report(true, "Sorts above published versions", "nothing published yet");
-}
-else
-{
-    newestPublished = published.Max()!;
-
-    if (published.Contains(version))
+    if (published is null)
     {
-        Report(false, "Sorts above published versions", $"{raw} is already published. Versions cannot be replaced on nuget.org.");
+        warnings.Add($"Could not reach nuget.org, so the version was not compared against what is published for {packageId}.");
+        Report(null, check, "skipped, nuget.org unreachable");
     }
-    else if (version <= newestPublished)
+    else if (published.Count == 0)
     {
-        Report(false, "Sorts above published versions", $"{raw} sorts below the published {newestPublished}. Restore would keep resolving to {newestPublished}.");
-        Console.Error.WriteLine($"        Next version above {newestPublished}: {SuggestNext(newestPublished)}");
+        Report(true, check, "nothing published yet");
     }
     else
     {
-        Report(true, "Sorts above published versions", $"newest published is {newestPublished}");
+        var newestPublished = published.Max()!;
+
+        if (published.Contains(version))
+        {
+            Report(false, check, $"{raw} is already published. Versions cannot be replaced on nuget.org.");
+        }
+        else if (version <= newestPublished)
+        {
+            Report(false, check, $"{raw} sorts below the published {newestPublished}. Restore would keep resolving to {newestPublished}.");
+            Console.Error.WriteLine($"        Next version above {newestPublished}: {SuggestNext(newestPublished)}");
+        }
+        else
+        {
+            Report(true, check, $"newest published is {newestPublished}");
+        }
     }
 }
 
@@ -170,7 +175,7 @@ void Report(bool? ok, string check, string detail)
 {
     var label = ok switch { true => "OK  ", false => "FAIL", _ => "SKIP" };
     var writer = ok == false ? Console.Error : Console.Out;
-    writer.WriteLine($"{label}  {check,-34}  {detail}");
+    writer.WriteLine($"{label}  {check,-40}  {detail}");
 
     if (ok == false)
     {
@@ -189,9 +194,9 @@ static string? FindRepositoryRoot()
     return directory?.FullName;
 }
 
-static async Task<HashSet<NuGetVersion>?> FetchPublishedVersionsAsync()
+static async Task<HashSet<NuGetVersion>?> FetchPublishedVersionsAsync(string packageId)
 {
-    var url = $"https://api.nuget.org/v3-flatcontainer/{PackageId.ToLowerInvariant()}/index.json";
+    var url = $"https://api.nuget.org/v3-flatcontainer/{packageId.ToLowerInvariant()}/index.json";
 
     try
     {

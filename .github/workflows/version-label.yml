@@ -17,6 +17,7 @@ jobs:
   gate:
     name: Semver label
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - name: Check the label against the files changed
@@ -28,11 +29,12 @@ jobs:
 
           # Changing any of these changes what consumers receive. The two props files
           # are in the list because a dependency version bump there alters the shipped
-          # package without touching a single .cs file.
+          # package without touching a single .cs file. The CLI is in the list because it
+          # and the library release in lockstep, so a CLI-only fix still needs a version.
           touched=0
           while IFS= read -r file; do
             case "${file}" in
-              src/SqlDataPack/*|Directory.Build.props|Directory.Packages.props)
+              src/SqlDataPack/*|src/SqlDataPack.Cli/*|build/winget/*|Directory.Build.props|Directory.Packages.props)
                 touched=1
                 echo "package file: ${file}"
                 ;;
