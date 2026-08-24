@@ -17,19 +17,19 @@ await SqlData.ExportAsync(sourceConnectionString, "database.sqlite");
 await SqlData.ImportAsync("database.sqlite", targetConnectionString);
 ```
 
-The file in between is ordinary SQLite, so between those two calls you can open it, query it, scrub it, or reshape it, before it goes anywhere near SQL Server again.
+The file in between is ordinary SQLite, so between those two calls you can open it, query it, and rewrite values, before it goes anywhere near SQL Server again.
 
-```text
-   SQL Server  ──export──▶  .sqlite package  ──import──▶  SQL Server
-   (production)                    │                      (dev / test / lab)
-                                   │
-                                   ▼
-                     ordinary SQLite, so before it lands,
-                query it · scrub it · reshape it · hand it to an agent
+```mermaid
+flowchart LR
+  src[("SQL Server<br/>source")]
+  pkg["<b>one .sqlite file</b><br/>open it in any SQLite tool:<br/>query it, rewrite values, scrub it"]
+  tgt[("SQL Server<br/>dev / test / lab")]
 
-     selected tables, columns and rows only  ·  identity and row counts verified
-   recipient needs no credentials  ·  no calls beyond the SQL Server you name
+  src -->|"export<br/>selected tables, columns, rows"| pkg
+  pkg -->|"import (optional)<br/>identity kept, counts verified"| tgt
 ```
+
+Only the tables, columns, and rows you asked for come out. Whoever you hand the file to needs no credentials, and nothing calls anywhere except the SQL Server in your connection string.
 
 ## Why not just take a backup?
 

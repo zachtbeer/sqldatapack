@@ -100,13 +100,12 @@ release-candidate strength promises into preview copy.
 ## Known gap
 
 Adding and removing rows in the package fails the import row-count check (#13, #18). It is committed
-to before the 1.0.0 tag, but it will probably not be in `1.0.0-preview1`, so copy is written against
-current behaviour: `UPDATE` in place roundtrips, adding and deleting rows does not.
+to before the 1.0.0 tag and will probably not be in `1.0.0-preview1`.
 
-Because this ships as a preview, saying the fix is coming is honest rather than a hedge, so the
-README states the limitation and that it closes before 1.0.0. It does not link the issue as a
-promise or give a date. Nothing in the README or the NuGet description may imply row edits work
-today; "scrub it" is the phrase that implies exactly that, so it stays out.
+Maintainer call: the README is written for 1.0.0, so it says `UPDATE`, `DELETE`, and `INSERT`
+without qualification. The docs site is written for what is shipped, so `editing-the-package.md`,
+`comparison.md`, and the FAQ say adding and removing rows is not supported yet and point at #18.
+When #18 lands, those three qualifiers come out and nothing in the README changes.
 
 The wedge is unaffected. Filtering happens on the way out with `WHERE` and `ExcludeColumns`, not by
 deleting rows in the package, so this is one honest sentence about editing rather than a caveat

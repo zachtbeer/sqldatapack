@@ -14,7 +14,7 @@ Neither of them can drop a column, apply a `WHERE` clause, or give you a stage b
 | Filter rows | No | No | Yes, in the query | Yes, global and per-table `WHERE` |
 | Single file out | Yes | Yes | No, one file per table | Yes |
 | **Query and inspect it without restoring to SQL Server** | No | No | No | Yes, it is a SQLite database |
-| **Modify the data before restoring** | No | No | No | Yes, `UPDATE` in place; row counts are fixed |
+| **Modify the data before restoring** | No | No | No | Yes, `UPDATE` in place; row counts are fixed for now |
 | Fix a bad edit without touching production again | No | No | No | Yes, re-edit the file and import again into an emptied target |
 | Nothing to install on the server | No | Needs SqlPackage | Needs `bcp` | Yes, one NuGet package |
 | Hand it to an agent or a teammate with no DB access | No | No | No | Yes |
@@ -32,7 +32,7 @@ If you need a referentially consistent slice, export from a restored copy, a dat
 
 ## Editing has a limit
 
-You can change values in the package freely. `UPDATE` statements roundtrip through import. You cannot add or remove rows: import compares what it copies against `exported_row_count` in `zsdp_table_stats`, so a table you deleted from fails the check partway through the import, and the target has to be emptied before you can retry. Filter rows out at export with a `WHERE` clause instead. See [Editing the package](/editing-the-package) for the full rules.
+You can change values in the package freely. `UPDATE` statements roundtrip through import. You cannot add or remove rows yet: import compares what it copies against `exported_row_count` in `zsdp_table_stats`, so a table you deleted from fails the check partway through the import, and the target has to be emptied before you can retry. Filter rows out at export with a `WHERE` clause instead. Lifting that for deliberate edits is tracked in [#18](https://github.com/zachtbeer/sqldatapack/issues/18) for 1.0.0. See [Editing the package](/editing-the-package) for the full rules.
 
 This is a preview limitation, not the intended design. Full row editing lands before the 1.0.0 tag.
 

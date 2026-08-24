@@ -17,17 +17,21 @@ Any SQLite tool works: `sqlite3`, a GUI, a Python script, an EF Core context, wh
 
 **Change values freely.** Rewriting values in place is fully supported and roundtrips through import: fix a typo, replace a real email with a synthetic one, correct a bad row, whatever the task calls for.
 
-## What breaks the import
+## Adding and removing rows
 
-**Deleting rows breaks the import.** At export, SqlDataPack records how many rows it wrote for each table as `exported_row_count` in `zsdp_table_stats`. At import, it compares the rows it actually copies from the package against that stored count, and throws on a mismatch:
+Not supported yet. At export, SqlDataPack records how many rows it wrote for each table as `exported_row_count` in `zsdp_table_stats`. At import, it compares the rows it actually copies out of the package against that stored count and throws on a mismatch:
 
 ```text
 Imported row count for 'dbo.Customers' was 4102, expected 4213.
 ```
 
-That check is a stored-count comparison, not a live `COUNT(*)` against the package: import counts rows as it copies them and checks the running total against the number recorded at export time. It exists so a scrubbing script with a bad `WHERE` clause, or a `DELETE` that went further than intended, cannot quietly ship a partial dataset. If you genuinely need fewer rows, filter them out at export instead of deleting them from the package.
+So a `DELETE` or an `INSERT` against a data table fails the import, and it fails partway through: earlier tables have already committed, so every target table in the import scope has to be emptied before you retry. Filter rows out at export with a `WHERE` clause instead.
 
-A row-count match is not evidence that a scrub actually worked. The check catches `DELETE`. It does not catch an `UPDATE` that matched zero rows, a scrub applied to one table while a related table still holds every real value, or a column you forgot existed. Verify the scrub itself, separately, before the package travels.
+The check is a stored-count comparison, not a live `COUNT(*)` against the package: import counts rows as it copies them and checks the running total against the number recorded at export. It exists so a scrubbing script with a bad `WHERE` clause, or a `DELETE` that went further than intended, cannot quietly ship a partial dataset. Letting you delete and insert rows on purpose, without tripping it, is tracked in [#18](https://github.com/zachtbeer/sqldatapack/issues/18) for 1.0.0.
+
+A row-count match is also not evidence that a scrub actually worked. The check catches `DELETE`. It does not catch an `UPDATE` that matched zero rows, a scrub applied to one table while a related table still holds every real value, or a column you forgot existed. Verify the scrub itself, separately, before the package travels.
+
+## What breaks the import
 
 **Values must stay valid for their target SQL Server type.** Import converts each SQLite value back into what `SqlBulkCopy` expects for the column's original type, and an edited value has to survive that conversion:
 
