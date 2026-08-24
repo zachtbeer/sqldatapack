@@ -9,7 +9,7 @@ No. The package is an ordinary SQLite file, so any SQLite tool works: `sqlite3`,
 
 ## Can I edit the data? Can I delete rows?
 
-You can edit values freely. Ordinary `UPDATE` statements against the package roundtrip through import. You cannot delete or insert rows yet, because import compares the rows it copies against `exported_row_count`, recorded in `zsdp_table_stats` at export time, and fails on a mismatch. Filter rows out at export instead. Letting you add and remove rows on purpose is tracked in [#18](https://github.com/zachtbeer/sqldatapack/issues/18) for 1.0.0. See [Editing the package](/editing-the-package) for the full rules on what you can and cannot change.
+You can edit values freely, and delete or insert rows. `UPDATE`, `DELETE` and `INSERT` all roundtrip through import. Import compares what the package holds against `exported_row_count`, recorded in `zsdp_table_stats` at export time, before it writes anything, and a difference comes back as a warning rather than a failure. Set `RowCountDrift.Fail` if a moved count should stop the import instead. See [Editing the package](/editing-the-package) for the full rules on what you can and cannot change.
 
 ## Does it send anything anywhere?
 

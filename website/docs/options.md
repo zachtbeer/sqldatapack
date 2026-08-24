@@ -132,6 +132,10 @@ Command timeouts are named differently depending on which side they apply to, al
 
 Widening differences and collation differences are always warnings and are never affected by this setting: a collation difference can mangle non-ASCII text but cannot be judged from catalog metadata alone, so blocking on it would fail every import into a differently collated server.
 
+`RowCountDrift` on `ImportOptions` selects what happens when the package holds a different number of rows than the export recorded, which is what deleting or inserting rows in the package produces. Defaults to `RowCountDrift.Warn`: the rows the package holds are imported and each table whose count moved is reported on `SqlDataPackResult.Warnings`. Set `RowCountDrift.Fail` to reject the package instead, before any row is written, naming every table whose count moved.
+
+This compares the count in the package manifest against the package's own contents, so it only answers whether the file changed since export. It is not the check that proves a load completed: that one compares the rows read out of the package against the rows that landed in the target, and it is always fatal.
+
 ## Progress
 
 `Progress`, an `IProgress<SqlDataPackProgress>`, receives table- and row-level updates as export or import runs. It exists on both `ExportOptions` and `ImportOptions`, and defaults to `null` on both (no progress reporting).

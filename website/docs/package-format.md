@@ -20,7 +20,7 @@ Two kinds of table live side by side in that list, and the prefix tells them apa
 | --- | --- |
 | `zsdp_tables` | One row per exported SQL Server table: its schema, table name, and the SQLite table it was written to. |
 | `zsdp_columns` | One row per exported (and skipped) column: SQL Server type name, max length, precision, scale, nullability, identity, computed, exclusion, collation, and vector base type and dimensions where relevant. |
-| `zsdp_table_stats` | Row counts and sizing per table: `exported_row_count` (what import checks against), estimated source row count, estimated source bytes, and the export batch size. |
+| `zsdp_table_stats` | Row counts and sizing per table: `exported_row_count` (what import compares the package's current contents against), estimated source row count, estimated source bytes, and the export batch size. |
 | `zsdp_exclusions` | Tables and columns that were skipped from export, and why. |
 | `zsdp_warnings` | Non-fatal warnings produced during export. |
 | `zsdp_import_plan` | The foreign-key-based order tables need to import in. |

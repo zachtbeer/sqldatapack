@@ -77,7 +77,7 @@ Import will not create tables or write into ones that already hold rows. See [Im
 
 - Every selected table was copied, since this run had no filtering.
 - Identity values were kept: SqlDataPack imports with `SqlBulkCopyOptions.KeepIdentity`, so parent/child relationships stay intact when the target schema is compatible.
-- Imported row counts were checked against exported row counts.
+- Every row read out of the package was confirmed to have landed in the target.
 - Nothing left the machine except the connection to the SQL Server you named. No other network calls, no telemetry.
 
 ## Next

@@ -59,7 +59,9 @@ dbo__orders           zsdp_export_runs      zsdp_table_stats
 $ sqlite3 dev-slice.sqlite "UPDATE dbo__customers SET Email = 'user' || CustomerId || '@example.invalid';"
 ```
 
-That replaces every real address with a fake one, in the file, before anything reaches SQL Server. See [Editing the package](https://zachtbeer.github.io/sqldatapack/editing-the-package).
+That replaces every real address with a fake one, in the file, before anything reaches SQL Server.
+
+Deleting rows works the same way. Drop every row for one customer and the import loads what is left, warning you per table that the count moved rather than refusing the package. Set `ImportOptions.RowCountDrift` to `RowCountDrift.Fail` if you would rather a moved count stopped the import, which is what an unattended scrubbing pipeline wants. See [Editing the package](https://zachtbeer.github.io/sqldatapack/editing-the-package).
 
 Or read the manifest (row counts, source types, foreign-key import order) without importing anything:
 

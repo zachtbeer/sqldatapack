@@ -18,11 +18,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: PerTableWhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 283
+    startLine: 298
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -57,11 +57,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 289
+    startLine: 304
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -95,11 +95,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TableName
     path: src/SqlDataPack/Options.cs
-    startLine: 297
+    startLine: 312
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -126,11 +126,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: WhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 302
+    startLine: 317
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

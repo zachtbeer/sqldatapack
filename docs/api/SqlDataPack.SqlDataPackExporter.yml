@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackExporter.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackExporter
     path: src/SqlDataPack/SqlDataPackExporter.cs
@@ -53,7 +53,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackExporter.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExportAsync
     path: src/SqlDataPack/SqlDataPackExporter.cs
@@ -100,7 +100,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/SqlDataPackExporter.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: PreflightAsync
     path: src/SqlDataPack/SqlDataPackExporter.cs

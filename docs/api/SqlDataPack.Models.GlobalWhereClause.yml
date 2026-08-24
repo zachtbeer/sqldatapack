@@ -21,11 +21,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: GlobalWhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 221
+    startLine: 236
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -85,11 +85,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 227
+    startLine: 242
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -123,11 +123,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 235
+    startLine: 250
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -161,11 +161,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ColumnNames
     path: src/SqlDataPack/Options.cs
-    startLine: 245
+    startLine: 260
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -195,11 +195,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: WhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 251
+    startLine: 266
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -229,11 +229,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Equals
     path: src/SqlDataPack/Options.cs
-    startLine: 257
+    startLine: 272
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -269,11 +269,11 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: GetHashCode
     path: src/SqlDataPack/Options.cs
-    startLine: 260
+    startLine: 275
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

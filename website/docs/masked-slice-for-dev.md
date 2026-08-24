@@ -107,7 +107,7 @@ SET BillingAddress = '1 Example Street';
 ```
 
 :::caution Do not delete rows
-Import compares the rows it actually copied against `exported_row_count`, recorded in `zsdp_table_stats` at export time, and fails on a mismatch. Rewriting values in place roundtrips freely: change an email, a name, an address, whatever needs scrubbing. Deleting a row does not, unless you also update that stored count, and that count is internal metadata, not a supported surface. If you genuinely need fewer rows, filter them out at export instead of deleting them from the package. See [Editing the package](/editing-the-package) for the full list of what you can and cannot change.
+Rewriting values in place roundtrips freely: change an email, a name, an address, whatever needs scrubbing. Deleting rows works too. Import compares what the package holds against `exported_row_count`, recorded in `zsdp_table_stats` at export time, and reports a difference as a warning rather than failing, so dropping every row for one customer is a supported way to scrub. Set `RowCountDrift.Fail` if a moved count should stop the import instead. See [Editing the package](/editing-the-package) for the full list of what you can and cannot change.
 :::
 
 ## Compact the file
@@ -127,7 +127,7 @@ var result = await SqlData.ImportAsync("dev-slice.sqlite", devSqlServerConnectio
 Console.WriteLine($"Imported {result.RowCount} rows into {result.TableCount} tables.");
 ```
 
-Check `result.Warnings` for anything the import wants you to know about. An empty list means every table copied clean and every row count matched what was recorded at export time.
+Check `result.Warnings` for anything the import wants you to know about, including any table whose row count no longer matches what was recorded at export. An empty list means every table copied clean and nothing in the package had changed since export.
 
 ## Why this beats restoring a backup and cleaning up
 

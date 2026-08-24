@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaCaptureMode
     path: src/SqlDataPack/Options.cs
@@ -44,7 +44,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: None
     path: src/SqlDataPack/Options.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/SqlDataPack/Options.cs
-      branch: main
+      branch: zb/v1-prep
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Dacpac
     path: src/SqlDataPack/Options.cs

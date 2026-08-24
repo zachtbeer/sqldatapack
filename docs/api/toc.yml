@@ -41,6 +41,9 @@ items:
   - uid: SqlDataPack.Models.PerTableWhereClause
     name: PerTableWhereClause
     type: Class
+  - uid: SqlDataPack.Models.RowCountDrift
+    name: RowCountDrift
+    type: Enum
   - uid: SqlDataPack.Models.SchemaCaptureMode
     name: SchemaCaptureMode
     type: Enum

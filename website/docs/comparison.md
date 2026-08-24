@@ -32,7 +32,7 @@ If you need a referentially consistent slice, export from a restored copy, a dat
 
 ## Editing has a limit
 
-You can change values in the package freely. `UPDATE` statements roundtrip through import. You cannot add or remove rows yet: import compares what it copies against `exported_row_count` in `zsdp_table_stats`, so a table you deleted from fails the check partway through the import, and the target has to be emptied before you can retry. Filter rows out at export with a `WHERE` clause instead. Lifting that for deliberate edits is tracked in [#18](https://github.com/zachtbeer/sqldatapack/issues/18) for 1.0.0. See [Editing the package](/editing-the-package) for the full rules.
+You can change values in the package freely, and add or remove rows. `UPDATE`, `INSERT` and `DELETE` all roundtrip through import. Before it writes anything, import compares what the package holds against `exported_row_count` in `zsdp_table_stats` and reports a difference as a warning rather than refusing it, so a table you deleted from imports with the rows it still has. Set `RowCountDrift.Fail` if you would rather a moved count stopped the import instead. See [Editing the package](/editing-the-package) for the full rules.
 
 This is a preview limitation, not the intended design. Full row editing lands before the 1.0.0 tag.
 
