@@ -23,7 +23,7 @@ If you have used `.bacpac`, think of it the same way, except the file it produce
 dotnet add package SqlDataPack --prerelease
 ```
 
-Targets `net8.0` and `net10.0`. The first published version is `1.0.0-preview1`, so `--prerelease` is required until 1.0.0 is out.
+Targets `net8.0` and `net10.0`. The first published version is `1.0.0-preview.1`, so `--prerelease` is required until 1.0.0 is out.
 
 ## Export
 

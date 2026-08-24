@@ -29,7 +29,7 @@ Yes. SqlDataPack imports both the current rows and the history rows of a system-
 
 ## Is the package format stable?
 
-Frozen for 1.0. Barring a critical fix, a package produced by the `1.0.0-rc` format imports unchanged on `1.0.0`, and the format follows the same versioning policy as the rest of the library from there. See [Versioning](/versioning) for the full compatibility policy.
+Frozen for 1.0. Barring a critical fix, a package produced by a `1.0.0` preview imports unchanged on `1.0.0`, and the format follows the same versioning policy as the rest of the library from there. See [Versioning](/versioning) for the full compatibility policy.
 
 ## Why is my table exported unfiltered?
 

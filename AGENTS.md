@@ -1,6 +1,6 @@
 # Repository Guidelines
 
-For agentic coding tools working in this repository. Prefer repo-grounded changes over generic .NET advice. The library is at `1.0.0-rc` with the public API and SQLite package format frozen for 1.0; treat a change to either as a breaking decision that needs maintainer sign-off. Contributor-level detail on setup, dependencies, and style lives in [CONTRIBUTING.md](CONTRIBUTING.md).
+For agentic coding tools working in this repository. Prefer repo-grounded changes over generic .NET advice. Nothing is published yet; the first release is `1.0.0-preview.1`. The public API and SQLite package format are frozen for 1.0, so treat a change to either as a breaking decision that needs maintainer sign-off. Contributor-level detail on setup, dependencies, and style lives in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Where things live
 

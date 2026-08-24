@@ -596,7 +596,7 @@ public sealed class ImportOptions {
 }
 
 /// <summary>
-/// Represents a validation or bridge operation error that callers can handle explicitly.
+/// Represents a validation or export/import operation error that callers can handle explicitly.
 /// </summary>
 public sealed class SqlDataPackException : Exception {
     /// <summary>

@@ -11,5 +11,3 @@ Every published version also has generated notes on the [releases page](https://
 ## Unreleased
 
 Nothing published yet under the `SqlDataPack` package id. The first release will be `1.0.0`.
-
-The project was previously published as `Zachtbeer.SqlDataBridge`, up to `1.0.0-rc.12`. That package id is retired. See [Versioning](./versioning.md) for what the version numbers mean from `1.0.0` onward.

@@ -7,7 +7,7 @@
 // Prints the version and nothing else, so a workflow can capture stdout directly.
 // An empty --from means nothing has been released yet and is a supported input, not
 // an error. Prereleases are rejected: the automatic path only ever produces X.Y.Z,
-// and a release candidate is tagged by hand. See docs/RELEASE.md.
+// and a preview is tagged by hand. See docs/RELEASE.md.
 
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -114,7 +114,7 @@ static int SelfTest()
 
     (string From, string Bump)[] rejected =
     [
-        ("v1.0.0-rc.13", "patch"),
+        ("v1.0.0-preview.13", "patch"),
         ("v1.0.0+build.1", "patch"),
         ("v1.0", "patch"),
         ("v1.0.0.0", "patch"),

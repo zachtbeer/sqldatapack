@@ -1,10 +1,10 @@
 name: Prerelease
 
-# Publishes one release candidate, by hand, from the Actions tab. You type the full
+# Publishes one preview, by hand, from the Actions tab. You type the full
 # version; this workflow tags it, builds it, and publishes it. Nothing about it is
 # automatic and nothing else triggers it.
 #
-#     Actions -> Prerelease -> Run workflow -> version: 1.0.0-rc.1
+#     Actions -> Prerelease -> Run workflow -> version: 1.0.0-preview.1
 #
 # Stable versions are rejected here on purpose. Those go through publish.yml, which
 # takes the number from the semver: label on the merged pull request. Keeping the two
@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Full prerelease version, no leading v (e.g. 1.0.0-rc.1)"
+        description: "Full prerelease version, no leading v (e.g. 1.0.0-preview.1)"
         type: string
         required: true
       dry_run:
@@ -222,7 +222,7 @@ jobs:
           echo "## Release notes for v${VERSION}" >> "$GITHUB_STEP_SUMMARY"
           cat ./release-notes.md >> "$GITHUB_STEP_SUMMARY"
 
-      # Always --prerelease. The guard job rejects anything else, so a candidate never
+      # Always --prerelease. The guard job rejects anything else, so a preview never
       # displays as "Latest" on the releases page.
       - name: Create GitHub Release
         if: needs.guard.outputs.publish == 'true'

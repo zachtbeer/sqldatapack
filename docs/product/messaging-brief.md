@@ -92,7 +92,7 @@ all match the csproj. **Zachtbeer Labs B.V. appears nowhere.** The only survivin
 
 ## Release shape
 
-The first published version is `1.0.0-preview1`, not a stable 1.0.0 and not an RC. Install lines
+The first published version is `1.0.0-preview.1`, not a stable 1.0.0 and not an RC. Install lines
 carry `--prerelease`, the NuGet badge uses `vpre`, and Project Status says the preview window exists
 to find out where the intended 1.0 shape is wrong while changing it is still cheap. Do not carry
 release-candidate strength promises into preview copy.
@@ -100,7 +100,7 @@ release-candidate strength promises into preview copy.
 ## Known gap
 
 Adding and removing rows in the package fails the import row-count check (#13, #18). It is committed
-to before the 1.0.0 tag and will probably not be in `1.0.0-preview1`.
+to before the 1.0.0 tag and will probably not be in `1.0.0-preview.1`.
 
 Maintainer call: the README is written for 1.0.0, so it says `UPDATE`, `DELETE`, and `INSERT`
 without qualification. The docs site is written for what is shipped, so `editing-the-package.md`,

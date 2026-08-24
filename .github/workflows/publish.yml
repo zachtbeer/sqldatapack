@@ -50,7 +50,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Stable tags only. A hand-pushed prerelease like v1.1.0-rc.1 is not a base
+          # Stable tags only. A hand-pushed prerelease like v1.1.0-preview.1 is not a base
           # for an automatic bump, so it is filtered out here.
           last=$(git tag --list 'v*' --sort=-v:refname | grep -v -- '-' | head -1 || true)
 

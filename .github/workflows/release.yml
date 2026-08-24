@@ -2,12 +2,12 @@ name: Release
 
 # Builds and publishes one version. Normally called by publish.yml, which computes
 # the version from the semver: label on the merged pull request and pushes the tag
-# before calling. A pushed v* tag also triggers it directly, which is how a release
-# candidate gets published by hand:
+# before calling. A pushed v* tag also triggers it directly, which is how a preview
+# gets published by hand:
 #
-#     dotnet run build/VersionGuard.cs -- 1.1.0-rc.1   # same checks this workflow runs
-#     git tag -a v1.1.0-rc.1 -m "v1.1.0-rc.1"
-#     git push origin v1.1.0-rc.1
+#     dotnet run build/VersionGuard.cs -- 1.1.0-preview.1   # same checks this workflow runs
+#     git tag -a v1.1.0-preview.1 -m "v1.1.0-preview.1"
+#     git push origin v1.1.0-preview.1
 #
 # Use the manual trigger with dry_run to rehearse against an existing tag without
 # publishing anything.
@@ -210,7 +210,7 @@ jobs:
           echo "## Release notes for v${VERSION}" >> "$GITHUB_STEP_SUMMARY"
           cat ./release-notes.md >> "$GITHUB_STEP_SUMMARY"
 
-      # Prereleases are marked as such, so a release candidate does not display as
+      # Prereleases are marked as such, so a preview does not display as
       # "Latest" on the releases page.
       - name: Create GitHub Release
         if: needs.guard.outputs.publish == 'true'

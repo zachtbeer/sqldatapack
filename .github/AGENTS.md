@@ -14,7 +14,7 @@ Scope: everything under `.github/`. The repository-wide rules in the root [AGENT
 | `fuzz.yml` | nightly, manual | Property-based fuzzing of the untrusted-input surface. |
 | `scorecard.yml` | push to `main`, weekly, branch protection changes | OpenSSF Scorecard. |
 
-Only `release.yml` publishes to NuGet.org. There is no preview feed: every package change ships a real version, and every change that is not a package change leaves the package identical.
+Only `release.yml` publishes to NuGet.org. There is no nightly or per-commit feed: every package change ships a real version, and every change that is not a package change leaves the package identical.
 
 ## The version comes from a label on the pull request
 
@@ -22,43 +22,21 @@ Nothing passes a version into an ordinary build, and no csproj holds a `<Version
 
 At release time `publish.yml` computes the version from the last stable tag and the highest `semver:` label since it, using `build/NextVersion.cs`, and passes it into both `dotnet build` and `dotnet pack`. It has to reach the build as well as the pack: packing with `--no-build` and a version the build never saw produces a package whose assembly and nupkg disagree.
 
-`build/NextVersion.cs --self-test` runs in CI. `build/VersionGuard.cs` runs before every tag is pushed and checks the SemVer form, that the version sorts strictly above everything on nuget.org, and that the tag is on `HEAD`.
+`build/NextVersion.cs --self-test` runs in CI. `build/VersionGuard.cs` runs before every tag is pushed and checks the SemVer form, that the version sorts strictly above everything on nuget.org, and that the tag is on `HEAD`. Do not reason about prerelease ordering by hand; let the guard decide.
 
-A release candidate is still tagged by hand, which triggers `release.yml` directly:
+A preview is still tagged by hand, which triggers `release.yml` directly:
 
 ```bash
-dotnet run build/VersionGuard.cs -- 1.1.0-rc.1
-git tag -a v1.1.0-rc.1 -m "v1.1.0-rc.1"
-git push origin v1.1.0-rc.1
+dotnet run build/VersionGuard.cs -- 1.1.0-preview.1
+git tag -a v1.1.0-preview.1 -m "v1.1.0-preview.1"
+git push origin v1.1.0-preview.1
 ```
 
-`publish.yml` ignores prerelease tags when looking for the last release, so a hand-pushed release candidate never becomes the base for the next automatic bump.
+`publish.yml` ignores prerelease tags when looking for the last release, so a hand-pushed preview never becomes the base for the next automatic bump.
 
 To rehearse without publishing, run `release.yml` manually with `dry_run` set. It builds, packs, validates and prints the release notes, and skips every publish step.
 
 Full history matters in `publish.yml` and `release.yml`, which read tags. Both check out with `fetch-depth: 0` for that reason. No other job needs it.
-
-## Why the version numbers jump from rc.2 to rc.13
-
-Kept because it explains the gap, and because it is the reason the checks above exist.
-
-A preview workflow, since deleted, used to build its version as `${base_version}-${preview_label}.${{ github.run_number }}`. `github.run_number` is the workflow's own lifetime counter: it increments on every run including failed and cancelled ones, and never resets when `base_version` changes. The label number was a build count for the workflow, not a count of previews.
-
-What that produced:
-
-| Intended | Published | Cause |
-| --- | --- | --- |
-| `1.0.0-rc.1` | `1.0.0-rc.10` | Preview run #10, commit `d98e766` |
-| none | `1.0.0-rc.11` | Preview run #11, same commit `d98e766` |
-| `1.0.0-rc.2` | `1.0.0-rc.12` | Preview run #12, commit `5378b23` |
-
-The missing `0.0.4-preview.5` is the same mechanism: run #5 was cancelled.
-
-Because SemVer compares numeric prerelease identifiers numerically, `1.0.0-rc.2` sorts *below* `1.0.0-rc.10`. Publishing an intuitively-next `1.0.0-rc.2` would have landed under what was already on nuget.org, and `--prerelease` restore would have kept resolving to the old one. [NuGet supports no permanent deletion](https://learn.microsoft.com/en-us/nuget/nuget-org/policies/deleting-packages), and unlisted versions can still be selected by floating ranges, so none of this was reversible. The next release after `1.0.0-rc.12` therefore has to be `1.0.0-rc.13` or higher.
-
-Those three versions belong to the retired package id `Zachtbeer.SqlDataBridge`. Nothing named `SqlDataPack` has ever been published, so the ordering damage above constrains this package not at all: its first release starts from `0.0.0` and the `semver:` label on the merged pull request decides the number. The history is kept because it is the reason `VersionGuard` checks ordering at all.
-
-`VersionGuard` now checks all of this mechanically. Do not reason about prerelease ordering by hand.
 
 ## API compatibility
 
