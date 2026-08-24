@@ -121,6 +121,34 @@ public sealed class ImportOutcomeTests {
     }
 
     /// <summary>
+    /// Preflight exists to answer "will this import work" without writing anything, so it has to reach the
+    /// same verdict the import will. Before this it called an edited package valid and the import then
+    /// refused it, which is the contradiction that made a half-loaded target so easy to hit.
+    /// </summary>
+    [Fact]
+    public async Task Preflight_RowsDeletedFromPackage_WarnsByDefaultAndErrorsUnderFail() {
+        await using var source = await SqlServerFixtureDatabase.CreateAsync(_fixture);
+        await source.ExecuteSqlAsync(SqlScriptLoader.LoadEmbeddedScript(CoreCommerce));
+        await using var target = await SqlServerFixtureDatabase.CreateAsync(_fixture);
+        await TargetSchemaScripts.ApplySourceSchemaUnseededAsync(target, CoreCommerce);
+        await using var sqlite = new SqliteTempFileHarness();
+        var exportedRows = await ExportThenDeleteOneRowAsync(source, sqlite);
+
+        var warnPreflight = await new SqlDataPackImporter().PreflightAsync(sqlite.FilePath, target.ConnectionString);
+
+        warnPreflight.IsValid.ShouldBeTrue();
+        warnPreflight.Errors.ShouldBeEmpty();
+        warnPreflight.Warnings.ShouldContain(w => w.Contains("dbo.GlobalSettings", StringComparison.Ordinal)
+                                                  && w.Contains($"holds {exportedRows - 1} rows", StringComparison.Ordinal));
+
+        var failPreflight = await new SqlDataPackImporter().PreflightAsync(sqlite.FilePath, target.ConnectionString, new ImportOptions { RowCountDrift = RowCountDrift.Fail });
+
+        failPreflight.IsValid.ShouldBeFalse();
+        failPreflight.Errors.ShouldContain(e => e.Contains("dbo.GlobalSettings", StringComparison.Ordinal));
+        failPreflight.Warnings.ShouldNotContain(w => w.Contains($"holds {exportedRows - 1} rows", StringComparison.Ordinal));
+    }
+
+    /// <summary>
     /// Exports one table, deletes its first row from the package, and returns the count the export recorded.
     /// The package then holds one row fewer than its manifest claims, which is what the documented edit
     /// workflow produces. Resolves the data table from the manifest because DataTablePrefix is configurable.

@@ -186,7 +186,20 @@ public sealed class SqlDataPackImporter {
                     errors.Add(exception.Message);
                 }
 
-                var warnings = BuildImportWarnings(tables, manifest.Warnings, options).Concat(typeWarnings).Distinct(StringComparer.Ordinal).ToArray();
+                // Same comparison ImportAsync runs, reported the way preflight reports everything: as an
+                // entry in errors rather than a throw, so IsValid falls out of errors.Count below.
+                var drift = await EvaluateRowCountDriftAsync(sqlite, tables, cancellationToken);
+                var driftWarnings = Array.Empty<string>();
+                if (drift.Count > 0) {
+                    if (options.RowCountDrift == RowCountDrift.Fail) {
+                        errors.Add(DescribeDriftError(drift));
+                    }
+                    else {
+                        driftWarnings = drift.Select(DescribeDriftWarning).ToArray();
+                    }
+                }
+
+                var warnings = BuildImportWarnings(tables, manifest.Warnings, options).Concat(typeWarnings).Concat(driftWarnings).Distinct(StringComparer.Ordinal).ToArray();
                 return new SqlDataPackPreflightResult(errors.Count == 0, errors, warnings, manifest);
             }
             finally {
