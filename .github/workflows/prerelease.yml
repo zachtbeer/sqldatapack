@@ -135,18 +135,31 @@ jobs:
       # ci.yml's matrix against 2017/2019/2022/2025; re-running it here would pull those
       # images on every release.
       - run: dotnet test tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj -c Release --no-build --verbosity normal
+      - run: dotnet test tests/SqlDataPack.Cli.Tests/SqlDataPack.Cli.Tests.csproj -c Release --no-build --verbosity normal
 
+      # Both packages. A preview does not build the standalone binaries or touch winget:
+      # those are for stable releases, and a preview of the tool is installable with
+      # `dotnet tool install -g SqlDataPack.Cli --prerelease`.
       - name: Pack
-        run: dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./release-packages -p:Version=${{ needs.guard.outputs.version }}
+        run: |
+          dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./release-packages -p:Version=${{ needs.guard.outputs.version }}
+          dotnet pack src/SqlDataPack.Cli/SqlDataPack.Cli.csproj -c Release --no-build -o ./release-packages -p:Version=${{ needs.guard.outputs.version }}
 
       # The version is passed into build and pack explicitly, so this asserts the
-      # artifact on disk is the one you asked for before anything is published.
-      - name: Verify package version matches
+      # artifacts on disk are the ones you asked for before anything is published.
+      - name: Verify package versions match
         env:
           EXPECTED: ${{ needs.guard.outputs.version }}
         run: |
-          if [ ! -f "./release-packages/SqlDataPack.${EXPECTED}.nupkg" ]; then
-            echo "::error::Expected SqlDataPack.${EXPECTED}.nupkg. Pack produced:"
+          missing=0
+          for id in SqlDataPack SqlDataPack.Cli; do
+            if [ ! -f "./release-packages/${id}.${EXPECTED}.nupkg" ]; then
+              echo "::error::Expected ${id}.${EXPECTED}.nupkg."
+              missing=1
+            fi
+          done
+          if [ "${missing}" -ne 0 ]; then
+            echo "Pack produced:"
             ls -1 ./release-packages/
             exit 1
           fi

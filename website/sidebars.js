@@ -11,6 +11,7 @@ const sidebars = {
   docsSidebar: [
     'intro',
     'getting-started',
+    'cli',
     {
       type: 'category',
       label: 'Recipes',

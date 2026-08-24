@@ -98,8 +98,106 @@ jobs:
         id: guard
         run: dotnet run build/VersionGuard.cs -- "${{ steps.tag.outputs.version }}"
 
-  release:
+  # The standalone builds, which is how most people get this: winget on Windows, a
+  # direct download everywhere else. Self-contained and single file, so the target
+  # machine needs no .NET at all.
+  #
+  # Each RID builds on its own operating system rather than cross-publishing from
+  # ubuntu. Cross-publishing works, but it leaves the macOS binaries unsigned in a way
+  # that is harder to fix later, and the runners cost nothing.
+  binaries:
+    name: Build ${{ matrix.rid }}
     needs: guard
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - rid: win-x64
+            os: windows-latest
+          - rid: win-arm64
+            os: windows-latest
+          - rid: linux-x64
+            os: ubuntu-latest
+          - rid: linux-arm64
+            os: ubuntu-latest
+          - rid: osx-x64
+            os: macos-latest
+          - rid: osx-arm64
+            os: macos-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      # No --locked-mode: publishing for a RID pulls runtime packs the lock file was not
+      # written against.
+      - name: Publish
+        shell: bash
+        run: |
+          dotnet publish src/SqlDataPack.Cli/SqlDataPack.Cli.csproj \
+            -c Release \
+            -r ${{ matrix.rid }} \
+            --self-contained true \
+            -p:Version=${{ needs.guard.outputs.version }} \
+            -o ./publish/${{ matrix.rid }}
+
+      # The publish settings are supposed to produce exactly one file. If they ever stop
+      # doing so, the archive layout and the winget manifest are both wrong, so fail here
+      # rather than ship it. SingleFileCliTests covers the same property in the test suite.
+      - name: Verify the build is a single file
+        shell: bash
+        run: |
+          count=$(find ./publish/${{ matrix.rid }} -type f | wc -l)
+          if [ "${count}" -ne 1 ]; then
+            echo "::error::Expected one self-contained file for ${{ matrix.rid }}, found ${count}:"
+            find ./publish/${{ matrix.rid }} -type f
+            exit 1
+          fi
+
+      # Windows ships the bare executable so the winget portable manifest can point
+      # straight at it. Everything else is tarred to keep the executable bit.
+      - name: Stage artifact
+        shell: bash
+        run: |
+          mkdir -p ./artifacts
+          case "${{ matrix.rid }}" in
+            win-*)
+              cp "./publish/${{ matrix.rid }}/SqlDataPack.Cli.exe" "./artifacts/sqldatapack-${{ matrix.rid }}.exe"
+              ;;
+            *)
+              cp "./publish/${{ matrix.rid }}/SqlDataPack.Cli" "./publish/${{ matrix.rid }}/sqldatapack"
+              chmod +x "./publish/${{ matrix.rid }}/sqldatapack"
+              tar -czf "./artifacts/sqldatapack-${{ matrix.rid }}.tar.gz" -C "./publish/${{ matrix.rid }}" sqldatapack
+              ;;
+          esac
+          ls -l ./artifacts
+
+      # Cheap proof the thing runs at all before it reaches anyone. Only where the
+      # runner can execute the architecture it just built.
+      - name: Smoke test
+        if: matrix.rid == 'win-x64' || matrix.rid == 'linux-x64' || matrix.rid == 'osx-arm64'
+        shell: bash
+        run: |
+          case "${{ matrix.rid }}" in
+            win-*) ./publish/${{ matrix.rid }}/SqlDataPack.Cli.exe --version ;;
+            *)     ./publish/${{ matrix.rid }}/sqldatapack --version ;;
+          esac
+
+      - name: Upload binary
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: binary-${{ matrix.rid }}
+          path: ./artifacts/*
+
+  release:
+    needs: [guard, binaries]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -134,17 +232,31 @@ jobs:
       # images on every release.
       - run: dotnet test tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj -c Release --no-build --verbosity normal
 
+      # Two packages: the library, and the CLI as a dotnet global tool. SqlDataPack.Cli
+      # needs its own trusted-publishing policy on nuget.org or the push 403s after the
+      # tag is already live.
       - name: Pack
-        run: dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./release-packages -p:Version=${{ needs.guard.outputs.version }}
+        run: |
+          dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./release-packages -p:Version=${{ needs.guard.outputs.version }}
+          dotnet pack src/SqlDataPack.Cli/SqlDataPack.Cli.csproj -c Release --no-build -o ./release-packages -p:Version=${{ needs.guard.outputs.version }}
 
       # The version is passed into build and pack explicitly, so this asserts the
-      # artifact on disk is the one the tag promised before anything is published.
-      - name: Verify package version matches the tag
+      # artifacts on disk are the ones the tag promised before anything is published.
+      # Named rather than counted: a missing package and an unexpected extra one are
+      # both worth failing on.
+      - name: Verify package versions match the tag
         env:
           EXPECTED: ${{ needs.guard.outputs.version }}
         run: |
-          if [ ! -f "./release-packages/SqlDataPack.${EXPECTED}.nupkg" ]; then
-            echo "::error::Expected SqlDataPack.${EXPECTED}.nupkg. Pack produced:"
+          missing=0
+          for id in SqlDataPack SqlDataPack.Cli; do
+            if [ ! -f "./release-packages/${id}.${EXPECTED}.nupkg" ]; then
+              echo "::error::Expected ${id}.${EXPECTED}.nupkg."
+              missing=1
+            fi
+          done
+          if [ "${missing}" -ne 0 ]; then
+            echo "Pack produced:"
             ls -1 ./release-packages/
             exit 1
           fi
@@ -157,22 +269,47 @@ jobs:
             ./release-packages/*.nupkg
             ./release-packages/*.snupkg
 
-      # Attest the nupkg bytes we built, before publishing. nuget.org appends a
-      # repository signature to the published package, which changes its bytes and
-      # invalidates this attestation when verified against the nuget.org file. The
-      # attestation bundle and the exact attested nupkg are therefore attached to the
-      # GitHub release below, and the README documents verifying against that file.
+      - name: Download standalone binaries
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          pattern: binary-*
+          merge-multiple: true
+          path: ./release-binaries
+
+      # winget verifies the installer against this hash, and anyone downloading by hand
+      # has nothing else to check the file against.
+      - name: Checksums
+        run: |
+          cd ./release-binaries
+          sha256sum * > ./SHA256SUMS
+          cat ./SHA256SUMS
+          echo '## Downloads' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat ./SHA256SUMS >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      # Attest the bytes we built, before publishing. nuget.org appends a repository
+      # signature to the published package, which changes its bytes and invalidates this
+      # attestation when verified against the nuget.org file. The attestation bundle and
+      # the exact attested nupkg are therefore attached to the GitHub release below, and
+      # the README documents verifying against that file. The standalone binaries are
+      # attested too: they are unsigned, so provenance is the only thing anyone can check.
       - name: Attest build provenance
         id: attest
         if: needs.guard.outputs.publish == 'true'
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4
         with:
-          subject-path: "./release-packages/*.nupkg"
+          subject-path: |
+            ./release-packages/*.nupkg
+            ./release-binaries/sqldatapack-*
 
       - name: Generate SBOM (CycloneDX)
         run: |
           dotnet tool install --global CycloneDX --version 6.2.0
           dotnet CycloneDX src/SqlDataPack/SqlDataPack.csproj -o ./sbom --output-format Json --set-version "${{ needs.guard.outputs.version }}"
+          dotnet CycloneDX src/SqlDataPack.Cli/SqlDataPack.Cli.csproj -o ./sbom-cli --output-format Json --set-version "${{ needs.guard.outputs.version }}"
+          mv ./sbom/bom.json ./sbom/sqldatapack-sbom.json
+          mv ./sbom-cli/bom.json ./sbom/sqldatapack-cli-sbom.json
 
       - name: NuGet login (OIDC trusted publishing)
         if: needs.guard.outputs.publish == 'true'
@@ -221,8 +358,54 @@ jobs:
           cp "${{ steps.attest.outputs.bundle-path }}" ./release-packages/provenance.intoto.jsonl
           gh release create "v${VERSION}" \
             ./release-packages/*.nupkg \
-            ./sbom/bom.json \
+            ./release-binaries/sqldatapack-* \
+            ./release-binaries/SHA256SUMS \
+            ./sbom/sqldatapack-sbom.json \
+            ./sbom/sqldatapack-cli-sbom.json \
             ./release-packages/provenance.intoto.jsonl \
             -t "v${VERSION}" \
             --notes-file ./release-notes.md \
             ${{ needs.guard.outputs.prerelease == 'true' && '--prerelease' || '--latest' }}
+
+  # winget is the channel most people will actually use, so this runs on every stable
+  # release. The first submission has to be done by hand -- microsoft/winget-pkgs reviews
+  # a new package identifier before it accepts automated updates -- and the manifests to
+  # copy for it live in build/winget/.
+  #
+  # Needs WINGET_TOKEN: a PAT with public_repo scope on an account that has forked
+  # microsoft/winget-pkgs. Without it this skips with a warning rather than failing the
+  # release, because the release itself has already succeeded by this point.
+  winget:
+    name: Submit winget manifest
+    needs: [guard, release]
+    if: needs.guard.outputs.publish == 'true' && needs.guard.outputs.prerelease != 'true'
+    runs-on: windows-latest
+
+    env:
+      WINGET_TOKEN: ${{ secrets.WINGET_TOKEN }}
+      VERSION: ${{ needs.guard.outputs.version }}
+      PACKAGE_ID: zachtbeer.SqlDataPack
+
+    steps:
+      - name: Check for a submission token
+        id: token
+        shell: bash
+        run: |
+          if [ -z "${WINGET_TOKEN}" ]; then
+            echo "::warning::WINGET_TOKEN is not set, so the winget manifest was not submitted. Submit it by hand from build/winget/ and set the secret to automate later releases."
+            echo "submit=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "submit=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Submit to winget-pkgs
+        if: steps.token.outputs.submit == 'true'
+        shell: pwsh
+        run: |
+          $base = "https://github.com/${env:GITHUB_REPOSITORY}/releases/download/v${env:VERSION}"
+          Invoke-WebRequest -Uri https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+          .\wingetcreate.exe update $env:PACKAGE_ID `
+            --version $env:VERSION `
+            --urls "$base/sqldatapack-win-x64.exe|x64" "$base/sqldatapack-win-arm64.exe|arm64" `
+            --submit `
+            --token $env:WINGET_TOKEN

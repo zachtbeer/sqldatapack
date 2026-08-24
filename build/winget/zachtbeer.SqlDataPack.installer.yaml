@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+#
+# Portable, pointed straight at the bare .exe. The published build is one self-contained
+# file, so there is no archive to unpack and no nested installer to describe.
+#
+# winget drops the file under %LOCALAPPDATA%\Microsoft\WinGet\Packages (or %PROGRAMFILES%
+# with --scope machine) and puts a symlink named by PortableCommandAlias on PATH.
+#
+# Replace VERSION and both SHA256 values. The hashes are in the SHA256SUMS asset on the
+# GitHub release, or from `winget hash <file>`.
+PackageIdentifier: zachtbeer.SqlDataPack
+PackageVersion: VERSION
+InstallerType: portable
+Commands:
+  - sqldatapack
+ReleaseDate: RELEASE_DATE
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/zachtbeer/sqldatapack/releases/download/vVERSION/sqldatapack-win-x64.exe
+    InstallerSha256: SHA256_X64
+    PortableCommandAlias: sqldatapack
+  - Architecture: arm64
+    InstallerUrl: https://github.com/zachtbeer/sqldatapack/releases/download/vVERSION/sqldatapack-win-arm64.exe
+    InstallerSha256: SHA256_ARM64
+    PortableCommandAlias: sqldatapack
+ManifestType: installer
+ManifestVersion: 1.6.0

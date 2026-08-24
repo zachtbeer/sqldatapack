@@ -88,8 +88,13 @@ jobs:
       - run: dotnet restore SqlDataPack.slnx --locked-mode
       - run: dotnet build SqlDataPack.slnx -c Release --no-restore
       - run: dotnet test tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj -c Release --no-build --verbosity normal
+      - run: dotnet test tests/SqlDataPack.Cli.Tests/SqlDataPack.Cli.Tests.csproj -c Release --no-build --verbosity normal
+      # Both packages, so a change that breaks packing the tool is caught here rather
+      # than on a release.
       - if: matrix.os == 'ubuntu-latest'
-        run: dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./packages
+        run: |
+          dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./packages
+          dotnet pack src/SqlDataPack.Cli/SqlDataPack.Cli.csproj -c Release --no-build -o ./packages
 
   windows-smoke:
     name: Windows smoke (LocalDB + samples)
