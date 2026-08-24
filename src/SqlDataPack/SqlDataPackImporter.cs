@@ -376,6 +376,42 @@ public sealed class SqlDataPackImporter {
         return warnings.Distinct(StringComparer.Ordinal).ToArray();
     }
 
+    /// <summary>
+    /// One table whose row count no longer matches what the export recorded.
+    /// </summary>
+    internal readonly record struct RowCountDriftFinding(string TableName, long Expected, long Actual);
+
+    /// <summary>
+    /// Compares what each data table holds now against the count the export recorded. This answers
+    /// only whether the package changed since export, which the format allows on purpose. It is not
+    /// the check that a load completed: that one lives in <see cref="ImportTableAsync"/> and compares
+    /// the rows read out of the package against the rows that landed in the target.
+    /// </summary>
+    internal static async Task<IReadOnlyList<RowCountDriftFinding>> EvaluateRowCountDriftAsync(SqliteConnection sqlite, IReadOnlyList<TableMetadata> tables, CancellationToken cancellationToken) {
+        var expected = await SqlitePackage.ReadExpectedRowCountsAsync(sqlite, cancellationToken);
+        var findings = new List<RowCountDriftFinding>();
+        foreach (var table in tables) {
+            // A table with no stats row at all is a corrupt package, not drift, and
+            // SqlitePackage.ValidateForImportAsync has already rejected it by this point.
+            if (!expected.TryGetValue(table.Name.FullName, out var recorded)) {
+                continue;
+            }
+
+            var actual = await SqlitePackage.ReadActualRowCountAsync(sqlite, table.SqliteTableName, cancellationToken);
+            if (actual != recorded) {
+                findings.Add(new RowCountDriftFinding(table.Name.FullName, recorded, actual));
+            }
+        }
+
+        return findings;
+    }
+
+    private static string DescribeDriftWarning(RowCountDriftFinding drift) =>
+        $"Table '{drift.TableName}' holds {drift.Actual} rows but the export recorded {drift.Expected}. Importing the {drift.Actual} rows the package holds.";
+
+    private static string DescribeDriftError(IReadOnlyList<RowCountDriftFinding> drift) =>
+        $"Package row counts differ from what the export recorded: {string.Join("; ", drift.Select(d => $"'{d.TableName}' holds {d.Actual} rows, export recorded {d.Expected}"))}. Set ImportOptions.RowCountDrift to RowCountDrift.Warn to import the package as it stands.";
+
     private static void AddWarning(List<string> warnings, string warning, IProgress<SqlDataPackProgress>? progress) {
         if (!warnings.Contains(warning, StringComparer.Ordinal)) {
             warnings.Add(warning);
