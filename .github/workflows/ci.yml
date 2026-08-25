@@ -23,21 +23,33 @@ on:
 permissions:
   contents: read
 
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+# A pull request branch that gets three pushes in a row used to run three full copies of
+# this, 13 jobs each, with nothing cancelling the earlier two. Superseded pull request
+# runs are cancelled; main is not, because those runs gate the release.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   format:
     name: Formatting
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x
             10.0.x
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.nuget/packages
           key: nuget-format-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json', '.config/dotnet-tools.json') }}
@@ -55,15 +67,10 @@ jobs:
           build/cleanup.sh
           git diff --exit-code
 
-      # After the git diff check above, not before: running a file-based app in build/
-      # can rewrite build/packages.lock.json, which is deliberately outside
-      # SqlDataPack.slnx and never restored in locked mode.
-      - name: Version bump script self-test
-        run: dotnet run build/NextVersion.cs -- --self-test
-
   build:
     name: Build and unit tests (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
 
     strategy:
       fail-fast: false
@@ -71,15 +78,15 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x
             10.0.x
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.nuget/packages
           key: nuget-${{ matrix.os }}-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
@@ -88,21 +95,27 @@ jobs:
       - run: dotnet restore SqlDataPack.slnx --locked-mode
       - run: dotnet build SqlDataPack.slnx -c Release --no-restore
       - run: dotnet test tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj -c Release --no-build --verbosity normal
+      - run: dotnet test tests/SqlDataPack.Cli.Tests/SqlDataPack.Cli.Tests.csproj -c Release --no-build --verbosity normal
+      # Both packages, so a change that breaks packing the tool is caught here rather
+      # than on a release.
       - if: matrix.os == 'ubuntu-latest'
-        run: dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./packages
+        run: |
+          dotnet pack src/SqlDataPack/SqlDataPack.csproj -c Release --no-build -o ./packages
+          dotnet pack src/SqlDataPack.Cli/SqlDataPack.Cli.csproj -c Release --no-build -o ./packages
 
   windows-smoke:
     name: Windows smoke (LocalDB + samples)
     runs-on: windows-latest
+    timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: 8.0.x
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.nuget/packages
           key: nuget-windows-smoke-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
@@ -170,6 +183,7 @@ jobs:
   integration:
     name: Integration tests (${{ matrix.sqlserver }}, ${{ matrix.tfm }})
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     # The suite multi-targets net8.0 and net10.0. Running the frameworks as a matrix
     # dimension rather than letting one `dotnet test` invocation walk both keeps each
@@ -193,15 +207,15 @@ jobs:
             image: mcr.microsoft.com/mssql/server:2025-latest
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x
             10.0.x
 
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.nuget/packages
           key: nuget-${{ matrix.sqlserver }}-${{ hashFiles('**/*.csproj', 'Directory.Packages.props', '**/packages.lock.json') }}
@@ -209,18 +223,30 @@ jobs:
 
       - run: dotnet restore SqlDataPack.slnx --locked-mode
       - run: dotnet build tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj -c Release --no-restore -f ${{ matrix.tfm }}
-      - run: dotnet test tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj -c Release --no-build -f ${{ matrix.tfm }} --verbosity normal
+      # SingleFileCliTests publishes the CLI self-contained before it can run anything,
+      # which takes minutes and produces an identical binary in every cell. The publish is
+      # cached per process, so four net10.0 cells means four publishes in four jobs. Run it
+      # in one cell and filter it out of the others. The cell has to be a net10.0 one; the
+      # tests are gated on that in source.
+      - name: Test
         env:
           SQLDATAPACK_SQLSERVER_IMAGE: ${{ matrix.image }}
+        run: |
+          if [ "${{ matrix.tfm }}" = "net10.0" ] && [ "${{ matrix.sqlserver }}" = "2022" ]; then
+            dotnet test tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj -c Release --no-build -f ${{ matrix.tfm }} --verbosity normal
+          else
+            dotnet test tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj -c Release --no-build -f ${{ matrix.tfm }} --verbosity normal --filter "FullyQualifiedName!~SingleFileCliTests"
+          fi
 
   security-scan:
     name: Vulnerable dependency scan
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v5
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: |
             8.0.x

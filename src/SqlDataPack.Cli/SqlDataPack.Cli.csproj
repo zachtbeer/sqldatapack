@@ -1,0 +1,89 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!--
+      net10.0 only. The library still targets net8.0 for consumers, but this is an app: the
+      downloadable builds carry their own runtime, and net8.0 goes out of support in Nov 2026.
+    -->
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>SqlDataPack.Cli</RootNamespace>
+    <!--
+      Not "sqldatapack". Windows paths are case insensitive, so that assembly name lands on
+      sqldatapack.dll and overwrites the library's SqlDataPack.dll in the output directory, and the
+      app then dies at startup with a TypeLoadException for SqlDataPackException. The command is
+      named by ToolCommandName for the global tool and by the release workflow for the standalone
+      builds, so nothing user-facing depends on this.
+    -->
+    <AssemblyName>SqlDataPack.Cli</AssemblyName>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Global tool">
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>sqldatapack</ToolCommandName>
+    <PackageId>SqlDataPack.Cli</PackageId>
+    <Authors>zachtbeer</Authors>
+    <Description>Command line tool for SqlDataPack. Exports a slice of a SQL Server database into a single SQLite file and imports it back, without writing any code. Pick the tables, columns and rows that come out, edit the file with plain SQL, then load it into a dev or test database or hand it to someone who has no access to the source.</Description>
+    <PackageTags>sqlserver;sqlite;cli;dotnet-tool;export;import;test-data;data-masking;bug-repro;dacpac</PackageTags>
+    <PackageProjectUrl>https://github.com/zachtbeer/sqldatapack</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zachtbeer/sqldatapack</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <Copyright>Copyright (c) 2026 zachtbeer</Copyright>
+    <PackageReleaseNotes>https://github.com/zachtbeer/sqldatapack/releases</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <!--
+    Single-file publish settings for the downloadable and winget builds. `dotnet pack` never sees
+    them, so the global tool package stays an ordinary framework-dependent tool.
+
+    IncludeAllContentForSelfExtract is load bearing, not a size or tidiness choice. DacFx resolves
+    paths from Assembly.Location, which returns an empty string for assemblies bundled into a
+    single file, so a plain PublishSingleFile build throws "Could not save package to file. The path
+    is empty." from DacPackageExtensions.BuildPackage the moment anyone asks for dacpac capture.
+    Self-extracting restores Assembly.Location. SingleFileCliTests covers it against a real server;
+    do not drop the property without reading that file.
+
+    Trimming stays off because DacFx is not trim safe.
+
+    The whole group is gated on RuntimeIdentifier. Setting PublishSingleFile unconditionally makes
+    restore pull RID-specific assets for whichever machine ran it, writing a `net10.0/[local rid]`
+    section into the committed packages.lock.json. A lock file written on Windows then fails
+    `dotnet restore` in locked mode on CI's Linux and macOS runners.
+  -->
+  <PropertyGroup Label="Self-contained publish" Condition="'$(RuntimeIdentifier)' != ''">
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
+    <SelfContained>true</SelfContained>
+    <DebugType>none</DebugType>
+    <!--
+      DebugType only silences this project. Without this the library's SqlDataPack.pdb and .xml are
+      copied next to the executable, so the "single file" download is three files.
+    -->
+    <AllowedReferenceRelatedFileExtensions Condition="'$(RuntimeIdentifier)' != ''">none</AllowedReferenceRelatedFileExtensions>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../SqlDataPack/SqlDataPack.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+    <None Include="../SqlDataPack/icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="SqlDataPack.Cli.Tests" />
+  </ItemGroup>
+</Project>

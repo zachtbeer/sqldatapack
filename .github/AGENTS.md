@@ -7,36 +7,37 @@ Scope: everything under `.github/`. The repository-wide rules in the root [AGENT
 | File | Trigger | What it does |
 | --- | --- | --- |
 | `ci.yml` | push/PR to `main` | Formatting gate, build, test matrix. |
-| `version-label.yml` | PR to `main` | Fails a pull request that changes the package without exactly one `semver:` label, or carries a label without changing the package. |
-| `publish.yml` | push to `main` | Reads the `semver:` labels since the last tag, computes and pushes the version tag, then calls `release.yml`. |
-| `release.yml` | push of a `v*` tag, or called by `publish.yml` | Validates the version, builds, tests, packs, attests, pushes to NuGet.org, creates a GitHub release. |
-| `codeql.yml` | push/PR to `main`, weekly | CodeQL analysis for C#. |
+| `release.yml` | push of a `v*` tag, manual | Validates the version, builds the six standalone binaries, tests, packs, attests, pushes to NuGet.org, creates a GitHub release, submits the winget manifest. |
+| `codeql.yml` | push to `main`, weekly | CodeQL analysis for C#. |
+| `docs.yml` | push/PR to `main` | Builds the docs site; deploys it on `main`. |
 | `fuzz.yml` | nightly, manual | Property-based fuzzing of the untrusted-input surface. |
-| `scorecard.yml` | push to `main`, weekly, branch protection changes | OpenSSF Scorecard. |
+| `scorecard.yml` | weekly, branch protection changes | OpenSSF Scorecard. |
 
-Only `release.yml` publishes to NuGet.org. There is no nightly or per-commit feed: every package change ships a real version, and every change that is not a package change leaves the package identical.
+`release.yml` is the only file that can reach `dotnet nuget push`, and that is a constraint to preserve, not an accident. nuget.org trusted publishing authenticates a workflow file, so one publishing file means one policy. A second publishing workflow, or reaching this one through `workflow_call`, means another policy and another thing to keep pointed at the right file. The repository previously had three and every one of them was misconfigured at some point. Add a trigger to `release.yml` rather than a workflow beside it.
 
-## The version comes from a label on the pull request
+A merge to `main` publishes nothing.
+
+## The version comes from the tag
 
 Nothing passes a version into an ordinary build, and no csproj holds a `<Version>`. Local builds produce `1.0.0`, which is a placeholder and not a real version.
 
-At release time `publish.yml` computes the version from the last stable tag and the highest `semver:` label since it, using `build/NextVersion.cs`, and passes it into both `dotnet build` and `dotnet pack`. It has to reach the build as well as the pack: packing with `--no-build` and a version the build never saw produces a package whose assembly and nupkg disagree.
+At release time the version is read off the tag and passed into both `dotnet build` and `dotnet pack`. It has to reach the build as well as the pack: packing with `--no-build` and a version the build never saw produces a package whose assembly and nupkg disagree.
 
-`build/NextVersion.cs --self-test` runs in CI. `build/VersionGuard.cs` runs before every tag is pushed and checks the SemVer form, that the version sorts strictly above everything on nuget.org, and that the tag is on `HEAD`. Do not reason about prerelease ordering by hand; let the guard decide.
-
-A preview is still tagged by hand, which triggers `release.yml` directly:
+`build/VersionGuard.cs` runs before the tag is pushed and again in CI. It checks the SemVer form, that the version sorts strictly above everything published for both package ids, and that the tag is on `HEAD`. Do not reason about prerelease ordering by hand; let the guard decide.
 
 ```bash
-dotnet run build/VersionGuard.cs -- 1.1.0-preview.1
-git tag -a v1.1.0-preview.1 -m "v1.1.0-preview.1"
-git push origin v1.1.0-preview.1
+dotnet run build/VersionGuard.cs -- 1.1.0
+git tag -a v1.1.0 -m "v1.1.0"
+git push origin v1.1.0
 ```
 
-`publish.yml` ignores prerelease tags when looking for the last release, so a hand-pushed preview never becomes the base for the next automatic bump.
+A preview is the same, with a prerelease version. `release.yml` derives prerelease-ness from the string, marks the GitHub release accordingly, and skips winget.
 
-To rehearse without publishing, run `release.yml` manually with `dry_run` set. It builds, packs, validates and prints the release notes, and skips every publish step.
+Everything that can fail runs before the first `dotnet nuget push`. Keep it that way when adding steps: a failed step after a push leaves a version on nuget.org that cannot be taken back.
 
-Full history matters in `publish.yml` and `release.yml`, which read tags. Both check out with `fetch-depth: 0` for that reason. No other job needs it.
+To rehearse without publishing, run `release.yml` manually with `dry_run` set. It builds, packs, validates and prints the release notes, and skips every publish step. It cannot tell you whether nuget.org will accept the credential, because it stops before the login.
+
+Full history matters in `release.yml`, which reads tags. It checks out with `fetch-depth: 0` for that reason. No other job needs it.
 
 ## API compatibility
 

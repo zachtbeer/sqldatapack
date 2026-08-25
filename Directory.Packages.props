@@ -13,6 +13,9 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.11" />
     <PackageVersion Include="Microsoft.SqlServer.DacFx" Version="170.4.83" />
   </ItemGroup>
+  <ItemGroup Label="CLI">
+    <PackageVersion Include="System.CommandLine" Version="2.0.11" />
+  </ItemGroup>
   <ItemGroup Label="Testing">
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageVersion Include="FsCheck" Version="3.4.0" />
@@ -24,7 +27,7 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
     <!-- xunit 2.x has no dynamic Assert.Skip; this adds [SkippableFact] and Skip.IfNot for the
          engine-version gates in the integration suite. -->
-    <PackageVersion Include="Xunit.SkippableFact" Version="1.5.61" />
+    <PackageVersion Include="Xunit.SkippableFact" Version="1.5.85" />
   </ItemGroup>
   <ItemGroup Label="Transitive pins (security)">
     <!-- Microsoft.Data.Sqlite pulls 2.1.11, which carries GHSA-2m69-gcr7-jv3q.

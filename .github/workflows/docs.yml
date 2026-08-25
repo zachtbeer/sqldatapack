@@ -1,6 +1,16 @@
 name: Docs
+
+# One build, two tails. On a pull request it stops after `npm run build`, which is the
+# check that matters: docusaurus.config.js sets onBrokenLinks and onBrokenMarkdownLinks
+# to throw, so a dead internal link fails the build instead of shipping. On main the same
+# build uploads a Pages artifact and deploys it.
 on:
   push:
+    branches: [main]
+    paths:
+      - 'website/**'
+      - '.github/workflows/docs.yml'
+  pull_request:
     branches: [main]
     paths:
       - 'website/**'
@@ -10,20 +20,23 @@ on:
 permissions:
   contents: read
 
-# Allow one concurrent deployment; let an in-progress run finish so a published
-# site is never left half-updated.
+# Pull request runs are per-branch and a new push replaces the one in flight. Deploys
+# share one group and are never cancelled, so a published site is never left half
+# updated.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('docs-pr-{0}', github.ref) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
+    name: Build the site
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: website
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
@@ -32,19 +45,23 @@ jobs:
           cache-dependency-path: website/package-lock.json
 
       - name: Configure Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - run: npm ci
       - run: npm run build
 
       - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: website/build
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       pages: write
       id-token: write

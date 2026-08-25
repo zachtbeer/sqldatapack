@@ -26,15 +26,47 @@ Full documentation, including recipes and known limitations: **https://zachtbeer
 
 ## Install
 
+There are two ways to use this: a command you run, or a package you call.
+
+**The command.** Nothing to install first, no .NET needed on the machine:
+
+```powershell
+winget install zachtbeer.SqlDataPack
+```
+
+```bash
+dotnet tool install -g SqlDataPack.Cli    # if you already have the SDK
+```
+
+Or download a single executable for Windows, Linux or macOS from [the releases page](https://github.com/zachtbeer/sqldatapack/releases). See [Command line](https://zachtbeer.github.io/sqldatapack/cli).
+
+**The library:**
+
 ```bash
 dotnet add package SqlDataPack
 ```
 
 Targets `net8.0` and `net10.0`.
 
-## Export
+## Export, from the command line
 
-This exports three tables, keeps only the rows for one customer, and leaves the `NationalId` column out of the file entirely:
+```bash
+sqldatapack export \
+  --connection "Server=.;Database=Northwind;Integrated Security=true" \
+  --out dev-slice.sqlite \
+  --tables dbo.Customers,dbo.Orders,dbo.Invoices \
+  --exclude-column dbo.Customers.NationalId \
+  --global-where "CustomerId:CustomerId = 42"
+
+sqldatapack import dev-slice.sqlite \
+  --connection "Server=.;Database=NorthwindDev;Integrated Security=true"
+```
+
+That is the same slice the C# below produces. Options the flags do not cover go in a JSON file passed with `--options`, which is meant to be committed and therefore refuses to hold a connection string.
+
+## Export, from code
+
+The same three tables, only the rows for one customer, and the `NationalId` column left out of the file entirely:
 
 ```csharp
 using SqlDataPack;
@@ -103,6 +135,7 @@ Backups and `.bacpac` files are whole-row, whole-table by nature: neither drops 
 Full documentation: **https://zachtbeer.github.io/sqldatapack/**
 
 - [Getting started](https://zachtbeer.github.io/sqldatapack/getting-started): install, export, inspect, import
+- [Command line](https://zachtbeer.github.io/sqldatapack/cli): every flag, the options file, exit codes
 - [Recipes](https://zachtbeer.github.io/sqldatapack/masked-slice-for-dev): masked dev slices, bug repros, schema capture, agent handoff
 - [Options](https://zachtbeer.github.io/sqldatapack/options): table, column, and row filtering, tuning, dacpac
 - [Troubleshooting](https://zachtbeer.github.io/sqldatapack/troubleshooting): common failures and fixes

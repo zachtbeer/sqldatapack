@@ -12,8 +12,10 @@
   <Folder Name="/tests/">
     <Project Path="tests/SqlDataPack.Benchmarks/SqlDataPack.Benchmarks.csproj" />
     <Project Path="tests/SqlDataPack.Fuzzing/SqlDataPack.Fuzzing.csproj" />
+    <Project Path="tests/SqlDataPack.Cli.Tests/SqlDataPack.Cli.Tests.csproj" />
     <Project Path="tests/SqlDataPack.Tests/SqlDataPack.Tests.csproj" />
   </Folder>
   <Project Path="src/SqlDataPack/SqlDataPack.csproj" />
+  <Project Path="src/SqlDataPack.Cli/SqlDataPack.Cli.csproj" />
   <Project Path="tests/SqlDataPack.IntegrationTests/SqlDataPack.IntegrationTests.csproj" />
 </Solution>

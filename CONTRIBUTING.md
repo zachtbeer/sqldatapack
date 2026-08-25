@@ -40,20 +40,9 @@ Restore uses lock files with `--locked-mode` in CI, so after any version change 
 
 The version is not written down anywhere. No project file carries a `<Version>`, so a local build produces `1.0.0`, which is a placeholder rather than a real version. That is expected and nothing depends on it.
 
-The real version is decided when your pull request merges. Every pull request that changes the package carries exactly one label saying how big the change is:
+The real version comes from a git tag. Merging your pull request publishes nothing; a maintainer pushes a `v*` tag when there is something worth releasing, and that tag is what builds and publishes.
 
-| Label | Effect |
-| --- | --- |
-| `semver:major` | `1.4.2` becomes `2.0.0` |
-| `semver:minor` | `1.4.2` becomes `1.5.0` |
-| `semver:patch` | `1.4.2` becomes `1.4.3` |
-| `semver:none` | Nothing is published |
-
-CI fails your pull request if it changes the package without one of these, or carries one without changing the package. A change counts as a package change when it touches `src/SqlDataPack/`, `Directory.Build.props` or `Directory.Packages.props`.
-
-Use `semver:none` for a change nobody consuming the package could observe: a comment, a private refactor, a test-only edit that happens to live under `src/`.
-
-Merging then computes the version, tags it, and publishes to nuget.org. There is no nightly or per-commit feed: every package change ships a real version, and every other change leaves the package identical. See [docs/RELEASE.md](docs/RELEASE.md).
+The library and the CLI ship in lockstep off one tag, so `SqlDataPack` and `SqlDataPack.Cli` always carry the same version. There is no nightly or per-commit feed. See [docs/RELEASE.md](docs/RELEASE.md).
 
 ## API Compatibility
 
