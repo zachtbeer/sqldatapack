@@ -1,27 +1,30 @@
-# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.12.0.schema.json
 #
 # Portable, pointed straight at the bare .exe. The published build is one self-contained
 # file, so there is no archive to unpack and no nested installer to describe.
 #
 # winget drops the file under %LOCALAPPDATA%\Microsoft\WinGet\Packages (or %PROGRAMFILES%
-# with --scope machine) and puts a symlink named by PortableCommandAlias on PATH.
+# with --scope machine) and puts a symlink named by Commands on PATH. Not
+# PortableCommandAlias: that one only applies inside NestedInstallerFiles, for archive
+# installers, and winget rejects it here as an unknown field.
 #
-# Replace VERSION and both SHA256 values. The hashes are in the SHA256SUMS asset on the
-# GitHub release, or from `winget hash <file>`.
+# MinimumOSVersion is the .NET 10 floor, not ours. A self-contained build still needs
+# Windows 10 1607 or Server 2016.
+#
+# The version, date and hashes below are from the last manual submission. See README.md.
 PackageIdentifier: zachtbeer.SqlDataPack
-PackageVersion: VERSION
+PackageVersion: 1.1.0
 InstallerType: portable
 Commands:
   - sqldatapack
-ReleaseDate: RELEASE_DATE
+MinimumOSVersion: 10.0.14393.0
+ReleaseDate: 2026-08-25
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/zachtbeer/sqldatapack/releases/download/vVERSION/sqldatapack-win-x64.exe
-    InstallerSha256: SHA256_X64
-    PortableCommandAlias: sqldatapack
+    InstallerUrl: https://github.com/zachtbeer/sqldatapack/releases/download/v1.1.0/sqldatapack-win-x64.exe
+    InstallerSha256: 9e176dec1e88d21543fdfe7d5d8e958da160b8c5ebf22ffb7f39563dae55645b
   - Architecture: arm64
-    InstallerUrl: https://github.com/zachtbeer/sqldatapack/releases/download/vVERSION/sqldatapack-win-arm64.exe
-    InstallerSha256: SHA256_ARM64
-    PortableCommandAlias: sqldatapack
+    InstallerUrl: https://github.com/zachtbeer/sqldatapack/releases/download/v1.1.0/sqldatapack-win-arm64.exe
+    InstallerSha256: 5009f31ad6b4ba53ba24a555a354a89df526ffb27e73c73083638ac2a6fb486a
 ManifestType: installer
-ManifestVersion: 1.6.0
+ManifestVersion: 1.12.0

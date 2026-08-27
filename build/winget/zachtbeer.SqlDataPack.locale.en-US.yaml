@@ -1,7 +1,7 @@
-# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.6.0.schema.json
-# Replace VERSION with the release version, no leading v.
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.12.0.schema.json
+# The version below is from the last manual submission. See README.md.
 PackageIdentifier: zachtbeer.SqlDataPack
-PackageVersion: VERSION
+PackageVersion: 1.1.0
 PackageLocale: en-US
 Publisher: zachtbeer
 PublisherUrl: https://github.com/zachtbeer
@@ -33,9 +33,9 @@ Tags:
   - test-data
   - data-masking
   - dacpac
-ReleaseNotesUrl: https://github.com/zachtbeer/sqldatapack/releases/tag/vVERSION
+ReleaseNotesUrl: https://github.com/zachtbeer/sqldatapack/releases/tag/v1.1.0
 Documentations:
   - DocumentLabel: Documentation
     DocumentUrl: https://zachtbeer.github.io/sqldatapack/
 ManifestType: defaultLocale
-ManifestVersion: 1.6.0
+ManifestVersion: 1.12.0
