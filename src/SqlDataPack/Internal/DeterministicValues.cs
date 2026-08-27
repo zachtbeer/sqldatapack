@@ -8,6 +8,7 @@ namespace SqlDataPack.Internal;
 /// </summary>
 internal static class DeterministicValues {
     private const string HexDigits = "0123456789abcdef";
+    private const int StackLimit = 256;
 
     public static void Hex(ReadOnlySpan<byte> hash, Span<char> destination) {
         for (var i = 0; i < destination.Length; i++) {
@@ -18,7 +19,10 @@ internal static class DeterministicValues {
     }
 
     public static string Hex(ReadOnlySpan<byte> hash, int length) {
-        Span<char> buffer = stackalloc char[length];
+        // Never stackalloc a caller-supplied length: a StackOverflowException would take the process down
+        // rather than fail the export.
+        Span<char> stack = stackalloc char[StackLimit];
+        Span<char> buffer = length <= StackLimit ? stack[..length] : new char[length];
         Hex(hash, buffer);
         return new string(buffer);
     }

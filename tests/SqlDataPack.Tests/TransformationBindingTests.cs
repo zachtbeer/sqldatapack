@@ -244,6 +244,50 @@ public sealed class TransformationBindingTests {
         ColumnTransform.MaxLengthOf(new ColumnMetadata(Customers, "Value", 1, typeName, maxLength, 0, 0, IsNullable: true, IsIdentity: false, IsComputed: false, CollationName: null, IsExcluded: false)).ShouldBe(expected);
     }
 
+    [Fact]
+    public void Apply_NullTransformer_OnANullableColumn_WritesNull() {
+        var transform = TransformFor(Column("Notes", "nvarchar", -1), new NullTransformer());
+
+        transform.Apply("a long free-form note").ShouldBe(DBNull.Value);
+    }
+
+    [Fact]
+    public void Apply_NullTransformer_OnANotNullColumn_FailsNamingTheColumn() {
+        var transform = TransformFor(Column("Notes", "nvarchar", -1, isNullable: false), new NullTransformer());
+
+        Should.Throw<SqlDataPackException>(() => transform.Apply("a long free-form note"))
+            .Message.ShouldContain("returned NULL for dbo.Customers.Notes, which is not nullable");
+    }
+
+    [Fact]
+    public void Apply_EmptyStringTransformer_OnANotNullTextColumn_WritesTheEmptyString() {
+        var transform = TransformFor(Column("Notes", "nvarchar", -1, isNullable: false), new EmptyStringTransformer());
+
+        transform.Apply("a long free-form note").ShouldBe(string.Empty);
+    }
+
+    [Fact]
+    public void Apply_EmptyStringTransformer_OnANonTextColumn_Fails() {
+        var column = new ColumnMetadata(Customers, "Age", 1, "int", 4, 10, 0, IsNullable: true, IsIdentity: false, IsComputed: false, CollationName: null, IsExcluded: false);
+        var transform = TransformFor(column, new EmptyStringTransformer());
+
+        Should.Throw<SqlDataPackException>(() => transform.Apply(12)).Message.ShouldContain("returned a String for dbo.Customers.Age");
+    }
+
+    [Fact]
+    public void Validate_ConstantTransformers_RecordAnEmptyConfiguration() {
+        var options = ExportOptions.Default;
+        options.Transformations.Add("dbo.Customers.Notes", new NullTransformer());
+        options.Transformations.Add("dbo.Customers.Email", new EmptyStringTransformer());
+
+        var transformations = TransformationBinder.Validate([Table(Column("Email", "nvarchar", 100), Column("Notes", "nvarchar", -1))], options);
+
+        transformations.Single(t => t.Column == "Notes").TransformerType.ShouldBe("NullTransformer");
+        transformations.Single(t => t.Column == "Notes").Configuration.ShouldBeNull();
+        transformations.Single(t => t.Column == "Email").TransformerType.ShouldBe("EmptyStringTransformer");
+        transformations.Single(t => t.Column == "Email").Configuration.ShouldBeNull();
+    }
+
     private static ColumnTransform TransformFor(ColumnMetadata column, IValueTransformer transformer) => new(transformer, column, ExportSecret.Create());
 
     private static ExportOptions OptionsWith(string path, IValueTransformer transformer) {

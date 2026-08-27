@@ -9,10 +9,17 @@ namespace SqlDataPack.Transformations;
 /// here, and a value that carries no digits at all is still transformed — never returned as it arrived.
 /// </remarks>
 internal static class DigitFormatting {
+    /// <summary>
+    /// The characters that carry the value and so must never survive: every Unicode decimal digit rather than
+    /// just the ASCII ones, plus surrogate halves. A fullwidth or Arabic-Indic digit treated as punctuation
+    /// would be copied through untouched, leaking a real digit of the source.
+    /// </summary>
+    private static bool CarriesValue(char character) => char.IsDigit(character) || char.IsSurrogate(character);
+
     public static int CountDigits(string text) {
         var count = 0;
         foreach (var character in text) {
-            if (char.IsAsciiDigit(character)) {
+            if (CarriesValue(character)) {
                 count++;
             }
         }
@@ -36,7 +43,7 @@ internal static class DigitFormatting {
         var seen = 0;
         for (var i = 0; i < text.Length; i++) {
             var character = text[i];
-            if (!char.IsAsciiDigit(character)) {
+            if (!CarriesValue(character)) {
                 buffer[i] = character;
                 continue;
             }
@@ -56,7 +63,7 @@ internal static class DigitFormatting {
         var seen = 0;
         for (var i = 0; i < text.Length; i++) {
             var character = text[i];
-            if (!char.IsAsciiDigit(character)) {
+            if (!CarriesValue(character)) {
                 buffer[i] = character;
                 continue;
             }

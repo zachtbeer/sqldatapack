@@ -45,8 +45,11 @@ This is masking and pseudonymization for development and test data — sensitive
 | GUIDs | `GuidPseudonymizer` |
 | IP addresses | `IPv4Pseudonymizer`, `IPv6Pseudonymizer` |
 | US SSN | `SsnMasker`, `SsnPseudonymizer` |
+| Discard the value | `NullTransformer`, `EmptyStringTransformer` |
 
-Each takes an options object with the same name plus `Options` — `new PhoneMasker(new PhoneMaskerOptions { PreserveLastDigits = 4 })` leaves a recognisable last four. Options are copied at construction, so editing the object afterwards changes nothing.
+`NullTransformer` and `EmptyStringTransformer` are the blunt ones: every value becomes NULL, or every value becomes `""`. No options, nothing to configure, nothing derived from the source. Reach for them on a column whose contents you do not need at all and do not need shaped: a notes or payload column, typically. `NullTransformer` needs a nullable column and `EmptyStringTransformer` needs a text column; bind one to a column that cannot hold the result and the export fails naming the column.
+
+Each of the others takes an options object with the same name plus `Options` — `new PhoneMasker(new PhoneMaskerOptions { PreserveLastDigits = 4 })` leaves a recognisable last four. Options are copied at construction, so editing the object afterwards changes nothing.
 
 **Maskers** throw information away: many source values map to one output, on purpose. **Pseudonymizers** replace a value with a derived stand-in that keeps rows lining up.
 

@@ -354,6 +354,36 @@ public sealed class BuiltInTransformerTests {
             .Message.ShouldContain("can only run inside an export");
     }
 
+    [Theory]
+    [InlineData("206-555-121２")]
+    [InlineData("206-555-١٢٣٤")]
+    public void PhoneMasker_NonAsciiDigits_AreMaskedRatherThanTreatedAsPunctuation(string source) {
+        var masked = (string)new PhoneMasker().Transform(Context("Phone", "varchar", 40), source);
+
+        masked.ShouldNotContain(source[^1]);
+    }
+
+    [Fact]
+    public void SsnPseudonymizer_NonAsciiDigits_DoNotSurviveIntoTheOutput() {
+        var pseudonym = (string)new SsnPseudonymizer().Transform(Context("Ssn", "varchar", 20), "123-45-678９");
+
+        pseudonym.ShouldNotContain('９');
+    }
+
+    [Fact]
+    public void StringPseudonymizerOptions_ALengthLargeEnoughToOverflowTheStack_IsRejectedAtConstruction() {
+        // An unbounded Length reached a stackalloc, and a StackOverflowException takes the process down
+        // instead of failing the export the way every other transformer failure does.
+        Should.Throw<ArgumentOutOfRangeException>(() => new StringPseudonymizer(new StringPseudonymizerOptions { Length = 200_000 }));
+    }
+
+    [Fact]
+    public void StringPseudonymizer_AtTheLargestAcceptedLength_StillProducesAToken() {
+        var pseudonymizer = new StringPseudonymizer(new StringPseudonymizerOptions { Length = 256 });
+
+        ((string)pseudonymizer.Transform(Context("Code", "nvarchar", 500), "ACME-1234")).Length.ShouldBe(256);
+    }
+
     private static TransformContext Context(string column, string typeName, int maxLength, string table = "Customers", byte precision = 0, byte scale = 0, ExportSecret? secret = null) =>
         new("dbo", table, column, typeName, true, maxLength < 0 ? null : maxLength, precision, scale, secret ?? Export);
 }

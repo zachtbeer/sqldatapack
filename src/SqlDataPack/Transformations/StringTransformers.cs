@@ -80,6 +80,8 @@ public sealed class StringPseudonymizerOptions {
 /// unlikely at the default length but not impossible; uniqueness is not guaranteed.
 /// </remarks>
 public sealed class StringPseudonymizer : BuiltInTransformer {
+    private const int MaximumLength = 256;
+
     private readonly int length;
     private readonly string prefix;
 
@@ -92,6 +94,7 @@ public sealed class StringPseudonymizer : BuiltInTransformer {
     public StringPseudonymizer(StringPseudonymizerOptions options) {
         ArgumentNullException.ThrowIfNull(options);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(options.Length);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(options.Length, MaximumLength);
         length = options.Length;
         prefix = options.Prefix ?? string.Empty;
     }
