@@ -1,0 +1,428 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Transformations.EmailMaskerOptions
+  commentId: T:SqlDataPack.Transformations.EmailMaskerOptions
+  id: EmailMaskerOptions
+  parent: SqlDataPack.Transformations
+  children:
+  - SqlDataPack.Transformations.EmailMaskerOptions.Domain
+  - SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter
+  - SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters
+  langs:
+  - csharp
+  - vb
+  name: EmailMaskerOptions
+  nameWithType: EmailMaskerOptions
+  fullName: SqlDataPack.Transformations.EmailMaskerOptions
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/EmailTransformers.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: EmailMaskerOptions
+    path: src/SqlDataPack/Transformations/EmailTransformers.cs
+    startLine: 7
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: Configures <xref href="SqlDataPack.Transformations.EmailMasker" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public sealed class EmailMaskerOptions
+    content.vb: Public NotInheritable Class EmailMaskerOptions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters
+  commentId: P:SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters
+  id: PreserveCharacters
+  parent: SqlDataPack.Transformations.EmailMaskerOptions
+  langs:
+  - csharp
+  - vb
+  name: PreserveCharacters
+  nameWithType: EmailMaskerOptions.PreserveCharacters
+  fullName: SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/EmailTransformers.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: PreserveCharacters
+    path: src/SqlDataPack/Transformations/EmailTransformers.cs
+    startLine: 9
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: Leading characters of the local part to keep. Defaults to <code>1</code>; at least one character is always masked.
+  example: []
+  syntax:
+    content: public int PreserveCharacters { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property PreserveCharacters As Integer
+  overload: SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters*
+- uid: SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter
+  commentId: P:SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter
+  id: MaskCharacter
+  parent: SqlDataPack.Transformations.EmailMaskerOptions
+  langs:
+  - csharp
+  - vb
+  name: MaskCharacter
+  nameWithType: EmailMaskerOptions.MaskCharacter
+  fullName: SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/EmailTransformers.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: MaskCharacter
+    path: src/SqlDataPack/Transformations/EmailTransformers.cs
+    startLine: 12
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: The character masked positions are replaced with. Defaults to <code>'*'</code>.
+  example: []
+  syntax:
+    content: public char MaskCharacter { get; set; }
+    parameters: []
+    return:
+      type: System.Char
+    content.vb: Public Property MaskCharacter As Char
+  overload: SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter*
+- uid: SqlDataPack.Transformations.EmailMaskerOptions.Domain
+  commentId: P:SqlDataPack.Transformations.EmailMaskerOptions.Domain
+  id: Domain
+  parent: SqlDataPack.Transformations.EmailMaskerOptions
+  langs:
+  - csharp
+  - vb
+  name: Domain
+  nameWithType: EmailMaskerOptions.Domain
+  fullName: SqlDataPack.Transformations.EmailMaskerOptions.Domain
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/EmailTransformers.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Domain
+    path: src/SqlDataPack/Transformations/EmailTransformers.cs
+    startLine: 15
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: Replacement domain, for example <code>example.invalid</code>. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>, which keeps the source domain.
+  example: []
+  syntax:
+    content: public string? Domain { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Domain As String
+  overload: SqlDataPack.Transformations.EmailMaskerOptions.Domain*
+references:
+- uid: SqlDataPack.Transformations.EmailMasker
+  commentId: T:SqlDataPack.Transformations.EmailMasker
+  href: SqlDataPack.Transformations.EmailMasker.html
+  name: EmailMasker
+  nameWithType: EmailMasker
+  fullName: SqlDataPack.Transformations.EmailMasker
+- uid: SqlDataPack.Transformations
+  commentId: N:SqlDataPack.Transformations
+  href: SqlDataPack.html
+  name: SqlDataPack.Transformations
+  nameWithType: SqlDataPack.Transformations
+  fullName: SqlDataPack.Transformations
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters*
+  commentId: Overload:SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters
+  href: SqlDataPack.Transformations.EmailMaskerOptions.html#SqlDataPack_Transformations_EmailMaskerOptions_PreserveCharacters
+  name: PreserveCharacters
+  nameWithType: EmailMaskerOptions.PreserveCharacters
+  fullName: SqlDataPack.Transformations.EmailMaskerOptions.PreserveCharacters
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter*
+  commentId: Overload:SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter
+  href: SqlDataPack.Transformations.EmailMaskerOptions.html#SqlDataPack_Transformations_EmailMaskerOptions_MaskCharacter
+  name: MaskCharacter
+  nameWithType: EmailMaskerOptions.MaskCharacter
+  fullName: SqlDataPack.Transformations.EmailMaskerOptions.MaskCharacter
+- uid: System.Char
+  commentId: T:System.Char
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.char
+  name: char
+  nameWithType: char
+  fullName: char
+  nameWithType.vb: Char
+  fullName.vb: Char
+  name.vb: Char
+- uid: SqlDataPack.Transformations.EmailMaskerOptions.Domain*
+  commentId: Overload:SqlDataPack.Transformations.EmailMaskerOptions.Domain
+  href: SqlDataPack.Transformations.EmailMaskerOptions.html#SqlDataPack_Transformations_EmailMaskerOptions_Domain
+  name: Domain
+  nameWithType: EmailMaskerOptions.Domain
+  fullName: SqlDataPack.Transformations.EmailMaskerOptions.Domain
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

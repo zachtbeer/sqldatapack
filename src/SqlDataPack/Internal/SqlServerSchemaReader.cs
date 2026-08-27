@@ -30,6 +30,7 @@ internal static class SqlServerSchemaReader {
             tables.Add(new TableMetadata(table, SqlDataPackIdentifier.ToSqliteDataTableName(table, options.DataTablePrefix), columns, estimatedRows, stats?.EstimatedSourceBytes ?? 0, AppliedWhereClauses: whereClauses));
         }
 
+        var transformations = TransformationBinder.Validate(tables, options);
         SqlDataPackIdentifier.ValidateSqliteDataTableNamesUnique(tables);
         SqlDataPackIdentifier.ValidateSqliteDataTableNamesNotReserved(tables);
         ValidateGlobalWhereClauseMatches(tables, options.GlobalWhereClauses);
@@ -49,7 +50,7 @@ internal static class SqlServerSchemaReader {
         var skippedTables = allTables.Where(t => !selected.Contains(t)).Select(t => t.FullName).Order(StringComparer.OrdinalIgnoreCase).ToArray();
         var skippedColumns = tables.SelectMany(t => t.Columns.Where(c => c.IsComputed || c.IsExcluded)).Select(c => $"{c.Table.FullName}.{c.Name}").Order(StringComparer.OrdinalIgnoreCase).ToArray();
 
-        return new ExportPlan(tables.OrderBy(t => t.Name.FullName, StringComparer.OrdinalIgnoreCase).ToArray(), foreignKeys, importOrder, warnings, skippedTables, skippedColumns, schemaHash);
+        return new ExportPlan(tables.OrderBy(t => t.Name.FullName, StringComparer.OrdinalIgnoreCase).ToArray(), foreignKeys, importOrder, warnings, skippedTables, skippedColumns, schemaHash, transformations);
     }
 
     public static async Task<IReadOnlyList<string>> ValidateImportTargetAsync(string connectionString, IReadOnlyList<TableMetadata> tables, int? commandTimeout, bool failOnLossyTypeMismatch, CancellationToken cancellationToken) {

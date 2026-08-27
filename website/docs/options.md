@@ -70,6 +70,25 @@ options.ExcludeSsmsDiagrams = false; // include dbo.sysdiagrams rows in the pack
 options.ExcludeColumns = ["dbo.Customers.Ssn", "dbo.SupportCases.InternalNotes"];
 ```
 
+## Transforming columns
+
+`Transformations` binds a transformer to a fully qualified `schema.table.column` path, and the transformer replaces each non-NULL source value on its way into the package. Defaults to an empty dictionary, so nothing is transformed.
+
+```csharp
+using SqlDataPack.Transformations;
+
+options.Transformations.Add("dbo.Customers.Email", new EmailPseudonymizer());
+options.Transformations.Add("dbo.Customers.Phone", new PhoneMasker());
+options.Transformations.Add("dbo.Customers.LastName", new NameMasker(new NameMaskerOptions { PreserveCharacters = 2, Suffix = "test" }));
+options.Transformations.Add("dbo.Customers.InternalCode", new CustomTransformer((context, value) => $"TEST-{value}"));
+```
+
+One column takes one transformer; there is no chaining and no name matching. A source NULL bypasses the transformer and stays NULL. Everything else fails the export rather than falling back: a transformer that throws, one that returns `null` for a non-nullable column, and a result that does not fit the column's type, length, precision, or scale — an oversized result is never truncated.
+
+Built-in pseudonymizers are deterministic within one export and differ between exports. They are designed to minimize collisions, but uniqueness is not guaranteed. See [Export transformations](/transformations) for the built-in list, the determinism contract, and custom transformers.
+
+The CLI cannot set this from an options file: transformers are objects you construct, so a `transformations` key is refused as an unknown member.
+
 ## Filtering rows
 
 `GlobalWhereClauses` applies a SQL Server WHERE predicate to every selected table that has the clause's named column or columns. `GlobalWhereClause` has two constructors:

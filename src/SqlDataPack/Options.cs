@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using SqlDataPack.Internal;
+using SqlDataPack.Transformations;
 
 namespace SqlDataPack.Models;
 
@@ -370,6 +371,28 @@ public sealed class ExportOptions {
     /// Fully qualified column paths (<c>schema.table.column</c>) to omit from the exported package. Defaults to an empty list (export every column of every selected table).
     /// </summary>
     public IList<string> ExcludeColumns { get; set; } = new List<string>();
+
+    /// <summary>
+    /// Transformers bound to fully qualified column paths (<c>schema.table.column</c>), applied to each non-NULL
+    /// source value during export so the original never reaches the package. Defaults to an empty dictionary
+    /// (no transformation).
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// A column takes one transformer; there is no chaining, no name matching, and no automatic detection. Bind
+    /// a built-in from <c>SqlDataPack.Transformations</c> or your own <see cref="IValueTransformer"/>:
+    /// </para>
+    /// <code>
+    /// options.Transformations.Add("dbo.Customers.Email", new EmailPseudonymizer());
+    /// options.Transformations.Add("dbo.Customers.LastName", new NameMasker(new NameMaskerOptions { PreserveCharacters = 2, Suffix = "test" }));
+    /// </code>
+    /// <para>
+    /// A source NULL bypasses the transformer and stays NULL. Everything else fails the export rather than
+    /// falling back: a transformer that throws, one that returns NULL for a non-nullable column, and one whose
+    /// result does not fit the destination column's type, length, precision, or scale.
+    /// </para>
+    /// </remarks>
+    public IDictionary<string, IValueTransformer> Transformations { get; set; } = new Dictionary<string, IValueTransformer>(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     /// SQL Server WHERE predicates applied to every selected table that contains all of a clause's named columns — useful for tenant or soft-delete filtering. Defaults to an empty list. See <see cref="GlobalWhereClause"/>.

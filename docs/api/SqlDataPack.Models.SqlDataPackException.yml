@@ -21,7 +21,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackException
     path: src/SqlDataPack/Options.cs
-    startLine: 623
+    startLine: 646
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -69,7 +69,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 628
+    startLine: 651
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -104,7 +104,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 636
+    startLine: 659
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

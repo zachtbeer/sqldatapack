@@ -23,4 +23,6 @@ internal sealed record TableMetadata(TableName Name, string SqliteTableName, IRe
 
 internal sealed record ForeignKeyMetadata(TableName ParentTable, TableName ReferencedTable);
 
-internal sealed record ExportPlan(IReadOnlyList<TableMetadata> Tables, IReadOnlyList<ForeignKeyMetadata> ForeignKeys, IReadOnlyList<TableName> ImportOrder, IReadOnlyList<string> Warnings, IReadOnlyList<string> SkippedTables, IReadOnlyList<string> SkippedColumns, string SchemaHash);
+internal sealed record ExportPlan(IReadOnlyList<TableMetadata> Tables, IReadOnlyList<ForeignKeyMetadata> ForeignKeys, IReadOnlyList<TableName> ImportOrder, IReadOnlyList<string> Warnings, IReadOnlyList<string> SkippedTables, IReadOnlyList<string> SkippedColumns, string SchemaHash, IReadOnlyList<TransformationMetadata>? Transformations = null) {
+    public IReadOnlyList<TransformationMetadata> ColumnTransformations => Transformations ?? [];
+}

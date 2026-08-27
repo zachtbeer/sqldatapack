@@ -188,6 +188,15 @@ public sealed class OptionsFileTests : IDisposable {
     }
 
     [Fact]
+    public void SettingTransformationsFromTheFileIsRefused() {
+        // Transformers are objects a caller constructs, not configuration a file can name, so the property
+        // is off the file contract and a "transformations" key reads as an unknown member.
+        string path = this.WriteOptionsFile("""{ "transformations": { "dbo.Customers.Email": "EmailPseudonymizer" } }""");
+
+        Should.Throw<CliUsageException>(() => this.BindExport($"-c \"{Connection}\" -o slice.sqlite --options \"{path}\""));
+    }
+
+    [Fact]
     public void MalformedJsonIsReportedAsAUsageError() {
         string path = this.WriteOptionsFile("{ not json");
 

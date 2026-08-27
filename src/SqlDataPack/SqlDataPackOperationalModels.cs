@@ -332,6 +332,11 @@ public sealed record SqlDataPackManifest {
     public IReadOnlyList<string> ImportOrder { get; init; }
 
     /// <summary>
+    /// The columns a transformer was applied to during export. Empty when nothing was transformed.
+    /// </summary>
+    public IReadOnlyList<SqlDataPackTransformationManifest> Transformations { get; init; } = [];
+
+    /// <summary>
     /// The tables and columns the export left out, as <c>table:</c> and <c>column:</c> entries.
     /// </summary>
     public IReadOnlyList<string> Exclusions { get; init; }
@@ -427,4 +432,48 @@ public sealed record SqlDataPackPreflightResult {
     /// The package manifest, actual or planned, or <see langword="null"/> when it could not be built.
     /// </summary>
     public SqlDataPackManifest? Manifest { get; init; }
+}
+
+/// <summary>
+/// One transformed column, as recorded in the package.
+/// </summary>
+/// <remarks>
+/// The package records that a column was transformed and how it was configured, never the export secret,
+/// any key, or any original value. A transformer that is not one of SqlDataPack's built-ins is recorded as
+/// <c>Custom</c>.
+/// </remarks>
+public sealed record SqlDataPackTransformationManifest {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SqlDataPackTransformationManifest"/> record.
+    /// </summary>
+    /// <param name="Schema">The source schema name.</param>
+    /// <param name="Table">The source table name.</param>
+    /// <param name="Column">The source column name.</param>
+    /// <param name="TransformerType">The built-in transformer's type name, or <c>Custom</c>.</param>
+    /// <param name="Configuration">The built-in transformer's non-secret configuration, or <see langword="null"/>.</param>
+    public SqlDataPackTransformationManifest(string Schema, string Table, string Column, string TransformerType, string? Configuration) {
+        this.Schema = Schema;
+        this.Table = Table;
+        this.Column = Column;
+        this.TransformerType = TransformerType;
+        this.Configuration = Configuration;
+    }
+
+    /// <summary>The source schema name.</summary>
+    public string Schema { get; init; }
+
+    /// <summary>The source table name.</summary>
+    public string Table { get; init; }
+
+    /// <summary>The source column name.</summary>
+    public string Column { get; init; }
+
+    /// <summary>The fully qualified <c>schema.table.column</c> path the transformer was bound to.</summary>
+    public string ColumnPath => $"{Schema}.{Table}.{Column}";
+
+    /// <summary>The built-in transformer's type name, for example <c>EmailPseudonymizer</c>, or <c>Custom</c> for anything else.</summary>
+    public string TransformerType { get; init; }
+
+    /// <summary>The built-in transformer's non-secret configuration, rendered as <c>Name=value;Name=value</c>, or <see langword="null"/> when it has none.</summary>
+    public string? Configuration { get; init; }
 }

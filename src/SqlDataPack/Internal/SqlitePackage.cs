@@ -89,6 +89,13 @@ internal static class SqlitePackage {
                                                    exclusion_type TEXT NOT NULL,
                                                    target_name TEXT NOT NULL
                                                );
+                                               CREATE TABLE zsdp_transformations (
+                                                   source_schema TEXT NOT NULL,
+                                                   source_table TEXT NOT NULL,
+                                                   column_name TEXT NOT NULL,
+                                                   transformer_type TEXT NOT NULL,
+                                                   configuration TEXT NULL
+                                               );
                                                CREATE TABLE zsdp_warnings (
                                                    warning_text TEXT NOT NULL
                                                );
@@ -394,7 +401,9 @@ internal static class SqlitePackage {
 
         var tableManifests = tables.Select(t => ToTableManifest(t, rowCounts.TryGetValue(t.Name.FullName, out var rows) ? rows : 0)).ToArray();
 
-        return new SqlDataPackManifest(run.PackageFormatVersion, run.ApplicationVersion, run.ExportedAtUtc, run.SourceSchemaHash, tableManifests, importOrder, exclusions, warnings, containsDacpac, dacpacSchemaScope, sourceEngineEdition);
+        var transformations = await ReadTransformationsAsync(connection, cancellationToken);
+
+        return new SqlDataPackManifest(run.PackageFormatVersion, run.ApplicationVersion, run.ExportedAtUtc, run.SourceSchemaHash, tableManifests, importOrder, exclusions, warnings, containsDacpac, dacpacSchemaScope, sourceEngineEdition) { Transformations = transformations };
     }
 
     public static SqlDataPackManifest CreatePlannedManifest(ExportPlan plan, ExportOptions options) {
@@ -402,7 +411,9 @@ internal static class SqlitePackage {
 
         var exclusions = plan.SkippedTables.Select(t => $"table:{t}").Concat(plan.SkippedColumns.Select(c => $"column:{c}")).ToArray();
 
-        return new SqlDataPackManifest(SqlDataPackVersion.PackageFormatVersion, SqlDataPackVersion.PackageVersion, DateTimeOffset.UtcNow, plan.SchemaHash, tables, plan.ImportOrder.Select(t => t.FullName).ToArray(), exclusions, plan.Warnings, options.SchemaCaptureMode == SchemaCaptureMode.Dacpac, options.SchemaCaptureMode == SchemaCaptureMode.Dacpac ? options.DacpacCaptureOptions.SchemaScope : null);
+        return new SqlDataPackManifest(SqlDataPackVersion.PackageFormatVersion, SqlDataPackVersion.PackageVersion, DateTimeOffset.UtcNow, plan.SchemaHash, tables, plan.ImportOrder.Select(t => t.FullName).ToArray(), exclusions, plan.Warnings, options.SchemaCaptureMode == SchemaCaptureMode.Dacpac, options.SchemaCaptureMode == SchemaCaptureMode.Dacpac ? options.DacpacCaptureOptions.SchemaScope : null) {
+            Transformations = plan.ColumnTransformations.Select(t => new SqlDataPackTransformationManifest(t.Table.Schema, t.Table.Name, t.Column, t.TransformerType, t.Configuration)).ToArray()
+        };
     }
 
     private static async Task InsertMetadataAsync(SqliteConnection connection, ExportPlan plan, CancellationToken cancellationToken) {
@@ -460,6 +471,7 @@ internal static class SqlitePackage {
         await InsertStringsAsync(connection, transaction, "zsdp_exclusions", "exclusion_type", "target_name", "table", plan.SkippedTables, cancellationToken);
         await InsertStringsAsync(connection, transaction, "zsdp_exclusions", "exclusion_type", "target_name", "column", plan.SkippedColumns, cancellationToken);
         await InsertSingleColumnStringsAsync(connection, transaction, "zsdp_warnings", "warning_text", plan.Warnings, cancellationToken);
+        await InsertTransformationsAsync(connection, transaction, plan.ColumnTransformations, cancellationToken);
 
         for (var index = 0; index < plan.ImportOrder.Count; index++) {
             await using var planCommand = connection.CreateCommand();
@@ -472,6 +484,49 @@ internal static class SqlitePackage {
         }
 
         await transaction.CommitAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Records which columns a transformer touched. Only the column, the transformer type, and the built-in's
+    /// own non-secret configuration: never the export secret, a key, an original value, or an intermediate
+    /// hash. A custom transformer is recorded as <c>Custom</c>.
+    /// </summary>
+    private static async Task InsertTransformationsAsync(SqliteConnection connection, SqliteTransaction transaction, IReadOnlyList<TransformationMetadata> transformations, CancellationToken cancellationToken) {
+        foreach (var transformation in transformations) {
+            await using var command = connection.CreateCommand();
+            command.Transaction = transaction;
+            command.CommandText = "INSERT INTO zsdp_transformations(source_schema, source_table, column_name, transformer_type, configuration) VALUES ($schema, $table, $column, $type, $configuration)";
+            command.Parameters.AddWithValue("$schema", transformation.Table.Schema);
+            command.Parameters.AddWithValue("$table", transformation.Table.Name);
+            command.Parameters.AddWithValue("$column", transformation.Column);
+            command.Parameters.AddWithValue("$type", transformation.TransformerType);
+            command.Parameters.AddWithValue("$configuration", (object?)transformation.Configuration ?? DBNull.Value);
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+    }
+
+    /// <summary>
+    /// Reads the transformation metadata, tolerating a package written before the table existed. It is not in
+    /// <c>RequiredMetadataTables</c> for the same reason: a package with no transformations is still valid.
+    /// </summary>
+    private static async Task<IReadOnlyList<SqlDataPackTransformationManifest>> ReadTransformationsAsync(SqliteConnection connection, CancellationToken cancellationToken) {
+        if (!await TableExistsAsync(connection, "zsdp_transformations", cancellationToken)) {
+            return [];
+        }
+
+        var result = new List<SqlDataPackTransformationManifest>();
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+                              SELECT source_schema, source_table, column_name, transformer_type, configuration
+                              FROM zsdp_transformations
+                              ORDER BY source_schema, source_table, column_name
+                              """;
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken)) {
+            result.Add(new SqlDataPackTransformationManifest(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.IsDBNull(4) ? null : reader.GetString(4)));
+        }
+
+        return result;
     }
 
     private static async Task CreateDataTablesAsync(SqliteConnection connection, IReadOnlyList<TableMetadata> tables, CancellationToken cancellationToken) {

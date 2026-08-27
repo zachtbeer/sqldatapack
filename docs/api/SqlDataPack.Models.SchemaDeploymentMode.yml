@@ -21,7 +21,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaDeploymentMode
     path: src/SqlDataPack/Options.cs
-    startLine: 23
+    startLine: 24
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -48,7 +48,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: None
     path: src/SqlDataPack/Options.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -76,7 +76,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployDacpac
     path: src/SqlDataPack/Options.cs
-    startLine: 32
+    startLine: 33
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

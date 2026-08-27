@@ -37,7 +37,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ImportOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 467
+    startLine: 490
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -73,7 +73,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Default
     path: src/SqlDataPack/Options.cs
-    startLine: 478
+    startLine: 501
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -115,7 +115,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Latest
     path: src/SqlDataPack/Options.cs
-    startLine: 497
+    startLine: 520
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -171,7 +171,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: BatchSize
     path: src/SqlDataPack/Options.cs
-    startLine: 505
+    startLine: 528
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -202,7 +202,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AdaptiveBatchingEnabled
     path: src/SqlDataPack/Options.cs
-    startLine: 510
+    startLine: 533
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -233,7 +233,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableThresholdBytes
     path: src/SqlDataPack/Options.cs
-    startLine: 515
+    startLine: 538
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -264,7 +264,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableRowThreshold
     path: src/SqlDataPack/Options.cs
-    startLine: 520
+    startLine: 543
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -295,7 +295,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableBatchSize
     path: src/SqlDataPack/Options.cs
-    startLine: 525
+    startLine: 548
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -326,7 +326,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: MaxBatchBytes
     path: src/SqlDataPack/Options.cs
-    startLine: 530
+    startLine: 553
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -357,7 +357,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ValidationCommandTimeout
     path: src/SqlDataPack/Options.cs
-    startLine: 535
+    startLine: 558
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -388,7 +388,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: FailOnLossyTypeMismatch
     path: src/SqlDataPack/Options.cs
-    startLine: 549
+    startLine: 572
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -434,7 +434,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: RowCountDrift
     path: src/SqlDataPack/Options.cs
-    startLine: 557
+    startLine: 580
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -466,7 +466,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: BulkCopyTimeout
     path: src/SqlDataPack/Options.cs
-    startLine: 562
+    startLine: 585
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -497,7 +497,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Progress
     path: src/SqlDataPack/Options.cs
-    startLine: 567
+    startLine: 590
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -528,7 +528,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Logger
     path: src/SqlDataPack/Options.cs
-    startLine: 574
+    startLine: 597
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -564,7 +564,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaDeploymentMode
     path: src/SqlDataPack/Options.cs
-    startLine: 579
+    startLine: 602
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -595,7 +595,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacDeploymentOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 584
+    startLine: 607
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -626,7 +626,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SuspendTemporalSystemVersioning
     path: src/SqlDataPack/Options.cs
-    startLine: 603
+    startLine: 626
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -682,7 +682,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TemporalDataConsistencyCheck
     path: src/SqlDataPack/Options.cs
-    startLine: 617
+    startLine: 640
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

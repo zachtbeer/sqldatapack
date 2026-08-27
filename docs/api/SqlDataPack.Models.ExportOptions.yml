@@ -26,6 +26,7 @@ items:
   - SqlDataPack.Models.ExportOptions.SchemaCaptureMode
   - SqlDataPack.Models.ExportOptions.TableSelection
   - SqlDataPack.Models.ExportOptions.Tables
+  - SqlDataPack.Models.ExportOptions.Transformations
   langs:
   - csharp
   - vb
@@ -40,7 +41,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExportOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 323
+    startLine: 324
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -76,7 +77,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Default
     path: src/SqlDataPack/Options.cs
-    startLine: 334
+    startLine: 335
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -118,7 +119,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Latest
     path: src/SqlDataPack/Options.cs
-    startLine: 353
+    startLine: 354
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -174,7 +175,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TableSelection
     path: src/SqlDataPack/Options.cs
-    startLine: 361
+    startLine: 362
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -205,7 +206,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Tables
     path: src/SqlDataPack/Options.cs
-    startLine: 366
+    startLine: 367
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -236,7 +237,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExcludeColumns
     path: src/SqlDataPack/Options.cs
-    startLine: 371
+    startLine: 372
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -249,6 +250,64 @@ items:
       type: System.Collections.Generic.IList{System.String}
     content.vb: Public Property ExcludeColumns As IList(Of String)
   overload: SqlDataPack.Models.ExportOptions.ExcludeColumns*
+- uid: SqlDataPack.Models.ExportOptions.Transformations
+  commentId: P:SqlDataPack.Models.ExportOptions.Transformations
+  id: Transformations
+  parent: SqlDataPack.Models.ExportOptions
+  langs:
+  - csharp
+  - vb
+  name: Transformations
+  nameWithType: ExportOptions.Transformations
+  fullName: SqlDataPack.Models.ExportOptions.Transformations
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/Options.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Transformations
+    path: src/SqlDataPack/Options.cs
+    startLine: 394
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: >-
+    Transformers bound to fully qualified column paths (<code>schema.table.column</code>), applied to each non-NULL
+
+    source value during export so the original never reaches the package. Defaults to an empty dictionary
+
+    (no transformation).
+  remarks: >-
+    <p>
+
+    A column takes one transformer; there is no chaining, no name matching, and no automatic detection. Bind
+
+    a built-in from <code>SqlDataPack.Transformations</code> or your own <xref href="SqlDataPack.Transformations.IValueTransformer" data-throw-if-not-resolved="false"></xref>:
+
+    </p>
+
+    <pre><code class="lang-csharp">options.Transformations.Add("dbo.Customers.Email", new EmailPseudonymizer());
+
+    options.Transformations.Add("dbo.Customers.LastName", new NameMasker(new NameMaskerOptions { PreserveCharacters = 2, Suffix = "test" }));</code></pre>
+
+    <p>
+
+    A source NULL bypasses the transformer and stays NULL. Everything else fails the export rather than
+
+    falling back: a transformer that throws, one that returns NULL for a non-nullable column, and one whose
+
+    result does not fit the destination column's type, length, precision, or scale.
+
+    </p>
+  example: []
+  syntax:
+    content: public IDictionary<string, IValueTransformer> Transformations { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IDictionary{System.String,SqlDataPack.Transformations.IValueTransformer}
+    content.vb: Public Property Transformations As IDictionary(Of String, IValueTransformer)
+  overload: SqlDataPack.Models.ExportOptions.Transformations*
 - uid: SqlDataPack.Models.ExportOptions.GlobalWhereClauses
   commentId: P:SqlDataPack.Models.ExportOptions.GlobalWhereClauses
   id: GlobalWhereClauses
@@ -267,7 +326,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: GlobalWhereClauses
     path: src/SqlDataPack/Options.cs
-    startLine: 376
+    startLine: 399
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -298,7 +357,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: PerTableWhereClauses
     path: src/SqlDataPack/Options.cs
-    startLine: 381
+    startLine: 404
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -329,7 +388,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DataTablePrefix
     path: src/SqlDataPack/Options.cs
-    startLine: 386
+    startLine: 409
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -360,7 +419,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: BatchSize
     path: src/SqlDataPack/Options.cs
-    startLine: 391
+    startLine: 414
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -391,7 +450,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AdaptiveBatchingEnabled
     path: src/SqlDataPack/Options.cs
-    startLine: 396
+    startLine: 419
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -422,7 +481,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableThresholdBytes
     path: src/SqlDataPack/Options.cs
-    startLine: 401
+    startLine: 424
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -453,7 +512,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableRowThreshold
     path: src/SqlDataPack/Options.cs
-    startLine: 406
+    startLine: 429
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -484,7 +543,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: LargeTableBatchSize
     path: src/SqlDataPack/Options.cs
-    startLine: 411
+    startLine: 434
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -515,7 +574,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: MaxBatchBytes
     path: src/SqlDataPack/Options.cs
-    startLine: 416
+    startLine: 439
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -546,7 +605,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: CommandTimeout
     path: src/SqlDataPack/Options.cs
-    startLine: 421
+    startLine: 444
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -577,7 +636,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Progress
     path: src/SqlDataPack/Options.cs
-    startLine: 426
+    startLine: 449
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -608,7 +667,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Logger
     path: src/SqlDataPack/Options.cs
-    startLine: 433
+    startLine: 456
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -644,7 +703,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: OverwriteExistingPackage
     path: src/SqlDataPack/Options.cs
-    startLine: 438
+    startLine: 461
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -675,7 +734,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExcludeSsmsDiagrams
     path: src/SqlDataPack/Options.cs
-    startLine: 451
+    startLine: 474
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -719,7 +778,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaCaptureMode
     path: src/SqlDataPack/Options.cs
-    startLine: 456
+    startLine: 479
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -750,7 +809,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacCaptureOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 461
+    startLine: 484
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -1197,6 +1256,120 @@ references:
   name: ExcludeColumns
   nameWithType: ExportOptions.ExcludeColumns
   fullName: SqlDataPack.Models.ExportOptions.ExcludeColumns
+- uid: SqlDataPack.Transformations.IValueTransformer
+  commentId: T:SqlDataPack.Transformations.IValueTransformer
+  parent: SqlDataPack.Transformations
+  href: SqlDataPack.Transformations.IValueTransformer.html
+  name: IValueTransformer
+  nameWithType: IValueTransformer
+  fullName: SqlDataPack.Transformations.IValueTransformer
+- uid: SqlDataPack.Models.ExportOptions.Transformations*
+  commentId: Overload:SqlDataPack.Models.ExportOptions.Transformations
+  href: SqlDataPack.Models.ExportOptions.html#SqlDataPack_Models_ExportOptions_Transformations
+  name: Transformations
+  nameWithType: ExportOptions.Transformations
+  fullName: SqlDataPack.Models.ExportOptions.Transformations
+- uid: System.Collections.Generic.IDictionary{System.String,SqlDataPack.Transformations.IValueTransformer}
+  commentId: T:System.Collections.Generic.IDictionary{System.String,SqlDataPack.Transformations.IValueTransformer}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2
+  name: IDictionary<string, IValueTransformer>
+  nameWithType: IDictionary<string, IValueTransformer>
+  fullName: System.Collections.Generic.IDictionary<string, SqlDataPack.Transformations.IValueTransformer>
+  nameWithType.vb: IDictionary(Of String, IValueTransformer)
+  fullName.vb: System.Collections.Generic.IDictionary(Of String, SqlDataPack.Transformations.IValueTransformer)
+  name.vb: IDictionary(Of String, IValueTransformer)
+  spec.csharp:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: SqlDataPack.Transformations.IValueTransformer
+    name: IValueTransformer
+    href: SqlDataPack.Transformations.IValueTransformer.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: SqlDataPack.Transformations.IValueTransformer
+    name: IValueTransformer
+    href: SqlDataPack.Transformations.IValueTransformer.html
+  - name: )
+- uid: SqlDataPack.Transformations
+  commentId: N:SqlDataPack.Transformations
+  href: SqlDataPack.html
+  name: SqlDataPack.Transformations
+  nameWithType: SqlDataPack.Transformations
+  fullName: SqlDataPack.Transformations
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+- uid: System.Collections.Generic.IDictionary`2
+  commentId: T:System.Collections.Generic.IDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2
+  name: IDictionary<TKey, TValue>
+  nameWithType: IDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IDictionary<TKey, TValue>
+  nameWithType.vb: IDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IDictionary(Of TKey, TValue)
+  name.vb: IDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
 - uid: SqlDataPack.Models.GlobalWhereClause
   commentId: T:SqlDataPack.Models.GlobalWhereClause
   parent: SqlDataPack.Models

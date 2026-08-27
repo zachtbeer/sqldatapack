@@ -16,6 +16,7 @@ items:
   - SqlDataPack.Models.SqlDataPackManifest.SourceEngineEdition
   - SqlDataPack.Models.SqlDataPackManifest.SourceSchemaHash
   - SqlDataPack.Models.SqlDataPackManifest.Tables
+  - SqlDataPack.Models.SqlDataPackManifest.Transformations
   - SqlDataPack.Models.SqlDataPackManifest.Warnings
   langs:
   - csharp
@@ -302,6 +303,37 @@ items:
       type: System.Collections.Generic.IReadOnlyList{System.String}
     content.vb: Public Property ImportOrder As IReadOnlyList(Of String)
   overload: SqlDataPack.Models.SqlDataPackManifest.ImportOrder*
+- uid: SqlDataPack.Models.SqlDataPackManifest.Transformations
+  commentId: P:SqlDataPack.Models.SqlDataPackManifest.Transformations
+  id: Transformations
+  parent: SqlDataPack.Models.SqlDataPackManifest
+  langs:
+  - csharp
+  - vb
+  name: Transformations
+  nameWithType: SqlDataPackManifest.Transformations
+  fullName: SqlDataPack.Models.SqlDataPackManifest.Transformations
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Transformations
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 336
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The columns a transformer was applied to during export. Empty when nothing was transformed.
+  example: []
+  syntax:
+    content: public IReadOnlyList<SqlDataPackTransformationManifest> Transformations { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackTransformationManifest}
+    content.vb: Public Property Transformations As IReadOnlyList(Of SqlDataPackTransformationManifest)
+  overload: SqlDataPack.Models.SqlDataPackManifest.Transformations*
 - uid: SqlDataPack.Models.SqlDataPackManifest.Exclusions
   commentId: P:SqlDataPack.Models.SqlDataPackManifest.Exclusions
   id: Exclusions
@@ -320,7 +352,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Exclusions
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 336
+    startLine: 341
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -351,7 +383,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Warnings
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 341
+    startLine: 346
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -382,7 +414,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ContainsDacpac
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 346
+    startLine: 351
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -413,7 +445,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacSchemaScope
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 351
+    startLine: 356
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -444,7 +476,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SourceEngineEdition
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 357
+    startLine: 362
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -1052,6 +1084,45 @@ references:
   name: ImportOrder
   nameWithType: SqlDataPackManifest.ImportOrder
   fullName: SqlDataPack.Models.SqlDataPackManifest.ImportOrder
+- uid: SqlDataPack.Models.SqlDataPackManifest.Transformations*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackManifest.Transformations
+  href: SqlDataPack.Models.SqlDataPackManifest.html#SqlDataPack_Models_SqlDataPackManifest_Transformations
+  name: Transformations
+  nameWithType: SqlDataPackManifest.Transformations
+  fullName: SqlDataPack.Models.SqlDataPackManifest.Transformations
+- uid: System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackTransformationManifest}
+  commentId: T:System.Collections.Generic.IReadOnlyList{SqlDataPack.Models.SqlDataPackTransformationManifest}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<SqlDataPackTransformationManifest>
+  nameWithType: IReadOnlyList<SqlDataPackTransformationManifest>
+  fullName: System.Collections.Generic.IReadOnlyList<SqlDataPack.Models.SqlDataPackTransformationManifest>
+  nameWithType.vb: IReadOnlyList(Of SqlDataPackTransformationManifest)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of SqlDataPack.Models.SqlDataPackTransformationManifest)
+  name.vb: IReadOnlyList(Of SqlDataPackTransformationManifest)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+    name: SqlDataPackTransformationManifest
+    href: SqlDataPack.Models.SqlDataPackTransformationManifest.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+    name: SqlDataPackTransformationManifest
+    href: SqlDataPack.Models.SqlDataPackTransformationManifest.html
+  - name: )
 - uid: SqlDataPack.Models.SqlDataPackManifest.Exclusions*
   commentId: Overload:SqlDataPack.Models.SqlDataPackManifest.Exclusions
   href: SqlDataPack.Models.SqlDataPackManifest.html#SqlDataPack_Models_SqlDataPackManifest_Exclusions
