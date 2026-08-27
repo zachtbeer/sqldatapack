@@ -21,7 +21,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: RowCountDrift
     path: src/SqlDataPack/Options.cs
-    startLine: 68
+    startLine: 69
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -48,7 +48,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Warn
     path: src/SqlDataPack/Options.cs
-    startLine: 72
+    startLine: 73
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -76,7 +76,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Fail
     path: src/SqlDataPack/Options.cs
-    startLine: 77
+    startLine: 78
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

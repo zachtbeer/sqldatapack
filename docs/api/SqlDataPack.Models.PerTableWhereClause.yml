@@ -22,7 +22,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: PerTableWhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 298
+    startLine: 299
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 304
+    startLine: 305
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -99,7 +99,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TableName
     path: src/SqlDataPack/Options.cs
-    startLine: 312
+    startLine: 313
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -130,7 +130,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: WhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 317
+    startLine: 318
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

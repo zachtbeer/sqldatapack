@@ -23,7 +23,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackResult
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 363
+    startLine: 368
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 370
+    startLine: 375
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -102,7 +102,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: TableCount
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 379
+    startLine: 384
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -133,7 +133,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: RowCount
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 384
+    startLine: 389
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -164,7 +164,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Warnings
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 389
+    startLine: 394
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

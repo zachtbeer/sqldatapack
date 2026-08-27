@@ -1,0 +1,449 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Transformations.GuidPseudonymizer
+  commentId: T:SqlDataPack.Transformations.GuidPseudonymizer
+  id: GuidPseudonymizer
+  parent: SqlDataPack.Transformations
+  children:
+  - SqlDataPack.Transformations.GuidPseudonymizer.#ctor
+  - SqlDataPack.Transformations.GuidPseudonymizer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  langs:
+  - csharp
+  - vb
+  name: GuidPseudonymizer
+  nameWithType: GuidPseudonymizer
+  fullName: SqlDataPack.Transformations.GuidPseudonymizer
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/NumericPseudonymizer.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: GuidPseudonymizer
+    path: src/SqlDataPack/Transformations/NumericPseudonymizer.cs
+    startLine: 57
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: Replaces a <code>uniqueidentifier</code> with a deterministic GUID.
+  remarks: >-
+    Deterministic within one export: the same source GUID maps to the same replacement everywhere it appears,
+
+    so a key and the rows referencing it stay joined. Output is a well-formed version 4 GUID. Collisions are
+
+    vanishingly unlikely but not guaranteed impossible.
+  example: []
+  syntax:
+    content: 'public sealed class GuidPseudonymizer : BuiltInTransformer, IValueTransformer'
+    content.vb: Public NotInheritable Class GuidPseudonymizer Inherits BuiltInTransformer Implements IValueTransformer
+  inheritance:
+  - System.Object
+  - SqlDataPack.Transformations.BuiltInTransformer
+  implements:
+  - SqlDataPack.Transformations.IValueTransformer
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Transformations.GuidPseudonymizer.#ctor
+  commentId: M:SqlDataPack.Transformations.GuidPseudonymizer.#ctor
+  id: '#ctor'
+  parent: SqlDataPack.Transformations.GuidPseudonymizer
+  langs:
+  - csharp
+  - vb
+  name: GuidPseudonymizer()
+  nameWithType: GuidPseudonymizer.GuidPseudonymizer()
+  fullName: SqlDataPack.Transformations.GuidPseudonymizer.GuidPseudonymizer()
+  type: Constructor
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/NumericPseudonymizer.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: .ctor
+    path: src/SqlDataPack/Transformations/NumericPseudonymizer.cs
+    startLine: 59
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: Initializes a new <xref href="SqlDataPack.Transformations.GuidPseudonymizer" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public GuidPseudonymizer()
+    content.vb: Public Sub New()
+  overload: SqlDataPack.Transformations.GuidPseudonymizer.#ctor*
+  nameWithType.vb: GuidPseudonymizer.New()
+  fullName.vb: SqlDataPack.Transformations.GuidPseudonymizer.New()
+  name.vb: New()
+- uid: SqlDataPack.Transformations.GuidPseudonymizer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  commentId: M:SqlDataPack.Transformations.GuidPseudonymizer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  id: Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  parent: SqlDataPack.Transformations.GuidPseudonymizer
+  langs:
+  - csharp
+  - vb
+  name: Transform(TransformContext, object)
+  nameWithType: GuidPseudonymizer.Transform(TransformContext, object)
+  fullName: SqlDataPack.Transformations.GuidPseudonymizer.Transform(SqlDataPack.Transformations.TransformContext, object)
+  type: Method
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/NumericPseudonymizer.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Transform
+    path: src/SqlDataPack/Transformations/NumericPseudonymizer.cs
+    startLine: 65
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: Transforms one non-null source value.
+  example: []
+  syntax:
+    content: public override object Transform(TransformContext context, object value)
+    parameters:
+    - id: context
+      type: SqlDataPack.Transformations.TransformContext
+      description: "The destination column's contract: name, SQL Server type, nullability, and size."
+    - id: value
+      type: System.Object
+      description: The source value, never <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> and never <xref href="System.DBNull" data-throw-if-not-resolved="false"></xref>.
+    return:
+      type: System.Object
+      description: The value to write, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> to write NULL (nullable columns only).
+    content.vb: Public Overrides Function Transform(context As TransformContext, value As Object) As Object
+  overridden: SqlDataPack.Transformations.BuiltInTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  overload: SqlDataPack.Transformations.GuidPseudonymizer.Transform*
+  nameWithType.vb: GuidPseudonymizer.Transform(TransformContext, Object)
+  fullName.vb: SqlDataPack.Transformations.GuidPseudonymizer.Transform(SqlDataPack.Transformations.TransformContext, Object)
+  name.vb: Transform(TransformContext, Object)
+references:
+- uid: SqlDataPack.Transformations
+  commentId: N:SqlDataPack.Transformations
+  href: SqlDataPack.html
+  name: SqlDataPack.Transformations
+  nameWithType: SqlDataPack.Transformations
+  fullName: SqlDataPack.Transformations
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: SqlDataPack.Transformations.BuiltInTransformer
+  commentId: T:SqlDataPack.Transformations.BuiltInTransformer
+  parent: SqlDataPack.Transformations
+  href: SqlDataPack.Transformations.BuiltInTransformer.html
+  name: BuiltInTransformer
+  nameWithType: BuiltInTransformer
+  fullName: SqlDataPack.Transformations.BuiltInTransformer
+- uid: SqlDataPack.Transformations.IValueTransformer
+  commentId: T:SqlDataPack.Transformations.IValueTransformer
+  parent: SqlDataPack.Transformations
+  href: SqlDataPack.Transformations.IValueTransformer.html
+  name: IValueTransformer
+  nameWithType: IValueTransformer
+  fullName: SqlDataPack.Transformations.IValueTransformer
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SqlDataPack.Transformations.GuidPseudonymizer
+  commentId: T:SqlDataPack.Transformations.GuidPseudonymizer
+  href: SqlDataPack.Transformations.GuidPseudonymizer.html
+  name: GuidPseudonymizer
+  nameWithType: GuidPseudonymizer
+  fullName: SqlDataPack.Transformations.GuidPseudonymizer
+- uid: SqlDataPack.Transformations.GuidPseudonymizer.#ctor*
+  commentId: Overload:SqlDataPack.Transformations.GuidPseudonymizer.#ctor
+  href: SqlDataPack.Transformations.GuidPseudonymizer.html#SqlDataPack_Transformations_GuidPseudonymizer__ctor
+  name: GuidPseudonymizer
+  nameWithType: GuidPseudonymizer.GuidPseudonymizer
+  fullName: SqlDataPack.Transformations.GuidPseudonymizer.GuidPseudonymizer
+  nameWithType.vb: GuidPseudonymizer.New
+  fullName.vb: SqlDataPack.Transformations.GuidPseudonymizer.New
+  name.vb: New
+- uid: System.DBNull
+  commentId: T:System.DBNull
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.dbnull
+  name: DBNull
+  nameWithType: DBNull
+  fullName: System.DBNull
+- uid: SqlDataPack.Transformations.BuiltInTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  commentId: M:SqlDataPack.Transformations.BuiltInTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  parent: SqlDataPack.Transformations.BuiltInTransformer
+  isExternal: true
+  href: SqlDataPack.Transformations.BuiltInTransformer.html#SqlDataPack_Transformations_BuiltInTransformer_Transform_SqlDataPack_Transformations_TransformContext_System_Object_
+  name: Transform(TransformContext, object)
+  nameWithType: BuiltInTransformer.Transform(TransformContext, object)
+  fullName: SqlDataPack.Transformations.BuiltInTransformer.Transform(SqlDataPack.Transformations.TransformContext, object)
+  nameWithType.vb: BuiltInTransformer.Transform(TransformContext, Object)
+  fullName.vb: SqlDataPack.Transformations.BuiltInTransformer.Transform(SqlDataPack.Transformations.TransformContext, Object)
+  name.vb: Transform(TransformContext, Object)
+  spec.csharp:
+  - uid: SqlDataPack.Transformations.BuiltInTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+    name: Transform
+    href: SqlDataPack.Transformations.BuiltInTransformer.html#SqlDataPack_Transformations_BuiltInTransformer_Transform_SqlDataPack_Transformations_TransformContext_System_Object_
+  - name: (
+  - uid: SqlDataPack.Transformations.TransformContext
+    name: TransformContext
+    href: SqlDataPack.Transformations.TransformContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: SqlDataPack.Transformations.BuiltInTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+    name: Transform
+    href: SqlDataPack.Transformations.BuiltInTransformer.html#SqlDataPack_Transformations_BuiltInTransformer_Transform_SqlDataPack_Transformations_TransformContext_System_Object_
+  - name: (
+  - uid: SqlDataPack.Transformations.TransformContext
+    name: TransformContext
+    href: SqlDataPack.Transformations.TransformContext.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: SqlDataPack.Transformations.GuidPseudonymizer.Transform*
+  commentId: Overload:SqlDataPack.Transformations.GuidPseudonymizer.Transform
+  href: SqlDataPack.Transformations.GuidPseudonymizer.html#SqlDataPack_Transformations_GuidPseudonymizer_Transform_SqlDataPack_Transformations_TransformContext_System_Object_
+  name: Transform
+  nameWithType: GuidPseudonymizer.Transform
+  fullName: SqlDataPack.Transformations.GuidPseudonymizer.Transform
+- uid: SqlDataPack.Transformations.TransformContext
+  commentId: T:SqlDataPack.Transformations.TransformContext
+  parent: SqlDataPack.Transformations
+  href: SqlDataPack.Transformations.TransformContext.html
+  name: TransformContext
+  nameWithType: TransformContext
+  fullName: SqlDataPack.Transformations.TransformContext

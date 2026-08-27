@@ -31,7 +31,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacDeploymentOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 133
+    startLine: 134
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -67,7 +67,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Default
     path: src/SqlDataPack/Options.cs
-    startLine: 139
+    startLine: 140
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -103,7 +103,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AllowIncompatiblePlatform
     path: src/SqlDataPack/Options.cs
-    startLine: 144
+    startLine: 145
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -134,7 +134,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: BlockOnPossibleDataLoss
     path: src/SqlDataPack/Options.cs
-    startLine: 149
+    startLine: 150
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -165,7 +165,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AllowObjectDrops
     path: src/SqlDataPack/Options.cs
-    startLine: 154
+    startLine: 155
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -196,7 +196,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployUsers
     path: src/SqlDataPack/Options.cs
-    startLine: 159
+    startLine: 160
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -227,7 +227,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployLogins
     path: src/SqlDataPack/Options.cs
-    startLine: 164
+    startLine: 165
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -258,7 +258,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployPermissions
     path: src/SqlDataPack/Options.cs
-    startLine: 169
+    startLine: 170
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -289,7 +289,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployRoleMembership
     path: src/SqlDataPack/Options.cs
-    startLine: 174
+    startLine: 175
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -320,7 +320,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployDatabaseFiles
     path: src/SqlDataPack/Options.cs
-    startLine: 179
+    startLine: 180
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -351,7 +351,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DeployDatabaseOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 185
+    startLine: 186
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -385,7 +385,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: AdaptAzureSourceForOnPremTarget
     path: src/SqlDataPack/Options.cs
-    startLine: 208
+    startLine: 209
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -442,7 +442,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: VerifyDeployment
     path: src/SqlDataPack/Options.cs
-    startLine: 213
+    startLine: 214
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

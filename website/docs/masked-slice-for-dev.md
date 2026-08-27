@@ -53,6 +53,25 @@ For genuinely sensitive columns (credentials, tokens, government identifiers, an
 
 Free-text columns deserve the same treatment. You cannot pattern-match your way to confidence about what someone typed into a notes field, so exclude them by default rather than scrubbing them.
 
+## Scrub the columns you have to keep
+
+Some columns you cannot simply drop — a support tool needs an email address to be an email address, a report needs a name in the name column. `Transformations` replaces those values during the export, so the original never reaches the file:
+
+```csharp
+using SqlDataPack.Transformations;
+
+options.Transformations.Add("dbo.Customers.Email", new EmailPseudonymizer());
+options.Transformations.Add("dbo.Customers.Phone", new PhoneMasker());
+options.Transformations.Add("dbo.Customers.LastName", new NameMasker(new NameMaskerOptions {
+    PreserveCharacters = 2,
+    Suffix = "test"
+}));
+```
+
+Pseudonymizers are consistent within one export, so the same address in `dbo.Customers.Email` and `dbo.Orders.ContactEmail` still matches, and different between exports. Transformation fails the export rather than falling back to the original value or silently truncating a result that does not fit. Full details, the built-in list, and custom transformers are in [Export transformations](/transformations).
+
+Prefer `ExcludeColumns` where you can, and reach for a transformer only where the column has to keep carrying something. A value that never leaves SQL Server is safer than a scrubbed one.
+
 ## Filter the rows
 
 `GlobalWhereClauses` applies a SQL Server WHERE predicate to any selected table that has a matching source column. Several single-column clauses apply independently, each wherever its own column exists:

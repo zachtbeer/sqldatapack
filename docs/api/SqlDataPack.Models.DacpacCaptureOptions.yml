@@ -26,7 +26,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacCaptureOptions
     path: src/SqlDataPack/Options.cs
-    startLine: 83
+    startLine: 84
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -62,7 +62,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Default
     path: src/SqlDataPack/Options.cs
-    startLine: 89
+    startLine: 90
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaScope
     path: src/SqlDataPack/Options.cs
-    startLine: 94
+    startLine: 95
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -129,7 +129,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExtractReferencedServerScopedElements
     path: src/SqlDataPack/Options.cs
-    startLine: 99
+    startLine: 100
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -160,7 +160,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ExtractApplicationScopedObjectsOnly
     path: src/SqlDataPack/Options.cs
-    startLine: 104
+    startLine: 105
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -191,7 +191,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IgnorePermissions
     path: src/SqlDataPack/Options.cs
-    startLine: 109
+    startLine: 110
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -222,7 +222,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IgnoreUserLoginMappings
     path: src/SqlDataPack/Options.cs
-    startLine: 114
+    startLine: 115
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -253,7 +253,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: VerifyExtraction
     path: src/SqlDataPack/Options.cs
-    startLine: 127
+    startLine: 128
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

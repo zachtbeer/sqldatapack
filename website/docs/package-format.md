@@ -7,9 +7,9 @@ The export produces one SQLite file. Open it with any SQLite tool, no SQL Server
 
 ```text
 $ sqlite3 billing-repro.sqlite ".tables"
-dbo__customers        zsdp_columns          zsdp_import_plan      zsdp_tables
-dbo__invoices         zsdp_exclusions       zsdp_schema_packages  zsdp_warnings
-dbo__orders           zsdp_export_runs      zsdp_table_stats
+dbo__customers        zsdp_columns          zsdp_import_plan      zsdp_table_stats
+dbo__invoices         zsdp_exclusions       zsdp_schema_packages  zsdp_tables
+dbo__orders           zsdp_export_runs      zsdp_transformations  zsdp_warnings
 ```
 
 Two kinds of table live side by side in that list, and the prefix tells them apart: `zsdp_*` tables carry metadata about the export, and every bare-named table carries the rows themselves. `zsdp_` is reserved for the library's own use, so anything without it is your data.
@@ -22,6 +22,7 @@ Two kinds of table live side by side in that list, and the prefix tells them apa
 | `zsdp_columns` | One row per exported (and skipped) column: SQL Server type name, max length, precision, scale, nullability, identity, computed, exclusion, collation, and vector base type and dimensions where relevant. |
 | `zsdp_table_stats` | Row counts and sizing per table: `exported_row_count` (what import compares the package's current contents against), estimated source row count, estimated source bytes, and the export batch size. |
 | `zsdp_exclusions` | Tables and columns that were skipped from export, and why. |
+| `zsdp_transformations` | One row per column an export transformer was bound to: the column, the transformer type (or `Custom`), and the built-in's non-secret configuration. Never the export secret, a key, or an original value. |
 | `zsdp_warnings` | Non-fatal warnings produced during export. |
 | `zsdp_import_plan` | The foreign-key-based order tables need to import in. |
 | `zsdp_export_runs` | One row describing the export itself: package format version, application version, export timestamp, and the source schema hash. |

@@ -77,4 +77,92 @@ items:
   - uid: SqlDataPack.Models.SqlDataPackTableManifest
     name: SqlDataPackTableManifest
     type: Class
+  - uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+    name: SqlDataPackTransformationManifest
+    type: Class
+- uid: SqlDataPack.Transformations
+  name: SqlDataPack.Transformations
+  type: Namespace
+  items:
+  - uid: SqlDataPack.Transformations.BuiltInTransformer
+    name: BuiltInTransformer
+    type: Class
+  - uid: SqlDataPack.Transformations.CustomTransformer
+    name: CustomTransformer
+    type: Class
+  - uid: SqlDataPack.Transformations.EmailMasker
+    name: EmailMasker
+    type: Class
+  - uid: SqlDataPack.Transformations.EmailMaskerOptions
+    name: EmailMaskerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.EmailPseudonymizer
+    name: EmailPseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.EmailPseudonymizerOptions
+    name: EmailPseudonymizerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.GuidPseudonymizer
+    name: GuidPseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.IPv4Pseudonymizer
+    name: IPv4Pseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.IPv4PseudonymizerOptions
+    name: IPv4PseudonymizerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.IPv6Pseudonymizer
+    name: IPv6Pseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.IPv6PseudonymizerOptions
+    name: IPv6PseudonymizerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.IValueTransformer
+    name: IValueTransformer
+    type: Interface
+  - uid: SqlDataPack.Transformations.NameMasker
+    name: NameMasker
+    type: Class
+  - uid: SqlDataPack.Transformations.NameMaskerOptions
+    name: NameMaskerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.NumericPseudonymizer
+    name: NumericPseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.PhoneMasker
+    name: PhoneMasker
+    type: Class
+  - uid: SqlDataPack.Transformations.PhoneMaskerOptions
+    name: PhoneMaskerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.PhonePseudonymizer
+    name: PhonePseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.PhonePseudonymizerOptions
+    name: PhonePseudonymizerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.SsnMasker
+    name: SsnMasker
+    type: Class
+  - uid: SqlDataPack.Transformations.SsnMaskerOptions
+    name: SsnMaskerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.SsnPseudonymizer
+    name: SsnPseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.StringMasker
+    name: StringMasker
+    type: Class
+  - uid: SqlDataPack.Transformations.StringMaskerOptions
+    name: StringMaskerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.StringPseudonymizer
+    name: StringPseudonymizer
+    type: Class
+  - uid: SqlDataPack.Transformations.StringPseudonymizerOptions
+    name: StringPseudonymizerOptions
+    type: Class
+  - uid: SqlDataPack.Transformations.TransformContext
+    name: TransformContext
+    type: Class
 memberLayout: SamePage

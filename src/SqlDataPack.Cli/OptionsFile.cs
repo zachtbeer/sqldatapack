@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using Microsoft.Extensions.Logging;
 using SqlDataPack.Models;
+using SqlDataPack.Transformations;
 
 namespace SqlDataPack.Cli;
 
@@ -125,8 +126,10 @@ internal static class OptionsFile {
     }
 
     /// <summary>
-    /// Progress and Logger are callbacks, not configuration. Leaving them on the contract would
-    /// let an options file fail with a confusing serializer error instead of "unknown member".
+    /// Progress, Logger, and Transformations are code, not configuration. Leaving them on the contract
+    /// would let an options file fail with a confusing serializer error instead of "unknown member".
+    /// Transformers are objects a caller constructs, so binding them from a file would mean a name
+    /// registry the library deliberately does not have; the CLI exports untransformed.
     /// </summary>
     private static void DropNonSerializableProperties(JsonTypeInfo typeInfo) {
         if (typeInfo.Kind != JsonTypeInfoKind.Object) {
@@ -136,7 +139,8 @@ internal static class OptionsFile {
         for (var i = typeInfo.Properties.Count - 1; i >= 0; i--) {
             var propertyType = typeInfo.Properties[i].PropertyType;
             var isCallback = propertyType == typeof(ILogger)
-                             || (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IProgress<>));
+                             || (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IProgress<>))
+                             || propertyType == typeof(IDictionary<string, IValueTransformer>);
 
             if (isCallback) {
                 typeInfo.Properties.RemoveAt(i);

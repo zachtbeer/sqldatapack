@@ -11,7 +11,7 @@ namespace SqlDataPack.Internal;
 /// with a synthetic reader instead of measuring a copy of it.
 /// </summary>
 internal static class SqlitePackageWriter {
-    public static async Task<long> WriteTableAsync(SqliteConnection sqlite, DbDataReader reader, TableMetadata table, int batchSize, IProgress<SqlDataPackProgress>? progress, CancellationToken cancellationToken) {
+    public static async Task<long> WriteTableAsync(SqliteConnection sqlite, DbDataReader reader, TableMetadata table, int batchSize, IProgress<SqlDataPackProgress>? progress, CancellationToken cancellationToken, ColumnTransform?[]? transforms = null) {
         var columns = table.ExportedColumns;
         // Resolved once per column rather than once per cell; see ValueConverter.ToSqliteValue.
         var kinds = new ColumnKind[columns.Count];
@@ -42,6 +42,13 @@ internal static class SqlitePackageWriter {
             while (await reader.ReadAsync(cancellationToken)) {
                 for (var i = 0; i < columns.Count; i++) {
                     var value = reader.IsDBNull(i) ? DBNull.Value : reader.GetValue(i);
+                    // A source NULL bypasses the transformer and stays NULL. The array is null for every
+                    // table with nothing configured, so an export without transformations pays one
+                    // null check per cell and nothing else.
+                    if (transforms?[i] is { } transform && value is not DBNull) {
+                        value = transform.Apply(value);
+                    }
+
                     ValueConverter.BindSqliteParameter(insert.Parameters[i], ValueConverter.ToSqliteValue(value, columns[i], kinds[i]));
                 }
 

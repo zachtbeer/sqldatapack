@@ -24,6 +24,7 @@ items:
   - SqlDataPack.Models.SqlDataPackReader
   - SqlDataPack.Models.SqlDataPackResult
   - SqlDataPack.Models.SqlDataPackTableManifest
+  - SqlDataPack.Models.SqlDataPackTransformationManifest
   langs:
   - csharp
   - vb
@@ -160,6 +161,12 @@ references:
   name: SqlDataPackPreflightResult
   nameWithType: SqlDataPackPreflightResult
   fullName: SqlDataPack.Models.SqlDataPackPreflightResult
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+  commentId: T:SqlDataPack.Models.SqlDataPackTransformationManifest
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html
+  name: SqlDataPackTransformationManifest
+  nameWithType: SqlDataPackTransformationManifest
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest
 - uid: SqlDataPack.Models.SqlDataPackReader
   commentId: T:SqlDataPack.Models.SqlDataPackReader
   href: SqlDataPack.Models.SqlDataPackReader.html
