@@ -2,7 +2,7 @@
 
 `winget install zachtbeer.SqlDataPack` is the channel most people use, so this is worth getting right.
 
-These three files are the manifest for the [Windows Package Manager Community Repository](https://github.com/microsoft/winget-pkgs). They are templates: `VERSION`, `RELEASE_DATE`, `SHA256_X64` and `SHA256_ARM64` are placeholders.
+These three files are the manifest for the [Windows Package Manager Community Repository](https://github.com/microsoft/winget-pkgs). They carry the version, date and hashes from the last manual submission, so they validate as they stand. Nothing in the repo rewrites them: if you submit by hand again, update `PackageVersion` in all three, plus `ReleaseDate`, both `InstallerUrl`s and both `InstallerSha256`s in the installer manifest.
 
 ## The first submission is manual
 
@@ -12,7 +12,7 @@ microsoft/winget-pkgs reviews a new package identifier by hand before it will ta
 
 1. Publish the release. Take the two hashes from the `SHA256SUMS` asset.
 2. Copy these three files to `manifests/z/zachtbeer/SqlDataPack/<version>/` in a fork of `microsoft/winget-pkgs`, keeping the file names.
-3. Replace the placeholders. `RELEASE_DATE` is `YYYY-MM-DD`.
+3. Update the version, `ReleaseDate` and both hashes if they are not already current. `ReleaseDate` is `YYYY-MM-DD`.
 4. Validate and test locally:
 
    ```powershell
@@ -20,6 +20,10 @@ microsoft/winget-pkgs reviews a new package identifier by hand before it will ta
    winget settings --enable LocalManifestFiles
    winget install --manifest <folder>
    ```
+
+   `<folder>` has to hold the three YAML files and nothing else. Pointing `winget validate` at
+   `build/winget/` trips over this README and fails with `[YAML:Scanner] ... [line 3; col 1]`,
+   naming no file at all. The manifests are fine; the Markdown is not YAML.
 
 5. Open the pull request. Review usually takes a few days.
 6. Once it merges, set both of these on the repository:
