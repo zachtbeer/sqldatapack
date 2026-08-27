@@ -21,7 +21,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: DacpacSchemaScope
     path: src/SqlDataPack/Options.cs
-    startLine: 38
+    startLine: 39
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -48,7 +48,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Database
     path: src/SqlDataPack/Options.cs
-    startLine: 42
+    startLine: 43
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -76,7 +76,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SelectedExportTables
     path: src/SqlDataPack/Options.cs
-    startLine: 47
+    startLine: 48
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

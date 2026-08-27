@@ -1,0 +1,646 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+  commentId: T:SqlDataPack.Models.SqlDataPackTransformationManifest
+  id: SqlDataPackTransformationManifest
+  parent: SqlDataPack.Models
+  children:
+  - SqlDataPack.Models.SqlDataPackTransformationManifest.#ctor(System.String,System.String,System.String,System.String,System.String)
+  - SqlDataPack.Models.SqlDataPackTransformationManifest.Column
+  - SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath
+  - SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration
+  - SqlDataPack.Models.SqlDataPackTransformationManifest.Schema
+  - SqlDataPack.Models.SqlDataPackTransformationManifest.Table
+  - SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackTransformationManifest
+  nameWithType: SqlDataPackTransformationManifest
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest
+  type: Class
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: SqlDataPackTransformationManifest
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 444
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: One transformed column, as recorded in the package.
+  remarks: >-
+    The package records that a column was transformed and how it was configured, never the export secret,
+
+    any key, or any original value. A transformer that is not one of SqlDataPack's built-ins is recorded as
+
+    <code>Custom</code>.
+  example: []
+  syntax:
+    content: 'public sealed record SqlDataPackTransformationManifest : IEquatable<SqlDataPackTransformationManifest>'
+    content.vb: Public NotInheritable Class SqlDataPackTransformationManifest Implements IEquatable(Of SqlDataPackTransformationManifest)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{SqlDataPack.Models.SqlDataPackTransformationManifest}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.#ctor(System.String,System.String,System.String,System.String,System.String)
+  commentId: M:SqlDataPack.Models.SqlDataPackTransformationManifest.#ctor(System.String,System.String,System.String,System.String,System.String)
+  id: '#ctor(System.String,System.String,System.String,System.String,System.String)'
+  parent: SqlDataPack.Models.SqlDataPackTransformationManifest
+  langs:
+  - csharp
+  - vb
+  name: SqlDataPackTransformationManifest(string, string, string, string, string?)
+  nameWithType: SqlDataPackTransformationManifest.SqlDataPackTransformationManifest(string, string, string, string, string?)
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.SqlDataPackTransformationManifest(string, string, string, string, string?)
+  type: Constructor
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: .ctor
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 453
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: Initializes a new instance of the <xref href="SqlDataPack.Models.SqlDataPackTransformationManifest" data-throw-if-not-resolved="false"></xref> record.
+  example: []
+  syntax:
+    content: public SqlDataPackTransformationManifest(string Schema, string Table, string Column, string TransformerType, string? Configuration)
+    parameters:
+    - id: Schema
+      type: System.String
+      description: The source schema name.
+    - id: Table
+      type: System.String
+      description: The source table name.
+    - id: Column
+      type: System.String
+      description: The source column name.
+    - id: TransformerType
+      type: System.String
+      description: The built-in transformer's type name, or <code>Custom</code>.
+    - id: Configuration
+      type: System.String
+      description: The built-in transformer's non-secret configuration, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>.
+    content.vb: Public Sub New(Schema As String, Table As String, Column As String, TransformerType As String, Configuration As String)
+  overload: SqlDataPack.Models.SqlDataPackTransformationManifest.#ctor*
+  nameWithType.vb: SqlDataPackTransformationManifest.New(String, String, String, String, String)
+  fullName.vb: SqlDataPack.Models.SqlDataPackTransformationManifest.New(String, String, String, String, String)
+  name.vb: New(String, String, String, String, String)
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Schema
+  commentId: P:SqlDataPack.Models.SqlDataPackTransformationManifest.Schema
+  id: Schema
+  parent: SqlDataPack.Models.SqlDataPackTransformationManifest
+  langs:
+  - csharp
+  - vb
+  name: Schema
+  nameWithType: SqlDataPackTransformationManifest.Schema
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Schema
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Schema
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 462
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source schema name.
+  example: []
+  syntax:
+    content: public string Schema { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Schema As String
+  overload: SqlDataPack.Models.SqlDataPackTransformationManifest.Schema*
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Table
+  commentId: P:SqlDataPack.Models.SqlDataPackTransformationManifest.Table
+  id: Table
+  parent: SqlDataPack.Models.SqlDataPackTransformationManifest
+  langs:
+  - csharp
+  - vb
+  name: Table
+  nameWithType: SqlDataPackTransformationManifest.Table
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Table
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Table
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 465
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source table name.
+  example: []
+  syntax:
+    content: public string Table { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Table As String
+  overload: SqlDataPack.Models.SqlDataPackTransformationManifest.Table*
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Column
+  commentId: P:SqlDataPack.Models.SqlDataPackTransformationManifest.Column
+  id: Column
+  parent: SqlDataPack.Models.SqlDataPackTransformationManifest
+  langs:
+  - csharp
+  - vb
+  name: Column
+  nameWithType: SqlDataPackTransformationManifest.Column
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Column
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Column
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 468
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The source column name.
+  example: []
+  syntax:
+    content: public string Column { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Column As String
+  overload: SqlDataPack.Models.SqlDataPackTransformationManifest.Column*
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath
+  commentId: P:SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath
+  id: ColumnPath
+  parent: SqlDataPack.Models.SqlDataPackTransformationManifest
+  langs:
+  - csharp
+  - vb
+  name: ColumnPath
+  nameWithType: SqlDataPackTransformationManifest.ColumnPath
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: ColumnPath
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 471
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The fully qualified <code>schema.table.column</code> path the transformer was bound to.
+  example: []
+  syntax:
+    content: public string ColumnPath { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property ColumnPath As String
+  overload: SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath*
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType
+  commentId: P:SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType
+  id: TransformerType
+  parent: SqlDataPack.Models.SqlDataPackTransformationManifest
+  langs:
+  - csharp
+  - vb
+  name: TransformerType
+  nameWithType: SqlDataPackTransformationManifest.TransformerType
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: TransformerType
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 474
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The built-in transformer's type name, for example <code>EmailPseudonymizer</code>, or <code>Custom</code> for anything else.
+  example: []
+  syntax:
+    content: public string TransformerType { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TransformerType As String
+  overload: SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType*
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration
+  commentId: P:SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration
+  id: Configuration
+  parent: SqlDataPack.Models.SqlDataPackTransformationManifest
+  langs:
+  - csharp
+  - vb
+  name: Configuration
+  nameWithType: SqlDataPackTransformationManifest.Configuration
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration
+  type: Property
+  source:
+    remote:
+      path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Configuration
+    path: src/SqlDataPack/SqlDataPackOperationalModels.cs
+    startLine: 477
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Models
+  summary: The built-in transformer's non-secret configuration, rendered as <code>Name=value;Name=value</code>, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> when it has none.
+  example: []
+  syntax:
+    content: public string? Configuration { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Configuration As String
+  overload: SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration*
+references:
+- uid: SqlDataPack.Models
+  commentId: N:SqlDataPack.Models
+  href: SqlDataPack.html
+  name: SqlDataPack.Models
+  nameWithType: SqlDataPack.Models
+  fullName: SqlDataPack.Models
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Models
+    name: Models
+    href: SqlDataPack.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{SqlDataPack.Models.SqlDataPackTransformationManifest}
+  commentId: T:System.IEquatable{SqlDataPack.Models.SqlDataPackTransformationManifest}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<SqlDataPackTransformationManifest>
+  nameWithType: IEquatable<SqlDataPackTransformationManifest>
+  fullName: System.IEquatable<SqlDataPack.Models.SqlDataPackTransformationManifest>
+  nameWithType.vb: IEquatable(Of SqlDataPackTransformationManifest)
+  fullName.vb: System.IEquatable(Of SqlDataPack.Models.SqlDataPackTransformationManifest)
+  name.vb: IEquatable(Of SqlDataPackTransformationManifest)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+    name: SqlDataPackTransformationManifest
+    href: SqlDataPack.Models.SqlDataPackTransformationManifest.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+    name: SqlDataPackTransformationManifest
+    href: SqlDataPack.Models.SqlDataPackTransformationManifest.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest
+  commentId: T:SqlDataPack.Models.SqlDataPackTransformationManifest
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html
+  name: SqlDataPackTransformationManifest
+  nameWithType: SqlDataPackTransformationManifest
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.#ctor*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTransformationManifest.#ctor
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html#SqlDataPack_Models_SqlDataPackTransformationManifest__ctor_System_String_System_String_System_String_System_String_System_String_
+  name: SqlDataPackTransformationManifest
+  nameWithType: SqlDataPackTransformationManifest.SqlDataPackTransformationManifest
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.SqlDataPackTransformationManifest
+  nameWithType.vb: SqlDataPackTransformationManifest.New
+  fullName.vb: SqlDataPack.Models.SqlDataPackTransformationManifest.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Schema*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTransformationManifest.Schema
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html#SqlDataPack_Models_SqlDataPackTransformationManifest_Schema
+  name: Schema
+  nameWithType: SqlDataPackTransformationManifest.Schema
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Schema
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Table*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTransformationManifest.Table
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html#SqlDataPack_Models_SqlDataPackTransformationManifest_Table
+  name: Table
+  nameWithType: SqlDataPackTransformationManifest.Table
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Table
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Column*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTransformationManifest.Column
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html#SqlDataPack_Models_SqlDataPackTransformationManifest_Column
+  name: Column
+  nameWithType: SqlDataPackTransformationManifest.Column
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Column
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html#SqlDataPack_Models_SqlDataPackTransformationManifest_ColumnPath
+  name: ColumnPath
+  nameWithType: SqlDataPackTransformationManifest.ColumnPath
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.ColumnPath
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html#SqlDataPack_Models_SqlDataPackTransformationManifest_TransformerType
+  name: TransformerType
+  nameWithType: SqlDataPackTransformationManifest.TransformerType
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.TransformerType
+- uid: SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration*
+  commentId: Overload:SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration
+  href: SqlDataPack.Models.SqlDataPackTransformationManifest.html#SqlDataPack_Models_SqlDataPackTransformationManifest_Configuration
+  name: Configuration
+  nameWithType: SqlDataPackTransformationManifest.Configuration
+  fullName: SqlDataPack.Models.SqlDataPackTransformationManifest.Configuration

@@ -68,6 +68,7 @@ public sealed class PublicApiContractTests {
         options.TableSelection.ShouldBe(ExportTableSelectionMode.AllExcept);
         options.Tables.ShouldBeEmpty();
         options.ExcludeColumns.ShouldBeEmpty();
+        options.Transformations.ShouldBeEmpty();
         options.GlobalWhereClauses.ShouldBeEmpty();
         options.PerTableWhereClauses.ShouldBeEmpty();
         options.DataTablePrefix.ShouldBeNull();

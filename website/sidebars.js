@@ -39,6 +39,7 @@ const sidebars = {
       collapsed: false,
       items: [
         'options',
+        'transformations',
         'supported-types',
         'comparison',
         'known-limitations',

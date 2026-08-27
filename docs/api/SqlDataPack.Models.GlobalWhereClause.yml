@@ -25,7 +25,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: GlobalWhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 236
+    startLine: 237
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -89,7 +89,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 242
+    startLine: 243
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -127,7 +127,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/Options.cs
-    startLine: 250
+    startLine: 251
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -165,7 +165,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: ColumnNames
     path: src/SqlDataPack/Options.cs
-    startLine: 260
+    startLine: 261
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -199,7 +199,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: WhereClause
     path: src/SqlDataPack/Options.cs
-    startLine: 266
+    startLine: 267
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -233,7 +233,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Equals
     path: src/SqlDataPack/Options.cs
-    startLine: 272
+    startLine: 273
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -273,7 +273,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: GetHashCode
     path: src/SqlDataPack/Options.cs
-    startLine: 275
+    startLine: 276
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

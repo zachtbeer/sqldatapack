@@ -24,7 +24,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SqlDataPackPreflightResult
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 395
+    startLine: 400
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -62,7 +62,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: .ctor
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 403
+    startLine: 408
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -106,7 +106,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: IsValid
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 413
+    startLine: 418
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -137,7 +137,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Errors
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 418
+    startLine: 423
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -168,7 +168,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Warnings
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 423
+    startLine: 428
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -199,7 +199,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Manifest
     path: src/SqlDataPack/SqlDataPackOperationalModels.cs
-    startLine: 428
+    startLine: 433
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

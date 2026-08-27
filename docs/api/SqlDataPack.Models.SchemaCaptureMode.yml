@@ -21,7 +21,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: SchemaCaptureMode
     path: src/SqlDataPack/Options.cs
-    startLine: 8
+    startLine: 9
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -48,7 +48,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: None
     path: src/SqlDataPack/Options.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models
@@ -76,7 +76,7 @@ items:
       repo: https://github.com/zachtbeer/sqldatapack.git
     id: Dacpac
     path: src/SqlDataPack/Options.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - SqlDataPack
   namespace: SqlDataPack.Models

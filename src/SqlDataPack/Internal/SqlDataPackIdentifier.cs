@@ -114,10 +114,13 @@ internal static class SqlDataPackIdentifier {
         }
     }
 
-    public static (string Schema, string Table, string Column) ParseColumnPath(string value) {
+    public static (string Schema, string Table, string Column) ParseColumnPath(string value) => ParseColumnPath(value, "Column exclusion");
+
+    /// <summary><paramref name="what"/> names the setting in the error, so a bad transformation path does not report itself as an exclusion.</summary>
+    public static (string Schema, string Table, string Column) ParseColumnPath(string value, string what) {
         var parts = value.Split('.', StringSplitOptions.TrimEntries);
         if (parts.Length != 3 || parts.Any(string.IsNullOrWhiteSpace)) {
-            throw new SqlDataPackException($"Column exclusion '{value}' is invalid. Use '<schema>.<table>.<column>', for example 'dbo.Customers.LegacyColumn'.");
+            throw new SqlDataPackException($"{what} '{value}' is invalid. Use '<schema>.<table>.<column>', for example 'dbo.Customers.LegacyColumn'.");
         }
 
         return (parts[0], parts[1], parts[2]);

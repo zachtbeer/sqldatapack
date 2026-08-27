@@ -32,6 +32,10 @@ public sealed class SqlDataPackExporter {
         var warnings = BuildExportWarnings(plan, options);
         plan = plan with { Warnings = warnings };
         ReportWarnings(progress, warnings);
+        // One secret per export, generated here and discarded with the run: it never reaches the package,
+        // and two exports of the same database therefore pseudonymize differently.
+        var exportSecret = options.Transformations.Count == 0 ? null : ExportSecret.Create();
+        var transformersByColumn = TransformationBinder.Normalize(options);
         SchemaPackage? schemaPackage = options.SchemaCaptureMode switch {
             SchemaCaptureMode.None => null,
             SchemaCaptureMode.Dacpac => await DacpacSchemaManager.ExtractAsync(sqlServerConnectionString, plan, options.DacpacCaptureOptions, cancellationToken),
@@ -57,7 +61,8 @@ public sealed class SqlDataPackExporter {
             foreach (var table in plan.ImportOrder.Select(name => tablesByName[name.FullName])) {
                 var batchSize = BatchPlanner.GetEffectiveBatchSize(options, table.EstimatedSourceRowCount, table.EstimatedSourceBytes);
                 progress?.Report(new SqlDataPackProgress(SqlDataPackProgressKind.TableStarted, table.Name.FullName, TotalRows: table.EstimatedSourceRowCount));
-                var rows = await ExportTableAsync(sqlServer, sqlite, table, batchSize, options.CommandTimeout, progress, cancellationToken);
+                var transforms = TransformationBinder.CreateForTable(table, transformersByColumn, exportSecret);
+                var rows = await ExportTableAsync(sqlServer, sqlite, table, batchSize, options.CommandTimeout, progress, transforms, cancellationToken);
                 await SqlitePackage.RecordTableStatsAsync(sqlite, table, rows, batchSize, cancellationToken);
                 totalRows += rows;
                 progress?.Report(new SqlDataPackProgress(SqlDataPackProgressKind.TableCompleted, table.Name.FullName, rows, rows));
@@ -144,7 +149,7 @@ public sealed class SqlDataPackExporter {
         }
     }
 
-    private static async Task<long> ExportTableAsync(SqlConnection sqlServer, SqliteConnection sqlite, TableMetadata table, int batchSize, int? commandTimeout, IProgress<SqlDataPackProgress>? progress, CancellationToken cancellationToken) {
+    private static async Task<long> ExportTableAsync(SqlConnection sqlServer, SqliteConnection sqlite, TableMetadata table, int batchSize, int? commandTimeout, IProgress<SqlDataPackProgress>? progress, ColumnTransform?[]? transforms, CancellationToken cancellationToken) {
         var columns = table.ExportedColumns;
         var selectColumns = string.Join(", ", columns.Select(c => SqlDataPackIdentifier.QuoteSqlServerName(c.Name)));
         await using var select = sqlServer.CreateCommand();
@@ -154,7 +159,7 @@ public sealed class SqlDataPackExporter {
         }
 
         await using var reader = await select.ExecuteReaderAsync(System.Data.CommandBehavior.SequentialAccess, cancellationToken);
-        return await SqlitePackageWriter.WriteTableAsync(sqlite, reader, table, batchSize, progress, cancellationToken);
+        return await SqlitePackageWriter.WriteTableAsync(sqlite, reader, table, batchSize, progress, cancellationToken, transforms);
     }
 
     private static IReadOnlyList<string> BuildExportWarnings(ExportPlan plan, ExportOptions options) {

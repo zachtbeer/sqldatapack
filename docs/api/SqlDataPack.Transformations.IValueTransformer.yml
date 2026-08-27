@@ -1,0 +1,182 @@
+### YamlMime:ManagedReference
+items:
+- uid: SqlDataPack.Transformations.IValueTransformer
+  commentId: T:SqlDataPack.Transformations.IValueTransformer
+  id: IValueTransformer
+  parent: SqlDataPack.Transformations
+  children:
+  - SqlDataPack.Transformations.IValueTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  langs:
+  - csharp
+  - vb
+  name: IValueTransformer
+  nameWithType: IValueTransformer
+  fullName: SqlDataPack.Transformations.IValueTransformer
+  type: Interface
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/IValueTransformer.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: IValueTransformer
+    path: src/SqlDataPack/Transformations/IValueTransformer.cs
+    startLine: 25
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: >-
+    Transforms one source cell during export, before the value is converted and written to the SQLite package.
+
+    The original value never reaches the package for a column a transformer is bound to.
+  remarks: >-
+    <p>
+
+    Transformation is synchronous and value-oriented: an implementation sees one value plus the destination
+
+    column's contract, and nothing else. There is deliberately no access to the rest of the row, to either
+
+    connection, or to the export's internal secret.
+
+    </p>
+
+    <p>
+
+    A transformer is never called for a source <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>; NULL stays NULL. Returning
+
+    <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> is allowed for a nullable column and fails the export for a non-nullable one.
+
+    Any exception an implementation throws fails the export — transformation never falls back to the
+
+    original value.
+
+    </p>
+
+    <p>
+
+    An implementation may keep its own state, but SqlDataPack neither manages nor guarantees it: one
+
+    instance may be called for many rows of many tables, on the export's thread.
+
+    </p>
+  example: []
+  syntax:
+    content: public interface IValueTransformer
+    content.vb: Public Interface IValueTransformer
+  derivedClasses:
+  - SqlDataPack.Transformations.BuiltInTransformer
+  - SqlDataPack.Transformations.CustomTransformer
+  - SqlDataPack.Transformations.EmailMasker
+  - SqlDataPack.Transformations.EmailPseudonymizer
+  - SqlDataPack.Transformations.GuidPseudonymizer
+  - SqlDataPack.Transformations.IPv4Pseudonymizer
+  - SqlDataPack.Transformations.IPv6Pseudonymizer
+  - SqlDataPack.Transformations.NameMasker
+  - SqlDataPack.Transformations.NumericPseudonymizer
+  - SqlDataPack.Transformations.PhoneMasker
+  - SqlDataPack.Transformations.PhonePseudonymizer
+  - SqlDataPack.Transformations.SsnMasker
+  - SqlDataPack.Transformations.SsnPseudonymizer
+  - SqlDataPack.Transformations.StringMasker
+  - SqlDataPack.Transformations.StringPseudonymizer
+- uid: SqlDataPack.Transformations.IValueTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  commentId: M:SqlDataPack.Transformations.IValueTransformer.Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  id: Transform(SqlDataPack.Transformations.TransformContext,System.Object)
+  parent: SqlDataPack.Transformations.IValueTransformer
+  langs:
+  - csharp
+  - vb
+  name: Transform(TransformContext, object)
+  nameWithType: IValueTransformer.Transform(TransformContext, object)
+  fullName: SqlDataPack.Transformations.IValueTransformer.Transform(SqlDataPack.Transformations.TransformContext, object)
+  type: Method
+  source:
+    remote:
+      path: src/SqlDataPack/Transformations/IValueTransformer.cs
+      branch: zb/v1-prep
+      repo: https://github.com/zachtbeer/sqldatapack.git
+    id: Transform
+    path: src/SqlDataPack/Transformations/IValueTransformer.cs
+    startLine: 32
+  assemblies:
+  - SqlDataPack
+  namespace: SqlDataPack.Transformations
+  summary: Transforms one non-null source value.
+  example: []
+  syntax:
+    content: object? Transform(TransformContext context, object value)
+    parameters:
+    - id: context
+      type: SqlDataPack.Transformations.TransformContext
+      description: "The destination column's contract: name, SQL Server type, nullability, and size."
+    - id: value
+      type: System.Object
+      description: The source value, never <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> and never <xref href="System.DBNull" data-throw-if-not-resolved="false"></xref>.
+    return:
+      type: System.Object
+      description: The value to write, or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> to write NULL (nullable columns only).
+    content.vb: Function Transform(context As TransformContext, value As Object) As Object
+  overload: SqlDataPack.Transformations.IValueTransformer.Transform*
+  nameWithType.vb: IValueTransformer.Transform(TransformContext, Object)
+  fullName.vb: SqlDataPack.Transformations.IValueTransformer.Transform(SqlDataPack.Transformations.TransformContext, Object)
+  name.vb: Transform(TransformContext, Object)
+references:
+- uid: SqlDataPack.Transformations
+  commentId: N:SqlDataPack.Transformations
+  href: SqlDataPack.html
+  name: SqlDataPack.Transformations
+  nameWithType: SqlDataPack.Transformations
+  fullName: SqlDataPack.Transformations
+  spec.csharp:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+  spec.vb:
+  - uid: SqlDataPack
+    name: SqlDataPack
+    href: SqlDataPack.html
+  - name: .
+  - uid: SqlDataPack.Transformations
+    name: Transformations
+    href: SqlDataPack.Transformations.html
+- uid: System.DBNull
+  commentId: T:System.DBNull
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.dbnull
+  name: DBNull
+  nameWithType: DBNull
+  fullName: System.DBNull
+- uid: SqlDataPack.Transformations.IValueTransformer.Transform*
+  commentId: Overload:SqlDataPack.Transformations.IValueTransformer.Transform
+  href: SqlDataPack.Transformations.IValueTransformer.html#SqlDataPack_Transformations_IValueTransformer_Transform_SqlDataPack_Transformations_TransformContext_System_Object_
+  name: Transform
+  nameWithType: IValueTransformer.Transform
+  fullName: SqlDataPack.Transformations.IValueTransformer.Transform
+- uid: SqlDataPack.Transformations.TransformContext
+  commentId: T:SqlDataPack.Transformations.TransformContext
+  parent: SqlDataPack.Transformations
+  href: SqlDataPack.Transformations.TransformContext.html
+  name: TransformContext
+  nameWithType: TransformContext
+  fullName: SqlDataPack.Transformations.TransformContext
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
