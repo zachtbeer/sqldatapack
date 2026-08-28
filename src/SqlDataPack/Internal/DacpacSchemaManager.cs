@@ -22,16 +22,17 @@ internal static class DacpacSchemaManager {
             var applicationVersion = typeof(SqlDataPackVersion).Assembly.GetName().Version ?? new Version(1, 0, 0);
             var extractOptions = CreateExtractOptions(options);
 
-            // Source-side platform stamp. Soft-fails to null so an unusual provider doesn't kill the export;
-            // import-side decision tree treats null as "unknown" and falls back to the conservative path
-            // (= no model rewrite, deploy as-is).
+            // Source-side platform stamp. Soft-fails to null on anything, including an unreachable server:
+            // the stamp only feeds the import-side decision about the Azure model rewrite, and the extract
+            // below reports a broken connection far better than a metadata probe would.
             int? sourceEngineEdition = null;
             try {
-                sourceEngineEdition = await ReadEngineEditionAsync(connectionString, cancellationToken);
+                await using var probe = await OpenProbeConnectionAsync(connectionString, databaseName, cancellationToken);
+                (sourceEngineEdition, _) = await TryReadEngineEditionAsync(probe, cancellationToken);
             }
-            catch (Exception probeException) when (probeException is not OperationCanceledException) {
-                // Swallow — leaving the stamp null is preferable to failing the whole export over a
-                // metadata probe.
+            catch (SqlDataPackException) {
+                // The export plan already connected successfully, so this is unusual. Still not worth
+                // failing an export over a stamp the import can live without.
             }
 
             await Task.Run(() => services.Extract(path, databaseName, databaseName, applicationVersion, "Extracted by SqlDataPack.", tables: null, extractOptions: extractOptions, cancellationToken: cancellationToken), cancellationToken);
@@ -56,8 +57,10 @@ internal static class DacpacSchemaManager {
         }
     }
 
-    public static async Task DeployAsync(string connectionString, SchemaPackage package, DacpacDeploymentOptions options, bool allowDacpacObjectDrops, CancellationToken cancellationToken) {
+    /// <summary>Deploys the packaged dacpac and returns any warnings raised while preparing it.</summary>
+    public static async Task<IReadOnlyList<string>> DeployAsync(string connectionString, SchemaPackage package, DacpacDeploymentOptions options, bool allowDacpacObjectDrops, CancellationToken cancellationToken) {
         ArgumentNullException.ThrowIfNull(options);
+        var warnings = new List<string>();
 
         if (!string.Equals(package.PackageType, "dacpac", StringComparison.OrdinalIgnoreCase)) {
             throw new SqlDataPackException($"Schema package type '{package.PackageType}' is not supported for dacpac deployment.");
@@ -77,17 +80,24 @@ internal static class DacpacSchemaManager {
         try {
             await File.WriteAllBytesAsync(path, package.Payload, cancellationToken);
 
-            if (!options.DeployDatabaseOptions && options.AdaptAzureSourceForOnPremTarget) {
-                int targetEngineEdition;
-                try {
-                    targetEngineEdition = await ReadEngineEditionAsync(connectionString, cancellationToken);
-                }
-                catch (Exception exception) when (exception is not OperationCanceledException and not SqlDataPackException) {
-                    throw new SqlDataPackException($"Failed to probe target SQL Server engine edition before dacpac deploy to '{targetDatabaseName}'. " + "Set DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget = false (or DeployDatabaseOptions = true) to skip the probe and deploy the source model as-is.", exception);
-                }
+            // The Azure model rewrite only ever applies to an Azure-sourced or unstamped package, and the
+            // package already carries that stamp. Any other source settles the question without asking the
+            // target anything.
+            var needsPlatformCheck = !options.DeployDatabaseOptions && options.AdaptAzureSourceForOnPremTarget && MayNeedAzureSourceAdaptation(package.SourceEngineEdition);
 
-                if (ShouldAdaptAzureSourceForOnPremTarget(package.SourceEngineEdition, targetEngineEdition)) {
-                    NeutralizeForNonAzureSqlTarget(path);
+            // First contact with the target, and two separate questions. Not being able to connect is fatal
+            // and gets its own message rather than surfacing later as a DacFx deploy failure. Reading
+            // EngineEdition off that same connection is optional, and only decides the rewrite.
+            await using (var probe = await OpenProbeConnectionAsync(connectionString, targetDatabaseName, cancellationToken)) {
+                if (needsPlatformCheck) {
+                    var (targetEngineEdition, probeFailure) = await TryReadEngineEditionAsync(probe, cancellationToken);
+                    if (probeFailure is not null) {
+                        warnings.Add($"Could not read SERVERPROPERTY('EngineEdition') on target database '{targetDatabaseName}': {probeFailure} Treating the target as non-Azure, which adapts the schema package for an on-prem deploy. Set DacpacDeploymentOptions.AdaptAzureSourceForOnPremTarget to false if the target is Azure SQL.");
+                    }
+
+                    if (ShouldAdaptAzureSourceForOnPremTarget(package.SourceEngineEdition, targetEngineEdition)) {
+                        NeutralizeForNonAzureSqlTarget(path);
+                    }
                 }
             }
 
@@ -96,6 +106,7 @@ internal static class DacpacSchemaManager {
             var deployOptions = CreateDeployOptions(options, allowDacpacObjectDrops);
 
             await Task.Run(() => services.Deploy(dacpac, targetDatabaseName, upgradeExisting: true, options: deployOptions, cancellationToken: cancellationToken), cancellationToken);
+            return warnings;
         }
         catch (Exception exception) when (exception is not OperationCanceledException and not SqlDataPackException) {
             throw new SqlDataPackException($"Failed to deploy dacpac schema to target database '{targetDatabaseName}'.", exception);
@@ -293,12 +304,31 @@ internal static class DacpacSchemaManager {
         }
     }
 
-    private static async Task<int> ReadEngineEditionAsync(string connectionString, CancellationToken cancellationToken) {
-        await using var connection = new SqlConnection(connectionString);
-        await connection.OpenAsync(cancellationToken);
-        await using var command = new SqlCommand("SELECT CAST(SERVERPROPERTY('EngineEdition') AS int);", connection);
-        var result = await command.ExecuteScalarAsync(cancellationToken);
-        return result is int value ? value : throw new SqlDataPackException("Failed to determine SQL Server engine edition; SERVERPROPERTY('EngineEdition') returned no value.");
+    // Connecting and reading EngineEdition are kept apart because callers weigh them differently. A
+    // connection that will not open breaks the operation regardless, so it gets its own message instead of
+    // being buried under a DacFx failure a moment later. An unreadable EngineEdition only costs the
+    // Azure/on-prem signal, so it is worth a warning and nothing more.
+    private static async Task<SqlConnection> OpenProbeConnectionAsync(string connectionString, string databaseName, CancellationToken cancellationToken) {
+        var connection = new SqlConnection(connectionString);
+        try {
+            await connection.OpenAsync(cancellationToken);
+            return connection;
+        }
+        catch (Exception exception) when (exception is not OperationCanceledException) {
+            await connection.DisposeAsync();
+            throw new SqlDataPackException($"Cannot connect to SQL Server database '{databaseName}': {exception.Message}", exception);
+        }
+    }
+
+    private static async Task<(int? Edition, string? Failure)> TryReadEngineEditionAsync(SqlConnection connection, CancellationToken cancellationToken) {
+        try {
+            await using var command = new SqlCommand("SELECT CAST(SERVERPROPERTY('EngineEdition') AS int);", connection);
+            var result = await command.ExecuteScalarAsync(cancellationToken);
+            return result is int value ? (value, null) : (null, "SERVERPROPERTY('EngineEdition') returned no value.");
+        }
+        catch (Exception exception) when (exception is not OperationCanceledException) {
+            return (null, exception.Message);
+        }
     }
 
     // EngineEdition values that map to Azure-hosted SQL platforms whose extracts can carry contained users
@@ -307,24 +337,22 @@ internal static class DacpacSchemaManager {
     // 12 = Azure Synapse Analytics (SQL pool).
     private static bool IsAzureSqlEngineEdition(int engineEdition) => engineEdition is 5 or 8 or 11 or 12;
 
+    // Can the source stamp alone rule the rewrite out? A known non-Azure source never needs it, so the
+    // target's platform does not matter and nothing has to be probed. Null means the package predates the
+    // stamp or the export-side probe soft-failed; treat it as "might be Azure" to keep the old behaviour.
+    private static bool MayNeedAzureSourceAdaptation(int? sourceEngineEdition) {
+        return sourceEngineEdition is null || IsAzureSqlEngineEdition(sourceEngineEdition.Value);
+    }
+
     // Decision tree for the cross-platform model rewrite. Pure function so it can be unit-tested without
-    // DacFx or a live server.
-    //   - Unknown source (null) => fall back to "target is non-Azure => rewrite". This preserves the
-    //     pre-format-v4 behaviour for legacy callers that construct SchemaPackage directly without a
-    //     source stamp (tests, in-process API users).
-    //   - Known Azure source + non-Azure target => rewrite.
-    //   - Any other combination => skip (Azure->Azure is fine as-is; on-prem source never needs the rewrite).
-    internal static bool ShouldAdaptAzureSourceForOnPremTarget(int? sourceEngineEdition, int targetEngineEdition) {
-        var targetIsAzure = IsAzureSqlEngineEdition(targetEngineEdition);
-        if (targetIsAzure) {
+    // DacFx or a live server. An unknown target is assumed non-Azure, since deploying down to on-prem is
+    // the case the rewrite exists for and the rewrite is a no-op on a model with no containment in it.
+    internal static bool ShouldAdaptAzureSourceForOnPremTarget(int? sourceEngineEdition, int? targetEngineEdition) {
+        if (!MayNeedAzureSourceAdaptation(sourceEngineEdition)) {
             return false;
         }
 
-        if (sourceEngineEdition is null) {
-            return true;
-        }
-
-        return IsAzureSqlEngineEdition(sourceEngineEdition.Value);
+        return targetEngineEdition is null || !IsAzureSqlEngineEdition(targetEngineEdition.Value);
     }
 
     // Azure SQL DB-sourced dacpacs trigger DacFx to emit an ALTER DATABASE ... SET CONTAINMENT = PARTIAL

@@ -204,7 +204,7 @@ public sealed class DacpacDeploymentOptions {
     /// Set this to <see langword="false"/> to deploy the source model verbatim. Useful when you want the deploy to fail loudly so you can fix the source dacpac upstream, or when the operator has already configured <c>contained database authentication = 1</c> on the target and wants the original users preserved.
     /// </para>
     /// <para>
-    /// The probe failing aborts the deploy with a <see cref="SqlDataPackException"/>; disable this flag or <see cref="DeployDatabaseOptions"/> to bypass it. The source-platform signal travels in the SQLite package (column <c>source_engine_edition</c> on <c>zsdp_schema_packages</c>); packages produced before that column existed are treated as "unknown source" and rewritten the same way a non-Azure target would be probed for, preserving pre-stamp behaviour.
+    /// The source-platform signal travels in the SQLite package (column <c>source_engine_edition</c> on <c>zsdp_schema_packages</c>). When it says the source was not Azure SQL the rewrite is skipped outright and the target is never probed. When it says Azure SQL, or the package predates the stamp, the target is probed: a target that cannot be connected to fails the deploy with a connection error, while a target that connects but does not answer <c>SERVERPROPERTY('EngineEdition')</c> raises a warning and is assumed to be non-Azure.
     /// </para>
     /// </remarks>
     public bool AdaptAzureSourceForOnPremTarget { get; set; } = true;

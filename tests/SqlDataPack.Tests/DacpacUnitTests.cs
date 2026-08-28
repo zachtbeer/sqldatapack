@@ -266,7 +266,11 @@ public sealed class DacpacUnitTests : IDisposable {
     // Unknown source (package predates the source stamp) falls back to the target check.
     [InlineData(null, 3, true)]
     [InlineData(null, 5, false)]
-    public void ShouldAdaptAzureSourceForOnPremTarget_ReturnsExpected(int? sourceEdition, int targetEdition, bool expected) {
+    // Unknown target (probe connected but could not answer) is assumed non-Azure.
+    [InlineData(5, null, true)]
+    [InlineData(null, null, true)]
+    [InlineData(3, null, false)]
+    public void ShouldAdaptAzureSourceForOnPremTarget_ReturnsExpected(int? sourceEdition, int? targetEdition, bool expected) {
         DacpacSchemaManager.ShouldAdaptAzureSourceForOnPremTarget(sourceEdition, targetEdition).ShouldBe(expected);
     }
 
