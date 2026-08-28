@@ -92,7 +92,7 @@ internal static class DacpacSchemaManager {
                 if (needsPlatformCheck) {
                     var (targetEngineEdition, probeFailure) = await TryReadEngineEditionAsync(probe, cancellationToken);
                     if (probeFailure is not null) {
-                        warnings.Add($"Could not read SERVERPROPERTY('EngineEdition') on target database '{targetDatabaseName}': {probeFailure} Assuming a non-Azure target, so the Azure-sourced schema package was adapted for an on-prem deploy.");
+                        warnings.Add($"Could not determine whether target database '{targetDatabaseName}' is Azure SQL, so it was treated as on-prem and the schema package was adapted for an on-prem deploy. SERVERPROPERTY('EngineEdition') failed: {probeFailure}");
                     }
 
                     if (ShouldAdaptAzureSourceForOnPremTarget(package.SourceEngineEdition, targetEngineEdition)) {
