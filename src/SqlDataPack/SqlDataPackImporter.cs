@@ -30,6 +30,7 @@ public sealed class SqlDataPackImporter {
 
             await SqlitePackage.ValidateForImportAsync(sqlite, cancellationToken);
 
+            IReadOnlyList<string> schemaDeployWarnings = [];
             switch (options.SchemaDeploymentMode) {
                 case SchemaDeploymentMode.None:
                     break;
@@ -39,7 +40,7 @@ public sealed class SqlDataPackImporter {
                         throw new SqlDataPackException("SQLite package does not contain a dacpac schema package. Export with SchemaCaptureMode.Dacpac before deploying schema during import.");
                     }
 
-                    await DacpacSchemaManager.DeployAsync(sqlServerConnectionString, schemaPackage, options.DacpacDeploymentOptions, allowDacpacObjectDrops: false, cancellationToken);
+                    schemaDeployWarnings = await DacpacSchemaManager.DeployAsync(sqlServerConnectionString, schemaPackage, options.DacpacDeploymentOptions, allowDacpacObjectDrops: false, cancellationToken);
                     break;
                 default:
                     throw new SqlDataPackException($"SchemaDeploymentMode '{options.SchemaDeploymentMode}' is not supported.");
@@ -49,6 +50,7 @@ public sealed class SqlDataPackImporter {
             var importOrder = await SqlitePackage.ReadImportOrderAsync(sqlite, cancellationToken);
             var packageWarnings = await SqlitePackage.ReadWarningsAsync(sqlite, cancellationToken);
             var warnings = new List<string>(packageWarnings);
+            warnings.AddRange(schemaDeployWarnings);
 
             // Before the target is touched at all: the package is editable on purpose, so a count that moved
             // is usually a deliberate edit. Warn and carry on unless the caller asked to be strict. Added to
