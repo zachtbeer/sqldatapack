@@ -1,0 +1,21 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "SqlDataPack",
+  "description": ".NET library and CLI that exports chosen tables, columns, and rows from SQL Server into a single editable SQLite file, and imports it back into SQL Server.",
+  "folders": ["website/docs", "samples"],
+  "excludeFolders": ["docs", "tests", "build", ".github", ".superpowers", ".claude", "samples/SqlDataPack.DeployRepro"],
+  "excludeFiles": ["AGENTS.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "SECURITY.md"],
+  "rules": [
+    "Entry points are SqlData.ExportAsync(sqlServerConnectionString, sqliteFilePath, options) and SqlData.ImportAsync(sqliteFilePath, sqlServerConnectionString, options). Options are ExportOptions and ImportOptions in the SqlDataPack.Models namespace.",
+    "Name tables and columns schema-qualified: \"dbo.Customers\" for tables, \"dbo.Customers.NationalId\" for columns.",
+    "A GlobalWhereClause only filters tables that have every column it names. Any other table is exported with all its rows and a warning, not an error.",
+    "Export is not a consistent snapshot: each table is read with its own SELECT against the live source. For a referentially consistent slice, export from a restored copy, a database snapshot, or a readable secondary.",
+    "Import target tables must already exist (unless dacpac deployment creates them) and must be empty. There is no merge, upsert, or incremental sync.",
+    "Call new SqlDataPackImporter().PreflightAsync(packagePath, connectionString) before ImportAsync to validate the package and target without copying any rows.",
+    "In the SQLite file, bare-named tables such as dbo__customers hold the data and zsdp_* tables are SqlDataPack metadata. Edit data tables freely, never write to zsdp_* tables, and read metadata through SqlDataPackReader.",
+    "Update, delete, and insert rows in the package as much as you like, but never add, rename, or drop columns or tables. Edited values must still convert to the original SQL Server column type.",
+    "Resolve SQLite table names from the manifest (SqlDataPackReader.ReadManifestAsync) instead of hardcoding them, because DataTablePrefix changes them.",
+    "If the row count in the package no longer matches what was exported, import warns and continues by default. Set ImportOptions.RowCountDrift = RowCountDrift.Fail to stop it instead.",
+    "Scrub sensitive data at export time (ExcludeColumns, where clauses, transformations). After editing sensitive values in the SQLite file, run VACUUM, because the old bytes stay readable in free pages until you do."
+  ]
+}

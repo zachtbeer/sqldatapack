@@ -83,7 +83,7 @@ options.Transformations.Add("dbo.Customers.LastName", new NameMasker(new NameMas
 options.Transformations.Add("dbo.Customers.InternalCode", new CustomTransformer((context, value) => $"TEST-{value}"));
 ```
 
-One column takes one transformer; there is no chaining and no name matching. A source NULL bypasses the transformer and stays NULL. Everything else fails the export rather than falling back: a transformer that throws, one that returns `null` for a non-nullable column, and a result that does not fit the column's type, length, precision, or scale — an oversized result is never truncated.
+One column takes one transformer; there is no chaining and no name matching. A source NULL bypasses the transformer and stays NULL. Everything else fails the export rather than falling back: a transformer that throws, one that returns `null` for a non-nullable column, and a result that does not fit the column's type, length, precision, or scale. An oversized result is never truncated.
 
 Built-in pseudonymizers are deterministic within one export and differ between exports. They are designed to minimize collisions, but uniqueness is not guaranteed. See [Export transformations](/transformations) for the built-in list, the determinism contract, and custom transformers.
 
@@ -115,18 +115,16 @@ options.PerTableWhereClauses = [new PerTableWhereClause("dbo.Orders", "Status = 
 Defaults to an empty list.
 
 :::warning Global predicates fail open
-A table that matches some, but not all, of a clause's named columns is not filtered by that clause: it is exported **unfiltered**, every row. That is deliberate, so a shared lookup table is not silently truncated by a predicate written for tenant-scoped tables. But it cuts both ways: if your soft-delete column is called `Deleted` on one table and `IsDeleted` everywhere else, that table exports in full. You get a warning for it rather than silence — one per unmatched table, naming the clause, the table and the columns it was missing, stored in the package alongside the rest of the export warnings. It is still a warning, not an error: a clause only errors when it matches no selected table at all.
-
-Gating looks at the table's source columns, not the exported ones, so a predicate may reference a column that `ExcludeColumns` removes from the output. Gating and filtering both read the source columns.
+A table missing a column the clause names is not filtered by it: it exports **unfiltered**, every row. You get a warning about it, naming the clause and the table.
 
 When a predicate must never fail open, do not rely on a global clause. Use `PerTableWhereClauses` for exact tables, or narrow `TableSelection` so unmatched tables cannot be exported at all.
 :::
 
 ## Naming
 
-`DataTablePrefix` is prepended to every exported data table inside the SQLite package. It defaults to `null`, which writes data tables under their bare generated name, so `dbo.Customers` becomes `dbo__customers`. Set a value to group data tables behind a prefix instead — `"app"` writes `app_dbo__customers`. The package's own metadata tables are always named `zsdp_*` and are unaffected.
+`DataTablePrefix` is prepended to every exported data table inside the SQLite package. It defaults to `null`, which writes data tables under their bare generated name, so `dbo.Customers` becomes `dbo__customers`. Set a value to group data tables behind a prefix instead: `"app"` writes `app_dbo__customers`. The package's own metadata tables are always named `zsdp_*` and are unaffected.
 
-`zsdp_` and `sqlite_` are reserved. A generated name landing in either namespace fails the export with an error naming the source table — reachable both through a prefix (`DataTablePrefix = "sqlite"`) and, with no prefix, through a source schema named `sqlite` or `zsdp`.
+`zsdp_` and `sqlite_` are reserved. A generated name landing in either namespace fails the export with an error naming the source table. You can hit it through a prefix (`DataTablePrefix = "sqlite"`) and, with no prefix, through a source schema named `sqlite` or `zsdp`.
 
 ## Throughput
 

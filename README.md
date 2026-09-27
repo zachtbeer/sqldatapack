@@ -85,7 +85,7 @@ Console.WriteLine($"Exported {result.RowCount:N0} rows from {result.TableCount} 
 
 An excluded column is never read from SQL Server, never written to the file, and never sits on your disk. That is different from exporting everything and deleting the column afterwards, where the data already crossed the wire once and you are trusting a cleanup step to get it right every time. A global `WHERE` clause applies to every selected table that has the named column, and it fails open: a table without that column exports unfiltered, with a warning recorded per table in the package. See [Options](https://zachtbeer.github.io/sqldatapack/options).
 
-For a column that has to keep carrying something — an email address a support tool still needs to look like an email address — bind a transformer instead of dropping it. The value it returns is what lands in the package; the original never does:
+For a column that has to keep carrying something (an email address a support tool still needs to look like an email address), bind a transformer instead of dropping it. The value it returns is what lands in the package; the original never does:
 
 ```csharp
 using SqlDataPack.Transformations;

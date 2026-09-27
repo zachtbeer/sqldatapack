@@ -46,6 +46,4 @@ There is no nightly or per-commit feed. Every change to the package ships a real
 
 ### Previews
 
-Releases before `1.0.0` are numbered `1.0.0-preview.1`, `1.0.0-preview.2`, and so on. The number is a count of previews, chosen by hand when each one is published; it is not a build counter and it does not skip.
-
-The dot before the number matters. SemVer compares a numeric identifier as a number, so `preview.10` sorts above `preview.2`. Written without the dot, `preview10` is one alphanumeric identifier compared character by character, and would sort below `preview2` on nuget.org, where nothing can be deleted. `VersionGuard` checks the ordering before any tag is pushed.
+Releases before `1.0.0` are numbered `1.0.0-preview.1`, `1.0.0-preview.2`, and so on.

@@ -57,24 +57,17 @@ If an edit breaks one of these, import fails with SQL Server's own conversion er
 
 | Package area | Safe to edit |
 | --- | --- |
-| Data tables (every bare-named table, e.g. `dbo__customers`) | Yes. This is the whole point: rewrite values, delete rows, insert rows. |
+| Data tables (every bare-named table, e.g. `dbo__customers`) | Yes. Rewrite values, delete rows, insert rows. |
 | Metadata tables (`zsdp_*`: manifests, stats, warnings, the import plan) | No. Internal to SqlDataPack. Read them through `SqlDataPackReader`, do not write to them. |
 
 ## The package is unsealed on purpose
 
-There is no signature and no tamper check on import. `SourceSchemaHash` is written into the manifest at export time and is readable through `SqlDataPackReader`, but it is never validated on import: nothing compares it against the target, and nothing rejects a package because the hash looks wrong.
-
-That is a design decision, not an oversight. A checked hash would make the edit step this page describes impossible, since a hash computed at export would no longer match a package you deliberately changed afterward. The tradeoff is that a package carries no evidence of who produced it or what was done to it. Treat a package you did not produce yourself as untrusted input, and import it only into an environment you are willing to have it modify. The reader is fuzz-hardened against corrupt and hostile packages, so a malformed one fails as a `SqlDataPackException` rather than crashing, but a well-formed package containing wrong data imports cleanly, by design.
+Packages aren't signed or tamper-checked, so you can edit them. Only import a package from a source you trust.
 
 ## Compacting
 
-SQLite does not overwrite freed page content, and `PRAGMA secure_delete` is off in the builds `Microsoft.Data.Sqlite` ships. An in-place `UPDATE` that replaces a real value with a shorter one leaves the original bytes readable in free pages. A package that looks edited can still be carved for the original values with a hex editor.
-
-`VACUUM` rewrites the database and drops them. Run it before the package leaves your environment, then confirm:
+SQLite keeps old values in free pages after an `UPDATE`, so run `VACUUM` before the file leaves your machine.
 
 ```bash
-sqlite3 customer-snapshot.sqlite 'VACUUM;'
-grep -a 'a.real.address@customer.com' customer-snapshot.sqlite && echo "STILL PRESENT" || echo "clean"
+sqlite3 file.sqlite 'VACUUM;'
 ```
-
-This is not optional if the edit removed anything sensitive. If your editing tool left a `-wal` or `-journal` sidecar next to the package, delete it too, since it can hold pre-update page images. SqlDataPack itself writes with `journal_mode = MEMORY` and leaves no sidecar, but your tooling may differ.

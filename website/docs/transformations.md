@@ -30,7 +30,7 @@ await SqlData.ExportAsync(sourceConnectionString, "dev-slice.sqlite", options);
 That package holds `j*******@contoso.com`-shaped addresses, `(XXX) XXX-XXXX` phone numbers, and `Smtest` in place of `Smith`.
 
 :::note What this is and is not
-This is masking and pseudonymization for development and test data — sensitive-data scrubbing, not a guarantee of irreversible anonymization, and not a compliance control. Transformed values still carry structure (formatting, lengths, which rows share a value), and structure can be revealing. For a column you cannot afford to reason about at all — credentials, tokens, government identifiers, free-text notes — prefer [`ExcludeColumns`](/options#excluding-columns): a value that never leaves SQL Server cannot leak from the package.
+This is masking and pseudonymization for development and test data. It scrubs sensitive data; it's not a guarantee of irreversible anonymization, and not a compliance control. Transformed values still carry structure (formatting, lengths, which rows share a value), and structure can be revealing. For a column you cannot afford to reason about at all (credentials, tokens, government identifiers, free-text notes), prefer [`ExcludeColumns`](/options#excluding-columns): a value that never leaves SQL Server cannot leak from the package.
 :::
 
 ## The built-ins
@@ -49,13 +49,13 @@ This is masking and pseudonymization for development and test data — sensitive
 
 `NullTransformer` and `EmptyStringTransformer` are the blunt ones: every value becomes NULL, or every value becomes `""`. No options, nothing to configure, nothing derived from the source. Reach for them on a column whose contents you do not need at all and do not need shaped: a notes or payload column, typically. `NullTransformer` needs a nullable column and `EmptyStringTransformer` needs a text column; bind one to a column that cannot hold the result and the export fails naming the column.
 
-Each of the others takes an options object with the same name plus `Options` — `new PhoneMasker(new PhoneMaskerOptions { PreserveLastDigits = 4 })` leaves a recognisable last four. Options are copied at construction, so editing the object afterwards changes nothing.
+Each of the others takes an options object with the same name plus `Options`: `new PhoneMasker(new PhoneMaskerOptions { PreserveLastDigits = 4 })` leaves a recognisable last four. Options are copied at construction, so editing the object afterwards changes nothing.
 
 **Maskers** throw information away: many source values map to one output, on purpose. **Pseudonymizers** replace a value with a derived stand-in that keeps rows lining up.
 
-Built-ins preserve structure where that is cheap — punctuation in a phone number or SSN, the domain of an email address if you ask for it — and they are best-effort about it. They are *not* best-effort about protecting the value: a phone number the transformer cannot make sense of is still transformed, never passed through. There is no telephone or address grammar in the library, and there will not be one.
+Built-ins preserve structure where that is cheap (punctuation in a phone number or SSN, the domain of an email address if you ask for it), and they are best-effort about it. They are *not* best-effort about protecting the value: a phone number the transformer cannot make sense of is still transformed, never passed through. There is no telephone or address grammar in the library, and there will not be one.
 
-There are deliberately no built-ins for dates, times, credit cards, or postal addresses. Use a string transformer or a custom transformer for those.
+There are no built-ins for dates, times, credit cards, or postal addresses. Use a string transformer or a custom transformer for those.
 
 ## Deterministic within one export
 
@@ -87,7 +87,7 @@ Transformations never fall back quietly. Any of these fails the whole export:
 
 - the transformer throws;
 - it returns `null` for a non-nullable column;
-- its result does not fit the destination column — wrong type, longer than the column's length, more digits or decimal places than its precision and scale allow.
+- its result does not fit the destination column: wrong type, longer than the column's length, more digits or decimal places than its precision and scale allow.
 
 An oversized result is never truncated and a failed transformation never writes the original value. The transformed value does not have to resemble the original's length: a 5-character value in `nvarchar(50)` may become a 20-character one.
 
@@ -118,13 +118,13 @@ public sealed class TruncatingPostcodeMasker : IValueTransformer {
 options.Transformations.Add("dbo.Customers.Postcode", new TruncatingPostcodeMasker());
 ```
 
-Transformation is synchronous and value-oriented. A transformer receives one value plus `TransformContext` — schema, table, column, SQL Server type name, nullability, max length, precision, and scale — and nothing else: no other column of the row, no row, no connection, no export secret. It is called once per non-NULL cell of its column.
+Transformation is synchronous and value-oriented. A transformer receives one value plus `TransformContext` (schema, table, column, SQL Server type name, nullability, max length, precision, and scale) and nothing else: no other column of the row, no row, no connection, no export secret. It is called once per non-NULL cell of its column.
 
 A custom transformer may keep its own state, but SqlDataPack neither manages nor guarantees it. If you need cross-export stable identities, a lookup table, or uniqueness, hold that state yourself.
 
 ## What the package records
 
-The package records which columns were transformed, and how the built-in was configured — never the export secret, a key, an original value, or an intermediate hash:
+The package records which columns were transformed, and how the built-in was configured. Never the export secret, a key, an original value, or an intermediate hash:
 
 ```csharp
 var manifest = await new SqlDataPackReader().ReadManifestAsync("dev-slice.sqlite");
@@ -143,7 +143,7 @@ Anything that is not a built-in is recorded as `Custom` with no configuration. S
 
 Deferred on purpose, and reachable today with a custom transformer where it matters:
 
-- no automatic PII detection, column-name patterns, or global matching rules — bindings are explicit, one column at a time;
+- no automatic PII detection, column-name patterns, or global matching rules: bindings are explicit, one column at a time;
 - no chaining: one column, one transformer;
 - no async transformers, no row-level or multi-column transformations, no external service calls;
 - no cross-export deterministic identity and no configurable consistency groups;

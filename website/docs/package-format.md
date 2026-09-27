@@ -32,7 +32,7 @@ These tables are internal to SqlDataPack. You can query them, but the schema is 
 
 ## The data tables
 
-Each exported SQL Server table gets one SQLite table, named `<schema>__<table>`, so `dbo.Customers` becomes `dbo__customers`. Set `DataTablePrefix` to group data tables behind a prefix instead — `DataTablePrefix = "app"` writes `app_dbo__customers`. It defaults to no prefix; metadata tables stay `zsdp_*` either way.
+Each exported SQL Server table gets one SQLite table, named `<schema>__<table>`, so `dbo.Customers` becomes `dbo__customers`. Set `DataTablePrefix` to group data tables behind a prefix instead: `DataTablePrefix = "app"` writes `app_dbo__customers`. It defaults to no prefix; metadata tables stay `zsdp_*` either way.
 
 `zsdp_` and `sqlite_` are reserved: a source table whose generated name would land in either namespace fails the export with an error naming the table, rather than colliding with the package's own metadata or SQLite's.
 
@@ -82,9 +82,9 @@ The original SQL Server type name lives in `zsdp_columns` regardless of which SQ
 An export touches three things on disk:
 
 - **The SQLite package**, at the path you gave it.
-- **A temporary file alongside it during export**, named `.<name>.<guid>.tmp` in the destination directory. It is renamed into place on success and deleted on a best-effort basis on failure. If an export is interrupted, this file can survive, holding the unscrubbed extract under a name your cleanup script will not match. Treat the destination directory, not just the final file, as production-data territory.
+- **A temporary file alongside it during export**, named `.<name>.<guid>.tmp`. An interrupted export can leave this behind in the destination folder; delete it.
 - **A temporary `.dacpac` in the system temp directory**, only if you opted into dacpac capture or deployment. Schema only, no rows.
 
 ## Why SQLite
 
-SQLite gives the package a single-file format with broad tooling support, transactional writes, simple metadata storage, and enough type flexibility for transport. It also lets humans and AI coding agents inspect exported data without requiring SQL Server access. SqlDataPack uses SQLite as a transport container, not as a replacement for SQL Server semantics.
+SQLite gives the package a single-file format with broad tooling support and transactional writes. It also lets humans and AI coding agents inspect exported data without requiring SQL Server access.

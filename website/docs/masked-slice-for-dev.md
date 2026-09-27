@@ -55,7 +55,7 @@ Free-text columns deserve the same treatment. You cannot pattern-match your way 
 
 ## Scrub the columns you have to keep
 
-Some columns you cannot simply drop — a support tool needs an email address to be an email address, a report needs a name in the name column. `Transformations` replaces those values during the export, so the original never reaches the file:
+Some columns you cannot simply drop: a support tool needs an email address to be an email address, a report needs a name in the name column. `Transformations` replaces those values during the export, so the original never reaches the file:
 
 ```csharp
 using SqlDataPack.Transformations;
@@ -96,7 +96,7 @@ options.GlobalWhereClauses =
 That is a different clause from writing `new GlobalWhereClause("TenantId", ...)` and `new GlobalWhereClause("IsDeleted", ...)` separately. Two single-column clauses each apply on their own, independently, to any table carrying that one column. One multi-column clause applies only to a table that carries all of the named columns together; a table with just one of them is not touched by it at all.
 
 :::warning Global predicates fail open
-A table that has `TenantId` but no `IsDeleted` column does not match the clause above and is exported **unfiltered**: every row, every tenant. That behaviour is deliberate, so a shared lookup table is not silently truncated by a predicate written for tenant-scoped tables. But it cuts both ways: if your soft-delete column is called `Deleted` on one table and `IsDeleted` everywhere else, that table exports in full, and **no warning is emitted**. A clause only errors when it matches no selected table at all.
+A table that has `TenantId` but no `IsDeleted` column does not match the clause above and is exported **unfiltered**: every row, every tenant. You get a warning for it (naming the table and the clause it missed), but the export still succeeds, so watch for that warning if your soft-delete column is named inconsistently across tables.
 
 When a predicate must never fail open, do not rely on a global clause. Use `PerTableWhereClauses` for exact tables, or narrow `TableSelection` so unmatched tables cannot be exported in the first place.
 :::
@@ -125,9 +125,7 @@ UPDATE dbo__invoices
 SET BillingAddress = '1 Example Street';
 ```
 
-:::caution Do not delete rows
-Rewriting values in place roundtrips freely: change an email, a name, an address, whatever needs scrubbing. Deleting rows works too. Import compares what the package holds against `exported_row_count`, recorded in `zsdp_table_stats` at export time, and reports a difference as a warning rather than failing, so dropping every row for one customer is a supported way to scrub. Set `RowCountDrift.Fail` if a moved count should stop the import instead. See [Editing the package](/editing-the-package) for the full list of what you can and cannot change.
-:::
+Deleting rows is fine too, dropping every row for one customer is a supported way to scrub; import just warns that the row count changed. See [Editing the package](/editing-the-package) for the full list of what you can and cannot change.
 
 ## Compact the file
 

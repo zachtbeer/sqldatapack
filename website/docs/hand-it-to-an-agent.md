@@ -50,7 +50,7 @@ $ sqlite3 agent-handoff.sqlite "SELECT CustomerId, Name FROM dbo__customers LIMI
 3|Fabrikam, Inc.
 ```
 
-The bare-named tables hold the actual rows, one SQLite table per exported SQL Server table. The `zsdp_*` tables are metadata: source names, types, row counts, import order, warnings. That prefix is the whole rule — `zsdp_` is bookkeeping, everything else is data. An agent with ordinary SQLite tooling (`sqlite3`, a Python script, whatever it already has) can query, read, and reason about all of it without ever touching SQL Server.
+The bare-named tables hold the actual rows, one SQLite table per exported SQL Server table. The `zsdp_*` tables are metadata: source names, types, row counts, import order, warnings. That prefix is the whole rule: `zsdp_` is bookkeeping, everything else is data. An agent with ordinary SQLite tooling (`sqlite3`, a Python script, whatever it already has) can query, read, and reason about all of it without ever touching SQL Server.
 
 ## What it may change
 
@@ -58,13 +58,11 @@ The agent can rewrite values freely: fix a typo, correct a data type mismatch, r
 
 ## The guardrails
 
-An editable, self-describing SQLite file is a good handoff format for an agent precisely because it is local, inspectable, and needs no live database or credentials to hand over. But "editable" cuts both ways, so import checks its work.
+An editable, self-describing SQLite file is a good handoff format for an agent: it's local, inspectable, and needs no live database or credentials to hand over. Editable also means an agent can break something, so import checks its work.
 
-At export, SqlDataPack records how many rows it actually copied for each table in `zsdp_table_stats`, as `exported_row_count`. At import, it counts what the package holds now and compares. A difference is reported as a warning and the import proceeds with the rows that are there, so an agent told to drop rows can do so and still import the result. Set `RowCountDrift.Fail` if a moved count should stop the import instead.
+Import compares the row count the package holds now against what export recorded, so a scrubbing script that accidentally drops rows, an overzealous `DELETE`, or an agent told to drop rows on purpose all show up the same way: a warning per table on `SqlDataPackResult.Warnings` naming both counts, with the import still loading the rows that are there. Set `RowCountDrift.Fail` if a moved count should stop the import instead of just warning about it. Either way, the check only tells you the count changed; it can't tell a deliberate delete from a mistake.
 
-That means a scrubbing script the agent wrote that accidentally drops rows, an overzealous `DELETE`, a `WHERE` clause with an off-by-one, does not silently ship a partial dataset. It fails the import loudly, with a count that does not match, instead of quietly loading fewer rows than the source had. Treat that as the guardrail it is: the file being ordinary SQLite makes it easy to edit, and this check is what catches an edit that went further than intended.
-
-For metadata reads, point the agent at `SqlDataPackReader` rather than the internal `zsdp_*` tables directly; the reader is the supported surface, the table layout is not.
+For metadata reads, point the agent at `SqlDataPackReader` rather than the internal `zsdp_*` tables directly; the reader is what's supported, the table layout is not.
 
 ## What to hand over with it
 

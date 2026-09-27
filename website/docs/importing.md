@@ -94,7 +94,7 @@ Import also reads `zsdp_warnings`, the warnings recorded during export, and fold
 
 ## Dacpac deployment safety
 
-When `SchemaDeploymentMode.DeployDacpac` is set, deployment defaults are conservative around destructive changes. DacFx blocks possible data loss, does not drop target objects missing from the package schema, and excludes database files, filegroups, users, logins, permissions, and role membership unless you opt in. Incompatible SQL Server platforms are rejected by default too: `AllowIncompatiblePlatform` defaults to `false`, so a deploy across incompatible platforms, an on-premises dacpac against Azure SQL, for example, fails fast rather than attempting a deployment DacFx cannot guarantee. Set it to `true` only once you have confirmed the mismatch is safe for your schema. See [Slice with schema](/slice-with-schema) for the full deploy sequence and what to set when a deploy refuses.
+Dacpac deploy defaults are conservative (won't drop objects or risk data loss unless you opt in). See [Slice with schema](/slice-with-schema).
 
 ## When it fails
 

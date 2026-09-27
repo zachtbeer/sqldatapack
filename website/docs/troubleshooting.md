@@ -9,7 +9,7 @@ This page lists common SqlDataPack failures and the action that usually fixes th
 
 Import only writes into empty target tables. If you see an error that a target table must be empty, truncate or recreate the target table before import.
 
-SqlDataPack does this intentionally so partial merges, duplicate rows, and identity conflicts are explicit application decisions instead of implicit library behavior.
+This keeps merges, duplicate rows, and identity conflicts something your application decides on, not something the library decides for you.
 
 ## Import failed: target table does not exist
 
